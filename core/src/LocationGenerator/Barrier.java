@@ -7,7 +7,7 @@ package LocationGenerator;
 
 /**
  *
- * @author Admin
+ * @author Artem
  */
 public class Barrier {
     private int _location;
