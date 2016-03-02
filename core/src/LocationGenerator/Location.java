@@ -21,24 +21,28 @@ public final class Location {
     static int stopCounter = 0;
     
     public static ArrayList<Barrier> GetBarrierList(int startPosition, int barriersCount, boolean course){
-        if (startPosition<0){
-            throw new IllegalArgumentException("Start Position must be > 0");
+        if ((startPosition<0)&&(course==true)){
+            throw new IllegalArgumentException("Start Position must be > 0 if course is true");
+        }
+        if ((startPosition>0)&&(course==false)){
+            throw new IllegalArgumentException("Start Position must be < 0 if course is false");
         }
         int previousLocation = startPosition;
-        int location;
+        int location =0;
         Barrier tempBarrier;
         
         for (int i = 0;i<barriersCount;i++){
+            if (course){
             location = GetRandomLocation()+previousLocation;
             previousLocation = location;
+            }
+            else{
+            int temp = GetRandomLocation()*(-1);
+            location = temp+previousLocation;
+            previousLocation = location;
+            }
             BarrierTypes type = GetRandomType();
-            if (course){
-            tempBarrier = new Barrier(location, type);
-            }
-            else
-            {
-               tempBarrier = new Barrier(location*(-1), type); 
-            }
+               tempBarrier = new Barrier(location, type); 
             barriers.add(tempBarrier);
         }
         return barriers;

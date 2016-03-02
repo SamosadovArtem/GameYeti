@@ -10,6 +10,8 @@ import java.util.ArrayList;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new GameLibGDX(), config);                
+		new LwjglApplication(new GameLibGDX(), config);         
+               
+                
 	}
 }
