@@ -5,6 +5,8 @@
  */
 package com.mygdx.game.screen;
 
+import GameWorld.Main.MainRenderer;
+import GameWorld.Main.MainWorld;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.GameLibGDX;
 import java.util.HashSet;
@@ -19,20 +21,13 @@ public class MainScreen extends AbstractScreen {
     public MainScreen(GameLibGDX game) {
         super(game);
         Gdx.app.log("MainScreen", "main screen created");
-        this.game.setScreen(new MapsScreen(game));
-        
     }
 
     @Override
-    void loadResources() {
-        Gdx.app.log("MainScreen", "loadResources");
-       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    void initScene() {
+    protected void initScene() {  
         Gdx.app.log("MainScreen", "initScene");
-       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.world = new MainWorld();
+        this.render = new MainRenderer(world);        
     }
     
 }

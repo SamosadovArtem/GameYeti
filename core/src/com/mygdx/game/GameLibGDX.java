@@ -6,11 +6,12 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.screen.AbstractScreen;
 import com.mygdx.game.screen.MainScreen;
 
 public class GameLibGDX extends ApplicationAdapter {
     
-    private Screen screen;
+    private AbstractScreen screen;
 	
     @Override
     public void create () {
@@ -19,7 +20,7 @@ public class GameLibGDX extends ApplicationAdapter {
     }
    
         
-    public void setScreen (Screen screen) {
+    public void setScreen (AbstractScreen screen) {
         if (this.screen != null) this.screen.hide();
         this.screen = screen;
         if (this.screen != null) {
@@ -28,7 +29,12 @@ public class GameLibGDX extends ApplicationAdapter {
         }
     }
     
-    public Screen getScreen () {
+    @Override
+    public void render(){
+        screen.render(Gdx.graphics.getDeltaTime());
+    }
+    
+    public AbstractScreen getScreen () {
         return screen;
     }
 }

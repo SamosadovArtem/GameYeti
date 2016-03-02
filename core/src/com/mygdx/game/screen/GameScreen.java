@@ -5,6 +5,8 @@
  */
 package com.mygdx.game.screen;
 
+import GameWorld.Main.MainRenderer;
+import GameWorld.Main.MainWorld;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.GameLibGDX;
 
@@ -18,17 +20,12 @@ public class GameScreen extends AbstractScreen {
         super(game);
         Gdx.app.log("GameScreen", "main screen created");
     }
-
+    
     @Override
-    void loadResources() {
-        Gdx.app.log("GameScreen", "loadResources");
-       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    void initScene() {
+    protected void initScene() {
         Gdx.app.log("GameScreen", "initScene");
-       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.world = new MainWorld();
+        this.render = new MainRenderer(world); 
     }
     
 }

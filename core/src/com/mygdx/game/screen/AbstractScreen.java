@@ -5,6 +5,8 @@
  */
 package com.mygdx.game.screen;
 
+import GameWorld.Renderer;
+import GameWorld.World;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -15,19 +17,18 @@ import com.mygdx.game.GameLibGDX;
  *
  * @author Broff
  */
-public abstract class AbstractScreen implements Screen {
-
-    abstract void loadResources();
-    abstract void initScene();
+public class AbstractScreen implements Screen {
             
     protected GameLibGDX game;
     protected Stage stage;
+    protected Renderer render;
+    protected World world;
     
+    protected void initScene(){};
     
     public AbstractScreen(GameLibGDX game){
         this.game = game;
         this.stage = new Stage();
-        loadResources();
         initScene();
     }    
     
@@ -53,18 +54,7 @@ public abstract class AbstractScreen implements Screen {
         return this.game;
     }  
   
-    //метод, который требует реализовать интерфейс Screen. он вызывается в цикле
-    @Override
-    public void render(float delta) {
-        //вызываем метод act для сцены. В этом методе происходят изменения актёров, если это необходимо
-        getStage().act(delta);
-        //устанавливаем чёрный цвет, как цвет очистки экрана. используется палитра RGBA
-        Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
-        //очищаем экран
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        //вызываем метод draw для сцены. Этот метод рисует актёров на экране
-        getStage().draw();
-    }
+    
     
     @Override
     public void resize(int width, int height) {
@@ -94,5 +84,11 @@ public abstract class AbstractScreen implements Screen {
     
     @Override
     public void resume() {
+    }
+
+    @Override
+    public void render(float delta) {
+        world.update(delta);
+        render.render();
     }
 }

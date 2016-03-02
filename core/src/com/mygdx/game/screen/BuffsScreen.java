@@ -5,6 +5,10 @@
  */
 package com.mygdx.game.screen;
 
+import GameWorld.Buffs.BuffsRenderer;
+import GameWorld.Buffs.BuffsWorld;
+import GameWorld.Main.MainRenderer;
+import GameWorld.Main.MainWorld;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.GameLibGDX;
 
@@ -20,15 +24,9 @@ public class BuffsScreen extends AbstractScreen {
     }
 
     @Override
-    void loadResources() {
-        Gdx.app.log("BuffsScreen", "loadResources");
-       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    void initScene() {
+    protected void initScene() {
         Gdx.app.log("BuffsScreen", "initScene");
-       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+        this.world = new BuffsWorld();
+        this.render = new BuffsRenderer(world);
+    }    
 }

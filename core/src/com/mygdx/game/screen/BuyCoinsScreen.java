@@ -5,10 +5,9 @@
  */
 package com.mygdx.game.screen;
 
+import GameWorld.BuyCoins.BuyCoinsWorld;
 import GameWorld.Main.MainRenderer;
 import GameWorld.Main.MainWorld;
-import GameWorld.Maps.MapsRenderer;
-import GameWorld.Maps.MapsWorld;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.GameLibGDX;
 
@@ -16,17 +15,17 @@ import com.mygdx.game.GameLibGDX;
  *
  * @author qw
  */
-public class MapsScreen extends AbstractScreen {
+public class BuyCoinsScreen extends AbstractScreen {
 
-    public MapsScreen(GameLibGDX game) {
+    public BuyCoinsScreen(GameLibGDX game) {
         super(game);
-        Gdx.app.log("MapScreen", "main screen created");
+        Gdx.app.log("BuyCoinsScreen", "main screen created");
     }
-
+    
     @Override
     protected void initScene() {
-        Gdx.app.log("MainScreen", "initScene");
-        this.world = new MapsWorld();
-        this.render = new MapsRenderer(world); 
-    }
+        Gdx.app.log("BuyCoinsScreen", "initScene");
+        this.world = new BuyCoinsWorld();
+        this.render = new BuyCoinsRenderer(world);
+    }    
 }
