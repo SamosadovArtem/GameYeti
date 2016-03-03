@@ -17,6 +17,9 @@ import com.mygdx.game.GameLibGDX;
  */
 public class BuyCoinsScreen extends AbstractScreen {
 
+    public BuyCoinsWorld world;
+    public BuyCoinsRenderer render;
+    
     public BuyCoinsScreen(GameLibGDX game) {
         super(game);
         Gdx.app.log("BuyCoinsScreen", "main screen created");
@@ -28,4 +31,10 @@ public class BuyCoinsScreen extends AbstractScreen {
         this.world = new BuyCoinsWorld();
         this.render = new BuyCoinsRenderer(world);
     }    
+    
+    @Override
+    public void render(float delta) {
+        world.update(delta);
+        render.render();
+    }
 }

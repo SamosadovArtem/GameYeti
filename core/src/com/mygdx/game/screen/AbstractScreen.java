@@ -17,12 +17,10 @@ import com.mygdx.game.GameLibGDX;
  *
  * @author Broff
  */
-public class AbstractScreen implements Screen {
+public abstract class AbstractScreen implements Screen {
             
     protected GameLibGDX game;
     protected Stage stage;
-    protected Renderer render;
-    protected World world;
     
     protected void initScene(){};
     
@@ -86,9 +84,4 @@ public class AbstractScreen implements Screen {
     public void resume() {
     }
 
-    @Override
-    public void render(float delta) {
-        world.update(delta);
-        render.render();
-    }
 }

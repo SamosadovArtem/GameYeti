@@ -18,6 +18,9 @@ import com.mygdx.game.GameLibGDX;
  */
 public class BuffsScreen extends AbstractScreen {
 
+    public BuffsWorld world;
+    public BuffsRenderer render;
+    
     public BuffsScreen(GameLibGDX game) {
         super(game);
         Gdx.app.log("BuffsScreen", "main screen created");
@@ -29,4 +32,10 @@ public class BuffsScreen extends AbstractScreen {
         this.world = new BuffsWorld();
         this.render = new BuffsRenderer(world);
     }    
+    
+    @Override
+    public void render(float delta) {
+        world.update(delta);
+        render.render();
+    }
 }

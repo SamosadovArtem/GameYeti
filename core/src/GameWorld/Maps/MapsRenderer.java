@@ -5,6 +5,7 @@
  */
 package GameWorld.Maps;
 
+import GameWorld.Game.GameWorld;
 import GameWorld.Renderer;
 import GameWorld.World;
 import com.badlogic.gdx.Gdx;
@@ -16,8 +17,11 @@ import com.badlogic.gdx.graphics.GL20;
  */
 public class MapsRenderer extends Renderer {
 
-    public MapsRenderer(World world) {
-        super(world);
+    MapsWorld world;
+    
+    public MapsRenderer(MapsWorld world) {
+        super();
+        this.world = world;
         Gdx.app.log("MapsRenderer", "create");
     }
 

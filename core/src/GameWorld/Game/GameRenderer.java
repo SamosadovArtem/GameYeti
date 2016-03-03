@@ -5,6 +5,7 @@
  */
 package GameWorld.Game;
 
+import GameWorld.Buffs.BuffsWorld;
 import GameWorld.Renderer;
 import GameWorld.World;
 import com.badlogic.gdx.Gdx;
@@ -16,8 +17,11 @@ import com.badlogic.gdx.graphics.GL20;
  */
 public class GameRenderer extends Renderer {
 
-    public GameRenderer(World world) {
-        super(world);
+    GameWorld world;
+    
+    public GameRenderer(GameWorld world) {
+        super();
+        this.world = world;
         Gdx.app.log("GameRenderer", "create");
     }
 

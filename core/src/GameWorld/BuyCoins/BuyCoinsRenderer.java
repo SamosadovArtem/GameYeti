@@ -5,6 +5,7 @@
  */
 package GameWorld.BuyCoins;
 
+import GameWorld.Buffs.BuffsWorld;
 import GameWorld.Renderer;
 import GameWorld.World;
 import com.badlogic.gdx.Gdx;
@@ -16,8 +17,11 @@ import com.badlogic.gdx.graphics.GL20;
  */
 public class BuyCoinsRenderer extends Renderer {
 
-    public BuyCoinsRenderer(World world) {
-        super(world);
+    BuyCoinsWorld world;
+    
+    public BuyCoinsRenderer(BuyCoinsWorld world) {
+        super();
+        this.world = world;
         Gdx.app.log("BuyCoinsRenderer", "create");
     }
 

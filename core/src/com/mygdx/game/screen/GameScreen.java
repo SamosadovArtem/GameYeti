@@ -5,6 +5,8 @@
  */
 package com.mygdx.game.screen;
 
+import GameWorld.Game.GameRenderer;
+import GameWorld.Game.GameWorld;
 import GameWorld.Main.MainRenderer;
 import GameWorld.Main.MainWorld;
 import com.badlogic.gdx.Gdx;
@@ -16,6 +18,9 @@ import com.mygdx.game.GameLibGDX;
  */
 public class GameScreen extends AbstractScreen {
 
+    public GameWorld world;
+    public GameRenderer render;
+    
     public GameScreen(GameLibGDX game) {
         super(game);
         Gdx.app.log("GameScreen", "main screen created");
@@ -24,8 +29,13 @@ public class GameScreen extends AbstractScreen {
     @Override
     protected void initScene() {
         Gdx.app.log("GameScreen", "initScene");
-        this.world = new MainWorld();
-        this.render = new MainRenderer(world); 
+        this.world = new GameWorld();
+        this.render = new GameRenderer(world); 
     }
     
+    @Override
+    public void render(float delta) {
+        world.update(delta);
+        render.render();
+    }
 }

@@ -5,10 +5,12 @@
  */
 package GameWorld.Buffs;
 
+import GameWorld.Main.MainWorld;
 import GameWorld.Renderer;
 import GameWorld.World;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 
 /**
@@ -17,8 +19,11 @@ import com.badlogic.gdx.graphics.GL20;
  */
 public class BuffsRenderer extends Renderer {
 
-    public BuffsRenderer(World world) {
-        super(world);
+    BuffsWorld world;
+    
+    public BuffsRenderer(BuffsWorld world) {
+        super();
+        this.world = world;
         Gdx.app.log("BuffsRenderer", "create");
     }
 

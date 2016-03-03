@@ -18,6 +18,9 @@ import com.mygdx.game.GameLibGDX;
  */
 public class MapsScreen extends AbstractScreen {
 
+    public MapsWorld world;
+    public MapsRenderer render;
+    
     public MapsScreen(GameLibGDX game) {
         super(game);
         Gdx.app.log("MapScreen", "main screen created");
@@ -28,5 +31,11 @@ public class MapsScreen extends AbstractScreen {
         Gdx.app.log("MainScreen", "initScene");
         this.world = new MapsWorld();
         this.render = new MapsRenderer(world); 
+    }
+    
+    @Override
+    public void render(float delta) {
+        world.update(delta);
+        render.render();
     }
 }

@@ -13,11 +13,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
  */
 public abstract class Renderer {
  
-    private World world;
-    private OrthographicCamera cam;
+    
+    protected OrthographicCamera cam;
         
-    public Renderer(World world){
-        this.world = world;
+    public Renderer(){
         cam = new OrthographicCamera();
         cam.setToOrtho(true, 800, 480);
     }

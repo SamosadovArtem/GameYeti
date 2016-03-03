@@ -18,6 +18,9 @@ import java.util.Set;
  */
 public class MainScreen extends AbstractScreen {
 
+    public MainWorld world;
+    public MainRenderer render;
+    
     public MainScreen(GameLibGDX game) {
         super(game);
         Gdx.app.log("MainScreen", "main screen created");
@@ -26,8 +29,14 @@ public class MainScreen extends AbstractScreen {
     @Override
     protected void initScene() {  
         Gdx.app.log("MainScreen", "initScene");
-        this.world = new MainWorld();
-        this.render = new MainRenderer(world);        
+        this.world = new MainWorld(stage);
+        this.render = new MainRenderer(world, stage);        
+    }
+    
+    @Override
+    public void render(float delta) {
+        world.update(delta);
+        render.render();
     }
     
 }
