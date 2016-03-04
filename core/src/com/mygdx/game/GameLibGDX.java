@@ -1,6 +1,8 @@
 package com.mygdx.game;
 
 import Helper.AssetLoader;
+import Helper.FontLoader;
+import Helper.Statistic;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -15,10 +17,15 @@ public class GameLibGDX extends ApplicationAdapter {
     @Override
     public void create () {
         Gdx.app.log("YetiGame", "app created");
-        AssetLoader.load();
+        loadResources();
         setScreen(new MainScreen(this));
     }
-   
+    
+    private void loadResources(){   
+        AssetLoader.load();
+        FontLoader.load();
+        Statistic.load();
+    }
         
     public void setScreen (Screen screen) {
         if (this.screen != null) this.screen.hide();
@@ -36,7 +43,8 @@ public class GameLibGDX extends ApplicationAdapter {
     
     @Override
     public void dispose(){
-        //AssetLoader.dispose();
+        AssetLoader.dispose();
+        FontLoader.dispose();
     }
     
     public Screen getScreen () {

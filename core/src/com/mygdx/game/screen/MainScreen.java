@@ -29,7 +29,7 @@ public class MainScreen extends AbstractScreen {
     @Override
     protected void initScene() {  
         Gdx.app.log("MainScreen", "initScene");
-        this.world = new MainWorld(stage);
+        this.world = new MainWorld(stage, game);
         this.render = new MainRenderer(world, stage);        
     }
     

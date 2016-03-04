@@ -29,7 +29,7 @@ public class BuffsScreen extends AbstractScreen {
     @Override
     protected void initScene() {
         Gdx.app.log("BuffsScreen", "initScene");
-        this.world = new BuffsWorld();
+        this.world = new BuffsWorld(stage, game);
         this.render = new BuffsRenderer(world);
     }    
     

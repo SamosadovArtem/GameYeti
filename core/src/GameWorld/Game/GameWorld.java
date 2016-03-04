@@ -7,6 +7,8 @@ package GameWorld.Game;
 
 import GameWorld.World;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.GameLibGDX;
 
 /**
  *
@@ -14,7 +16,8 @@ import com.badlogic.gdx.Gdx;
  */
 public class GameWorld extends World {
 
-    public GameWorld(){
+    public GameWorld(Stage stage, GameLibGDX g){        
+        super(stage, g);
         Gdx.app.log("GameWorld", "create");
     }
     

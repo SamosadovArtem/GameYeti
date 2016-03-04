@@ -7,6 +7,8 @@ package GameWorld.BuyCoins;
 
 import GameWorld.World;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.GameLibGDX;
 
 /**
  *
@@ -14,7 +16,8 @@ import com.badlogic.gdx.Gdx;
  */
 public class BuyCoinsWorld extends World {
 
-    public BuyCoinsWorld(){
+    public BuyCoinsWorld(Stage stage, GameLibGDX g){        
+        super(stage, g);
         Gdx.app.log("BuyCoinsWorld", "create");
     }
     

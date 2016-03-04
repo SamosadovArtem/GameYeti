@@ -19,15 +19,23 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  * @author qw
  */
 public class AssetLoader {
-    public static Texture texture, logoTexture;
-    public static TextureRegion logo, zbLogo, bg, grass, bird, birdDown,
-            birdUp, skullUp, skullDown, bar, playButtonUp, playButtonDown;
+    public static Texture textureBtnNormal, textureBtnPress;
+    public static TextureRegion btnPress, btn;
     public static Animation birdAnimation;
     public static Sound dead, flap, coin;
-    public static BitmapFont font, shadow;
-    private static Preferences prefs;
+    public static BitmapFont font, shadow;    
 
     public static void load() {
+        
+        textureBtnNormal = new Texture(Gdx.files.internal("gfx/buttons/button.png"));
+        textureBtnNormal.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+        btn = new TextureRegion(textureBtnNormal, 0, 0, 600, 200);
+        
+        textureBtnPress = new Texture(Gdx.files.internal("gfx/buttons/buttonPress.png"));
+        textureBtnPress.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+        btnPress = new TextureRegion(textureBtnPress, 0, 0, 600, 200);
         /*
         logoTexture = new Texture(Gdx.files.internal("data/logo.png"));
         logoTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -86,26 +94,10 @@ public class AssetLoader {
             prefs.putInteger("highScore", 0);
         }
         */
-    }
-
-    public static void setHighScore(int val) {
-        prefs.putInteger("highScore", val);
-        prefs.flush();
-    }
-
-    public static int getHighScore() {
-        return prefs.getInteger("highScore");
-    }
+    }    
 
     public static void dispose() {
-        texture.dispose();
-
-        dead.dispose();
-        flap.dispose();
-        coin.dispose();
-
-        font.dispose();
-        shadow.dispose();
+        textureBtnNormal.dispose();
     }
 
 }

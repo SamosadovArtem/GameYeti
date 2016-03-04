@@ -29,7 +29,7 @@ public class GameScreen extends AbstractScreen {
     @Override
     protected void initScene() {
         Gdx.app.log("GameScreen", "initScene");
-        this.world = new GameWorld();
+        this.world = new GameWorld(stage, game);
         this.render = new GameRenderer(world); 
     }
     

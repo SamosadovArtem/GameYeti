@@ -28,7 +28,7 @@ public class BuyCoinsScreen extends AbstractScreen {
     @Override
     protected void initScene() {
         Gdx.app.log("BuyCoinsScreen", "initScene");
-        this.world = new BuyCoinsWorld();
+        this.world = new BuyCoinsWorld(stage, game);
         this.render = new BuyCoinsRenderer(world);
     }    
     

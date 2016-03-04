@@ -29,7 +29,7 @@ public class MapsScreen extends AbstractScreen {
     @Override
     protected void initScene() {
         Gdx.app.log("MainScreen", "initScene");
-        this.world = new MapsWorld();
+        this.world = new MapsWorld(stage, game);
         this.render = new MapsRenderer(world); 
     }
     
