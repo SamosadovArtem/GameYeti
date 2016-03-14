@@ -5,7 +5,7 @@
  */
 package GameWorld.Buffs;
 
-import GameWorld.World;
+import GameWorld.AbstractWorld;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.GameLibGDX;
@@ -14,7 +14,7 @@ import com.mygdx.game.GameLibGDX;
  *
  * @author qw
  */
-public class BuffsWorld extends World {
+public class BuffsWorld extends AbstractWorld {
 
     public BuffsWorld(Stage stage, GameLibGDX g){        
         super(stage, g);

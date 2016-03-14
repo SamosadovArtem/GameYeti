@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
 /**
  *
@@ -84,8 +84,8 @@ public class Button extends Actor {
     font.setFixedWidthGlyphs(text);
     this.getFont().setColor(0,0,0,1);
     //Рисуем текст по центру кнопки
-    this.getFont().draw(batch, this.getText(), this.getX(), 
+   this.getFont().draw(batch, this.getText(), this.getX(), 
             this.getY() + this.getHeight() /2 + this.getFont().getCapHeight() / 2,
             this.getWidth(),Align.center, false);
-  }
+   }
 }

@@ -6,7 +6,7 @@
 package GameWorld.Main;
 
 import GameObjects.Button;
-import GameWorld.World;
+import GameWorld.AbstractWorld;
 import Helper.AssetLoader;
 import Helper.FontLoader;
 import Helper.Statistic;
@@ -17,15 +17,16 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.mygdx.game.GameLibGDX;
+import com.mygdx.game.screen.GameScreen;
 import com.mygdx.game.screen.MapsScreen;
 
 /**
  *
  * @author qw
  */
-public class MainWorld extends World {
+public class MainWorld extends AbstractWorld {
 
     
     //////////////////////////
@@ -68,7 +69,7 @@ public class MainWorld extends World {
     private void playButton(TextureRegion normalState, TextureRegion pressedState){
         mapsScreenButton = new Button("Play", normalState, pressedState, "PLAY", FontLoader.font){
             public void action(){
-                game.setScreen(new MapsScreen(game));                
+                game.setScreen(new GameScreen(game));                
             }
         };    
         mapsScreenButton.setSize(stage.getWidth() * 0.4f, stage.getHeight() / 5);

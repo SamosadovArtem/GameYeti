@@ -10,18 +10,18 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.mygdx.game.GameLibGDX;
 
 /**
  *
  * @author qw
  */
-public abstract class World {    
+public abstract class AbstractWorld {    
     
     protected Stage stage;
     protected GameLibGDX game;
-    public World(Stage s, GameLibGDX g){
+    public AbstractWorld(Stage s, GameLibGDX g){
         this.stage = s;
         this.game = g;
     }

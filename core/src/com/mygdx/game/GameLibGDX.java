@@ -8,6 +8,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.mygdx.game.screen.AbstractScreen;
+import com.mygdx.game.screen.GameScreen;
 import com.mygdx.game.screen.MainScreen;
 
 public class GameLibGDX extends ApplicationAdapter {

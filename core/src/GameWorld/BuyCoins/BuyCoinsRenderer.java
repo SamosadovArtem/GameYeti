@@ -7,7 +7,7 @@ package GameWorld.BuyCoins;
 
 import GameWorld.Buffs.BuffsWorld;
 import GameWorld.Renderer;
-import GameWorld.World;
+import GameWorld.AbstractWorld;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 

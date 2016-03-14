@@ -6,7 +6,7 @@
 package GameWorld.Main;
 
 import GameWorld.Renderer;
-import GameWorld.World;
+import GameWorld.AbstractWorld;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

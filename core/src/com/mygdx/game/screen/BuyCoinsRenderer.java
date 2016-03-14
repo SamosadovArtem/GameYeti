@@ -7,7 +7,7 @@ package com.mygdx.game.screen;
 
 import GameWorld.BuyCoins.BuyCoinsWorld;
 import GameWorld.Renderer;
-import GameWorld.World;
+import GameWorld.AbstractWorld;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 
