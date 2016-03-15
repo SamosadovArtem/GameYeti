@@ -52,6 +52,7 @@ public class GameRenderer extends Renderer {
         //camera.position.set(world.getPlayerX(), camera.viewportHeight / 2, 0f);
         
         renderer.render(world.world, camera.combined);
+        stage.draw();
     }
     
     @Override

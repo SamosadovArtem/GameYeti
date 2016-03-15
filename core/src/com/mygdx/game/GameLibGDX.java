@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import Helper.AssetLoader;
 import Helper.FontLoader;
+import Helper.InputHandler;
 import Helper.Statistic;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
@@ -29,7 +30,9 @@ public class GameLibGDX extends ApplicationAdapter {
     }
         
     public void setScreen (Screen screen) {
-        if (this.screen != null) this.screen.hide();
+        if (this.screen != null) {
+            this.screen.hide();
+        }
         this.screen = screen;
         if (this.screen != null) {
             this.screen.show();

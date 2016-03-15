@@ -7,14 +7,16 @@ package com.mygdx.game.screen;
 
 import GameWorld.Game.GameRenderer;
 import GameWorld.Game.GameWorld;
+import Helper.InputHandler;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.mygdx.game.GameLibGDX;
 
 /**
  *
  * @author qw
  */
-public class GameScreen extends AbstractScreen{
+public class GameScreen extends AbstractScreen {
 
     private GameWorld world;
     private GameRenderer renderer;
@@ -27,44 +29,19 @@ public class GameScreen extends AbstractScreen{
     protected void initScene() {
         Gdx.app.log("GameScreen", "initScene");
         this.world = new GameWorld(stage, game);
-        this.renderer = new GameRenderer(world, stage);
+        this.renderer = new GameRenderer(world, stage); 
+        Gdx.input.setInputProcessor(new InputHandler(world.getPinguin()));
     }
 
     @Override
     public void render(float delta) {
-
         world.update(delta);
         renderer.render(delta);        
     }
+    
 
     @Override
     public void show() {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
-    public void resize(int width, int height) {
-        //      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void pause() {
-        //    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void resume() {
-        //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void hide() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void dispose() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }
