@@ -8,6 +8,9 @@ package GameWorld.Game.Objects;
 import GameWorld.Game.Objects.GameActor;
 import GameWorld.Game.Data.PinguinUserData;
 import GameWorld.Game.Data.UserData;
+import Helper.Constants;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
@@ -18,14 +21,17 @@ import com.badlogic.gdx.physics.box2d.Body;
 public class Pinguin extends GameActor {
 
     private int power;
+    private int powerCof = 5;
     private float directionX;
     private float directionY;
     private boolean isIncrease;
     private boolean isPower;
     private boolean isDir;
+    private TextureRegion pinguinTexture;
 
-    public Pinguin(Body body) {
+    public Pinguin(Body body, TextureRegion pinguinTexture) {
         super(body);
+        this.pinguinTexture = pinguinTexture;
         power = 0;
         directionX = 0f;
         directionY = 1f;
@@ -33,6 +39,33 @@ public class Pinguin extends GameActor {
         isPower = false;
         isDir = true;
     }
+    
+    
+    @Override
+    public float getX(){
+        return body.getPosition().x;
+    }
+    
+    @Override
+    public float getY(){
+        return body.getPosition().y;
+    }
+    
+    @Override
+    public float getWidth(){
+        return Constants.RUNNER_WIDTH;
+    }
+    
+    @Override
+    public float getHeight(){
+        return Constants.RUNNER_HEIGHT;
+    }
+    
+    public void draw (Batch batch, float parentAlpha) {
+    
+      batch.draw(pinguinTexture, getX() - getWidth() / 2, getY() - getHeight() / 2, getWidth(), getHeight());
+   
+   }
 
     @Override
     public PinguinUserData getUserData() {
@@ -49,7 +82,8 @@ public class Pinguin extends GameActor {
     }
     
     public void jump(){
-        body.applyLinearImpulse(new Vector2(directionX * power, directionY * power), body.getWorldCenter(), true);
+        body.applyLinearImpulse(new Vector2(directionX * power * powerCof, directionY * power * powerCof),
+                body.getWorldCenter(), true);
     }
     
     public int getPower() {

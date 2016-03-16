@@ -10,6 +10,8 @@ import GameWorld.Game.GameWorld;
 import Helper.InputHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.GameLibGDX;
 
 /**
@@ -20,6 +22,7 @@ public class GameScreen extends AbstractScreen {
 
     private GameWorld world;
     private GameRenderer renderer;
+    private float cameraCoff = 60.0f;
 
     public GameScreen(GameLibGDX game) {
         super(game);
@@ -36,9 +39,28 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
         world.update(delta);
-        renderer.render(delta);        
+        moveCamera();                
+        Gdx.app.log("GameWorld", "xPos" + world.getPinguin().getBody().getPosition().x);
+        Gdx.app.log("GameWorld", "xPosCam" + stage.getCamera().position.x);
+        renderer.render();      
     }
     
+    private void moveCamera(){
+        float speed = 0;
+        if(world.getPlayerX() != getCameraX() + stage.getWidth() * 0.3f){
+            speed = (world.getPlayerX() - getCameraX() + stage.getWidth() * 0.3f) / cameraCoff;
+        }
+        setCameraX(getCameraX() + speed);
+    }
+    
+    private void setCameraX(float x){
+        stage.getCamera().position.x = x;
+        stage.getCamera().update();
+    }
+    
+    private float getCameraX(){
+       return  stage.getCamera().position.x;
+    }
 
     @Override
     public void show() {

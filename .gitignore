@@ -47,6 +47,7 @@ local.properties
 
 ## NetBeans
 **/nbproject/private/
+nbproject/
 build/
 nbbuild/
 dist/
@@ -62,3 +63,4 @@ build/
 
 ## OS Specific
 .DS_Store
+/nbproject/private/

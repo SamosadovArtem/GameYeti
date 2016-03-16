@@ -8,6 +8,7 @@ package GameWorld.Game;
 import GameWorld.AbstractWorld;
 import GameWorld.Game.Objects.Ground;
 import GameWorld.Game.Objects.Pinguin;
+import Helper.AssetLoader;
 import Helper.BodyUtils;
 import Helper.Constants;
 import Helper.Statistic;
@@ -65,12 +66,13 @@ public class GameWorld extends AbstractWorld  implements ContactListener {
     }
 
     private void setUpGround() {
-        ground = new Ground(WorldUtils.createGround(world));
+        ground = new Ground(WorldUtils.createGround(world), AssetLoader.btn);
+        ground.setPosition(100,100);
         stage.addActor(ground);
     }
 
     private void setUpRunner() {
-        pinguin = new Pinguin(WorldUtils.createPinguin(world));
+        pinguin = new Pinguin(WorldUtils.createPinguin(world), AssetLoader.btn);
         stage.addActor(pinguin);
     }
 
@@ -79,19 +81,17 @@ public class GameWorld extends AbstractWorld  implements ContactListener {
         accumulator += delta;
 
         while (accumulator >= delta) {
-            world.step(TIME_STEP, 6, 2);
+            world.step(TIME_STEP, 6, 1);
             accumulator -= TIME_STEP;
         }
-
-        if (pinguin.getBody().getPosition().x >= Constants.RUNNER_X + 15) {
-            pinguin.getBody().setLinearVelocity(new Vector2(-10.0f, 0));
-        }
-        else if (pinguin.getBody().getPosition().x <= Constants.RUNNER_X){
-            pinguin.getBody().setLinearVelocity(new Vector2(10.0f, 20.0f));
-        }
-        
-        initHit();
-        
+        moveUI();
+        initHit();        
+    }
+    
+    private void moveUI(){
+        dirXText.setX(stage.getCamera().position.x - stage.getWidth()/2);
+        dirYText.setX(stage.getCamera().position.x - stage.getWidth()/2);
+        powText.setX(stage.getCamera().position.x - stage.getWidth()/2);
     }
     
     private void initHit(){
@@ -109,11 +109,12 @@ public class GameWorld extends AbstractWorld  implements ContactListener {
     }
 
     public float getPlayerX() {
-        return pinguin.getBody().getLinearVelocity().x;
+        
+        return pinguin.getBody().getPosition().x;
     }
     
     public float getPlayerY() {
-        return pinguin.getBody().getLinearVelocity().y;
+        return pinguin.getBody().getPosition().y;
     }
 
     public Pinguin getPinguin() {
@@ -128,7 +129,7 @@ public class GameWorld extends AbstractWorld  implements ContactListener {
         dirXText.setAlignment(Align.center);
         dirXText.setFontScale(2);
         dirXText.setSize(stage.getWidth() * 0.4f, stage.getHeight() / 5);
-        dirXText.setPosition(100, 100);
+        dirXText.setPosition(0, 350);
         stage.addActor(dirXText);
     }
 
@@ -140,7 +141,7 @@ public class GameWorld extends AbstractWorld  implements ContactListener {
         dirYText.setAlignment(Align.center);
         dirYText.setFontScale(2);
         dirYText.setSize(stage.getWidth() * 0.4f, stage.getHeight() / 5);
-        dirYText.setPosition(100, 50);
+        dirYText.setPosition(0, 400);
         stage.addActor(dirYText);
     }
 
@@ -152,7 +153,7 @@ public class GameWorld extends AbstractWorld  implements ContactListener {
         powText.setAlignment(Align.center);
         powText.setFontScale(2);
         powText.setSize(stage.getWidth() * 0.4f, stage.getHeight() / 5);
-        powText.setPosition(100, 150);
+        powText.setPosition(0, 300);
         stage.addActor(powText);
     }
 

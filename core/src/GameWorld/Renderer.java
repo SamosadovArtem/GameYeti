@@ -5,6 +5,7 @@
  */
 package GameWorld;
 
+import Helper.Constants;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 /**
@@ -14,11 +15,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 public abstract class Renderer {
  
     
-    protected OrthographicCamera cam;
+    public OrthographicCamera cam;
         
     public Renderer(){
         cam = new OrthographicCamera();
-        cam.setToOrtho(true, 800, 480);
+        cam.setToOrtho(false, Constants.APP_WIDTH, Constants.APP_HEIGHT);
     }
     
     public abstract void render();

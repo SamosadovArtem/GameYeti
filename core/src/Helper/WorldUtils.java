@@ -24,12 +24,13 @@ import com.badlogic.gdx.physics.box2d.World;
 public class WorldUtils {
 
     public static World createWorld() {
-        return new World(Constants.WORLD_GRAVITY, true);
+        World w = new World(Constants.WORLD_GRAVITY, true);
+        return w;
     }
 
     public static Body createGround(World world) {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(Constants.GROUND_X, Constants.GROUND_Y);
+        bodyDef.position.set(new Vector2(Constants.GROUND_X, Constants.GROUND_Y));
         Body body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(Constants.GROUND_WIDTH / 2, Constants.GROUND_HEIGHT / 2);
@@ -43,22 +44,20 @@ public class WorldUtils {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(new Vector2(Constants.RUNNER_X, Constants.RUNNER_Y));
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(Constants.RUNNER_WIDTH / 2, Constants.RUNNER_HEIGHT / 2);
         Body body = world.createBody(bodyDef);
         body.setGravityScale(Constants.RUNNER_GRAVITY_SCALE);
         body.setFixedRotation(true);
         CircleShape circle = new CircleShape();
-        circle.setRadius(1f);
+        circle.setRadius(Constants.RUNNER_WIDTH);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = circle;
-        fixtureDef.density = 0.2f;
-        fixtureDef.friction = 0.05f;
-        fixtureDef.restitution = 0.6f;
+        fixtureDef.density = 0.0f;
+        fixtureDef.friction = 0.5f;
+        fixtureDef.restitution = 0.35f;
         body.createFixture(fixtureDef);
         body.resetMassData();
         body.setUserData(new PinguinUserData());
-        shape.dispose();
+        circle.dispose();
         return body;
     }
 
