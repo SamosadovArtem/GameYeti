@@ -19,7 +19,7 @@ import com.mygdx.game.GameLibGDX;
  */
 public abstract class AbstractWorld {    
     
-    protected Stage stage;
+    public Stage stage;
     protected GameLibGDX game;
     public AbstractWorld(Stage s, GameLibGDX g){
         this.stage = s;

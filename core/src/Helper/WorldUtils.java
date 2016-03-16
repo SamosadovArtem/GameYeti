@@ -52,7 +52,7 @@ public class WorldUtils {
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = circle;
         fixtureDef.density = 0.0f;
-        fixtureDef.friction = 0.5f;
+        fixtureDef.friction = 0.8f;
         fixtureDef.restitution = 0.35f;
         body.createFixture(fixtureDef);
         body.resetMassData();

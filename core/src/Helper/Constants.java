@@ -19,7 +19,7 @@ public class Constants {
     public static final Vector2 WORLD_GRAVITY = new Vector2(0, -10);
     
     public static final float GROUND_WIDTH = APP_WIDTH * 10.6f;
-    public static final float GROUND_HEIGHT = 20f;
+    public static final float GROUND_HEIGHT = 60f;
     public static final float GROUND_X = 0f;//(APP_WIDTH + GROUND_WIDTH) / (-2);
     public static final float GROUND_Y = APP_HEIGHT / 4f;
     public static final float GROUND_DENSITY = 0;

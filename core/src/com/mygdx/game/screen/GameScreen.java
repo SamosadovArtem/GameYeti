@@ -22,7 +22,7 @@ public class GameScreen extends AbstractScreen {
 
     private GameWorld world;
     private GameRenderer renderer;
-    private float cameraCoff = 60.0f;
+    private float cameraCoff = 30.0f;
 
     public GameScreen(GameLibGDX game) {
         super(game);
@@ -40,8 +40,8 @@ public class GameScreen extends AbstractScreen {
     public void render(float delta) {
         world.update(delta);
         moveCamera();                
-        Gdx.app.log("GameWorld", "xPos" + world.getPinguin().getBody().getPosition().x);
-        Gdx.app.log("GameWorld", "xPosCam" + stage.getCamera().position.x);
+        //Gdx.app.log("GameWorld", "xPos" + world.getPinguin().getBody().getPosition().x);
+        //Gdx.app.log("GameWorld", "xPosCam" + stage.getCamera().position.x);
         renderer.render();      
     }
     
@@ -51,15 +51,6 @@ public class GameScreen extends AbstractScreen {
             speed = (world.getPlayerX() - getCameraX() + stage.getWidth() * 0.3f) / cameraCoff;
         }
         setCameraX(getCameraX() + speed);
-    }
-    
-    private void setCameraX(float x){
-        stage.getCamera().position.x = x;
-        stage.getCamera().update();
-    }
-    
-    private float getCameraX(){
-       return  stage.getCamera().position.x;
     }
 
     @Override

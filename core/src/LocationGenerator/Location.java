@@ -13,8 +13,8 @@ import java.util.Random;
  * @author Admin
  */
 public final class Location {
-    static final int MIN_STEP = 5;
-    static final int MAX_STEP = 45;
+    static final int MIN_STEP = 150;
+    static final int MAX_STEP = 600;
     static Random rnd = new Random();
     static ArrayList<Barrier> barriers = new ArrayList<>();
     static int pushCounter = 0;

@@ -9,6 +9,7 @@ import GameWorld.Main.MainRenderer;
 import GameWorld.Main.MainWorld;
 import GameWorld.Maps.MapsRenderer;
 import GameWorld.Maps.MapsWorld;
+import Helper.MapsInputHandler;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.GameLibGDX;
 
@@ -24,13 +25,15 @@ public class MapsScreen extends AbstractScreen {
     public MapsScreen(GameLibGDX game) {
         super(game);
         Gdx.app.log("MapScreen", "main screen created");
+        
+        Gdx.input.setInputProcessor(new MapsInputHandler(world.GetButtonPositions(), world));
     }
 
     @Override
     protected void initScene() {
         Gdx.app.log("MainScreen", "initScene");
         this.world = new MapsWorld(stage, game);
-        this.render = new MapsRenderer(world); 
+        this.render = new MapsRenderer(world, stage); 
     }
     
     @Override
@@ -38,4 +41,7 @@ public class MapsScreen extends AbstractScreen {
         world.update(delta);
         render.render();
     }
+    
+    @Override
+    public void show(){}
 }

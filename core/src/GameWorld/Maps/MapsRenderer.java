@@ -5,11 +5,10 @@
  */
 package GameWorld.Maps;
 
-import GameWorld.Game.GameWorld;
 import GameWorld.Renderer;
-import GameWorld.AbstractWorld;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
  *
@@ -18,17 +17,21 @@ import com.badlogic.gdx.graphics.GL20;
 public class MapsRenderer extends Renderer {
 
     MapsWorld world;
+    Stage stage;
     
-    public MapsRenderer(MapsWorld world) {
+    public MapsRenderer(MapsWorld world, Stage stage) {
         super();
         this.world = world;
+        this.stage = stage;
         Gdx.app.log("MapsRenderer", "create");
     }
 
     @Override
     public void render() {
-        Gdx.gl.glClearColor(1, 0, 1, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        
+        stage.draw();
     }
     
 }

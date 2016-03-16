@@ -6,8 +6,10 @@
 package GameWorld.Game;
 
 import GameWorld.AbstractWorld;
+import GameWorld.Game.Generator.Generator;
 import GameWorld.Game.Objects.Ground;
 import GameWorld.Game.Objects.Pinguin;
+import GameWorld.Game.Objects.testObj;
 import Helper.AssetLoader;
 import Helper.BodyUtils;
 import Helper.Constants;
@@ -63,6 +65,15 @@ public class GameWorld extends AbstractWorld  implements ContactListener {
         initDirX();
         initDirY();
         initPower();
+         createObjects();
+    }
+    
+    private void createObjects(){
+        Generator g = new Generator((int)Constants.GROUND_Y + 40 ,0, 30);
+        for(testObj t: g.getObj()){
+            stage.addActor(t);
+            Gdx.app.log("GameWorld", "genegate x="+ t.getX());
+        }
     }
 
     private void setUpGround() {

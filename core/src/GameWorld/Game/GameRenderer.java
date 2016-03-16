@@ -34,6 +34,7 @@ public class GameRenderer extends Renderer {
         this.stage = stage;
         
         renderer = new Box2DDebugRenderer();
+        stage.getCamera().position.x = stage.getWidth() * 0.3f;
         Gdx.app.log("GameRenderer", "create");
     }
     

@@ -56,7 +56,14 @@ public abstract class AbstractScreen implements Screen {
         return this.game;
     }  
   
+    protected void setCameraX(float x){
+        stage.getCamera().position.x = x;
+        stage.getCamera().update();
+    }
     
+    protected float getCameraX(){
+       return  stage.getCamera().position.x;
+    }
     
     @Override
     public void resize(int width, int height) {

@@ -82,7 +82,7 @@ public class MainWorld extends AbstractWorld {
     private void settingsButton(TextureRegion normalState, TextureRegion pressedState){
         settingsButton = new Button("Settings", normalState, pressedState, "SETT", FontLoader.font){
             public void action(){
-                //game.setScreen(new MapsScreen(game));
+                game.setScreen(new MapsScreen(game));
                 Statistic.setHighScore(30);
                 updateHighscore();
             }
