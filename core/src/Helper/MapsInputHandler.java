@@ -54,7 +54,7 @@ public class MapsInputHandler implements InputProcessor{
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {             
-        if ((isTouched)&&(_oldX>screenX)){
+        if ((isTouched)&&(_oldX > screenX)){
             _oldX = screenX;
             if(world.stage.getCamera().position.x < max){
                 world.stage.getCamera().position.x+=15;

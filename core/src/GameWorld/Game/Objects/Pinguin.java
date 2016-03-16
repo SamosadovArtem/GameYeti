@@ -24,6 +24,7 @@ public class Pinguin extends GameActor {
     private int powerCof = 5;
     private float directionX;
     private float directionY;
+    private float angular = 0;
     private boolean isIncrease;
     private boolean isPower;
     private boolean isDir;
@@ -43,7 +44,7 @@ public class Pinguin extends GameActor {
     
     @Override
     public float getX(){
-        return body.getPosition().x;
+        return body.getPosition().x - getWidth()/2;
     }
     
     @Override
@@ -53,19 +54,23 @@ public class Pinguin extends GameActor {
     
     @Override
     public float getWidth(){
-        return Constants.RUNNER_WIDTH;
+        return Constants.RUNNER_WIDTH*2;
     }
     
     @Override
     public float getHeight(){
-        return Constants.RUNNER_HEIGHT;
+        return Constants.RUNNER_HEIGHT*2;
     }
     
     public void draw (Batch batch, float parentAlpha) {
     
-      batch.draw(pinguinTexture, getX() - getWidth() / 2, getY() - getHeight() / 2, getWidth(), getHeight());
-   
-   }
+      batch.draw(pinguinTexture, 
+              getX() - getWidth() / 2, getY() - getHeight() / 2,
+              getWidth() / 2 , getHeight() / 2, 
+              getWidth(), getHeight(),
+              1,1,
+              getRotation());   
+    }
 
     @Override
     public PinguinUserData getUserData() {

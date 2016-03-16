@@ -34,6 +34,7 @@ public class GameRenderer extends Renderer {
         this.stage = stage;
         
         renderer = new Box2DDebugRenderer();
+        renderer.setDrawVelocities(true);
         stage.getCamera().position.x = stage.getWidth() * 0.3f;
         Gdx.app.log("GameRenderer", "create");
     }
@@ -42,7 +43,7 @@ public class GameRenderer extends Renderer {
     public void render(){
         Gdx.gl.glClearColor(0, 0,0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);       
-        
+        //renderer.render(world.world, cam.combined);
         stage.draw();
     }
 }

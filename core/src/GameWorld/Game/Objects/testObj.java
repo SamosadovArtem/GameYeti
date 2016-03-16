@@ -25,10 +25,10 @@ public class testObj extends Actor {
 
     public testObj(TextureRegion pinguinTexture, int x, int y) {        
         this.pinguinTexture = pinguinTexture;
-        setWidth(20);
-        setHeight(40);
+        setWidth(40);
+        setHeight(70);
         setX(x);
-        setY(y);
+        setY(y+70);
     }    
     
     public void draw (Batch batch, float parentAlpha) {

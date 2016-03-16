@@ -24,9 +24,9 @@ public class Constants {
     public static final float GROUND_Y = APP_HEIGHT / 4f;
     public static final float GROUND_DENSITY = 0;
 
-    public static final float RUNNER_X = 2;
+    public static final float RUNNER_X = 0;
     public static final float RUNNER_Y = GROUND_Y + GROUND_HEIGHT;
-    public static final float RUNNER_WIDTH = 10f;
+    public static final float RUNNER_WIDTH = 30f;
     public static final float RUNNER_HEIGHT = 10f;
     public static float RUNNER_DENSITY = 0.5f;
     public static final float RUNNER_GRAVITY_SCALE = 10f;

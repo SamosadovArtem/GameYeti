@@ -46,18 +46,18 @@ public class WorldUtils {
         bodyDef.position.set(new Vector2(Constants.RUNNER_X, Constants.RUNNER_Y));
         Body body = world.createBody(bodyDef);
         body.setGravityScale(Constants.RUNNER_GRAVITY_SCALE);
-        body.setFixedRotation(true);
-        CircleShape circle = new CircleShape();
-        circle.setRadius(Constants.RUNNER_WIDTH);
+        body.setFixedRotation(false);
+        PolygonShape box = new PolygonShape();
+        box.setAsBox(Constants.RUNNER_WIDTH, Constants.RUNNER_HEIGHT);
         FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = circle;
+        fixtureDef.shape = box;
         fixtureDef.density = 0.0f;
-        fixtureDef.friction = 0.8f;
+        fixtureDef.friction = 1.8f;
         fixtureDef.restitution = 0.35f;
         body.createFixture(fixtureDef);
         body.resetMassData();
         body.setUserData(new PinguinUserData());
-        circle.dispose();
+        box.dispose();
         return body;
     }
 

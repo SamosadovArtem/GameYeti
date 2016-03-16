@@ -96,7 +96,24 @@ public class GameWorld extends AbstractWorld  implements ContactListener {
             accumulator -= TIME_STEP;
         }
         moveUI();
-        initHit();        
+        initHit();  
+        setAngularPinguin();
+        checkHeight();
+    }
+    
+    private void checkHeight(){
+        if(this.getPlayerY() >= Constants.APP_HEIGHT * 1.1){
+            pinguin.getBody().setLinearVelocity(new Vector2(0, 0));
+        }
+    }
+    
+    private void setAngularPinguin(){
+        float angle = pinguin.getBody().getLinearVelocity().angle();
+        if(pinguin.getBody().getLinearVelocity().x <= 0.2){
+            angle = 0;
+        }
+        pinguin.setRotation(angle);
+        
     }
     
     private void moveUI(){
