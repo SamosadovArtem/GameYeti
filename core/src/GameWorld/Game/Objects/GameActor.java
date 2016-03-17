@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  *
  * @author Pablo
  */
-public abstract class GameActor extends Actor{
+public class GameActor extends Actor{
     
     protected Body body;
     protected UserData userData;
@@ -23,9 +23,15 @@ public abstract class GameActor extends Actor{
         this.userData = (UserData) body.getUserData();
     }
     
+    public GameActor(){
+        
+    }
+    
     public Body getBody(){
         return body;
     }
     
-    public abstract UserData getUserData();
+    public UserData getUserData(){
+        return null;
+    }
 }

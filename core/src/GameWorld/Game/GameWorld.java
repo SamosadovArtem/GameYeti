@@ -7,12 +7,14 @@ package GameWorld.Game;
 
 import GameWorld.AbstractWorld;
 import GameWorld.Game.Generator.Generator;
+import GameWorld.Game.Objects.GameActor;
 import GameWorld.Game.Objects.Ground;
 import GameWorld.Game.Objects.Pinguin;
-import GameWorld.Game.Objects.testObj;
+import GameWorld.Game.Objects.Snake;
 import Helper.AssetLoader;
 import Helper.BodyUtils;
 import Helper.Constants;
+import Helper.GameContactListener;
 import Helper.Statistic;
 import Helper.WorldUtils;
 import com.badlogic.gdx.Gdx;
@@ -42,8 +44,9 @@ import com.mygdx.game.GameLibGDX;
 public class GameWorld extends AbstractWorld  implements ContactListener {
 
     public World world;
-    private Ground ground;
-    private Pinguin pinguin;
+    private Ground ground, ground2;
+    private Pinguin pinguin;	
+    private Snake snake;
     private Label dirXText;
     private Label dirYText;
     private Label powText;
@@ -58,28 +61,46 @@ public class GameWorld extends AbstractWorld  implements ContactListener {
     }
 
     private void setUpWorld() {
-        world = WorldUtils.createWorld();
-        world.setContactListener(this);
+        world = WorldUtils.createWorld();        
         setUpGround();
         setUpRunner();
+        world.setContactListener(new GameContactListener(pinguin));
         initDirX();
         initDirY();
         initPower();
-         createObjects();
+        createObjects();		
+        snake = new Snake(AssetLoader.btn,300f,Constants.GROUND_Y+20f,100f,20f,world);
+        stage.addActor(snake);
     }
     
     private void createObjects(){
-        Generator g = new Generator((int)Constants.GROUND_Y + 40 ,0, 30);
-        for(testObj t: g.getObj()){
+        Generator g = new Generator(world, (int)Constants.GROUND_Y ,0, 30);
+        for(GameActor t: g.getObj()){
             stage.addActor(t);
             Gdx.app.log("GameWorld", "genegate x="+ t.getX());
         }
     }
 
     private void setUpGround() {
-        ground = new Ground(WorldUtils.createGround(world), AssetLoader.btn);
-        ground.setPosition(100,100);
+        ground = new Ground(WorldUtils.createGround(world, 0f), AssetLoader.btn);
+      //  ground.setPosition(100, 100);
+
         stage.addActor(ground);
+        ground2 = new Ground(WorldUtils.createGround(world, Constants.GROUND_WIDTH), AssetLoader.btn);
+        stage.addActor(ground2);
+    }
+	
+	
+    private void addGround() {
+        if (ground.getBody().getPosition().x >= ground2.getBody().getPosition().x) {
+            ground2 = new Ground(WorldUtils.createGround(world, Constants.GROUND_WIDTH
+                    + ground.getBody().getPosition().x), AssetLoader.btn);
+            stage.addActor(ground2);
+        } else {
+            ground = new Ground(WorldUtils.createGround(world, Constants.GROUND_WIDTH
+                    + ground2.getBody().getPosition().x), AssetLoader.btn);
+            stage.addActor(ground);
+        }
     }
 
     private void setUpRunner() {
@@ -98,7 +119,11 @@ public class GameWorld extends AbstractWorld  implements ContactListener {
         moveUI();
         initHit();  
         setAngularPinguin();
-        checkHeight();
+        checkHeight();		
+		
+        if (pinguin.getBody().getPosition().x >= ground.getBody().getPosition().x) {
+            addGround();
+        }
     }
     
     private void checkHeight(){

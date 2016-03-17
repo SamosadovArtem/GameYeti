@@ -6,6 +6,7 @@
 package GameWorld.Maps;
 
 import GameObjects.Button;
+import GameObjects.Map;
 import GameWorld.AbstractWorld;
 import Helper.AssetLoader;
 import Helper.FontLoader;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.mygdx.game.GameLibGDX;
+import com.mygdx.game.screen.GameScreen;
 import java.util.ArrayList;
 
 /**
@@ -22,21 +24,24 @@ import java.util.ArrayList;
  */
 public class MapsWorld extends AbstractWorld {
 
-    ArrayList<Button> mapsList = new ArrayList<Button>();
+    public ArrayList<Map> mapsList = new ArrayList<Map>();
     
-    ArrayList<Float> buttonLocations = new ArrayList<>();
+    ArrayList<Float> mapLocations = new ArrayList<>();
         
     public boolean isNotTouched = false;
     
     public Float nearestButton;
     
     TextureRegion firstButtonNormalState = AssetLoader.btn;
+    TextureRegion firstButtonUnboughtState = AssetLoader.btn;
     TextureRegion firstButtonnPressedState = AssetLoader.btnPress;
     
     public MapsWorld(Stage stage, GameLibGDX g){        
         super(stage, g);
         Gdx.app.log("MapsWorld", "create");
-        createUI();
+        mapsList = LoadMaps(); //Там должны загружаться карты, но пока будут создаваться
+        //drawMaps(maplsList);
+        createUI(mapsList);
     }
     
     @Override
@@ -44,38 +49,44 @@ public class MapsWorld extends AbstractWorld {
         moveCamera();
     }
     
-    private void createUI(){
-        LoadButtons();       
+    private void createUI(ArrayList<Map> allMap){
+        for(int i = 0; i< allMap.size();i++){
+            stage.addActor(allMap.get(i));
+        }
     }
     
-    private ArrayList<Button> LoadButtons(){
-        ArrayList< Button> allButtons = new ArrayList<>();
+    private ArrayList<Map> LoadMaps(){
+        ArrayList<Map> allMap = new ArrayList<>();
         
-        Button tempButton = new Button("firstMap", firstButtonNormalState, 
-                firstButtonnPressedState, "MAPP1", FontLoader.font);
-         tempButton.setSize(stage.getWidth() * 0.4f, stage.getHeight() / 5);
-         tempButton.setPosition((stage.getWidth() - tempButton.getWidth())/2,
-                (stage.getHeight() - tempButton.getHeight())/2);
+        Map tempMap = new Map("firstMap", firstButtonNormalState, 
+                firstButtonnPressedState,firstButtonUnboughtState ,"MAPP1", FontLoader.font){
+                    public void action(){
+                game.setScreen(new GameScreen(game));                
+            }
+        };   
+         tempMap.setSize(stage.getWidth() * 0.4f, stage.getHeight() / 5);
+         tempMap.setPosition((stage.getWidth() - tempMap.getWidth())/2,
+                (stage.getHeight() - tempMap.getHeight())/2);
         
-        allButtons.add(tempButton);
-        buttonLocations.add(tempButton.getX()+tempButton.getWidth()/2);
-        stage.addActor(tempButton);
+        allMap.add(tempMap);
+        mapLocations.add(tempMap.getX()+tempMap.getWidth()/2);
+        //stage.addActor(tempMap);
         
-        Button tempButton2 = new Button("secondMap", firstButtonNormalState, 
-        firstButtonnPressedState, "MAPP2", FontLoader.font);
-        tempButton2.setSize(stage.getWidth() * 0.4f, stage.getHeight() / 5);
-        tempButton2.setPosition((stage.getWidth() - tempButton.getWidth())/2+tempButton2.getWidth()*2,
-        (stage.getHeight() - tempButton.getHeight())/2);
+        Map tempMap2 = new Map("secondMap", firstButtonNormalState, 
+        firstButtonnPressedState,firstButtonUnboughtState, "MAPP2", FontLoader.font);
+        tempMap2.setSize(stage.getWidth() * 0.4f, stage.getHeight() / 5);
+        tempMap2.setPosition((stage.getWidth() - tempMap.getWidth())/2+tempMap2.getWidth()*2,
+        (stage.getHeight() - tempMap.getHeight())/2);
         
-        allButtons.add(tempButton2);
-        buttonLocations.add(tempButton2.getX()+tempButton2.getWidth()/2);
-        stage.addActor(tempButton2);
+        allMap.add(tempMap2);
+        mapLocations.add(tempMap2.getX()+tempMap2.getWidth()/2);
+        //stage.addActor(tempMap2);
         
-        return allButtons;
+        return allMap;
     }
     
     public ArrayList<Float> GetButtonPositions(){
-        return buttonLocations;
+        return mapLocations;
     }
     
     private void moveCamera(){
@@ -93,7 +104,7 @@ public class MapsWorld extends AbstractWorld {
     public void calculateBtnPos(){
         float camPosX = stage.getCamera().position.x;
         float min = 100000;
-        for(float f: buttonLocations){
+        for(float f: mapLocations){
             if(Math.abs(camPosX - f) < min){
                 min = Math.abs(camPosX - f);
                 nearestButton = f;

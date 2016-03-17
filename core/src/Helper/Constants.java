@@ -12,6 +12,8 @@ import com.badlogic.gdx.math.Vector2;
  * @author Pablo
  */
 public class Constants {
+    public static final int MIN_STEP = 100;
+    public static final int MAX_STEP = 600;
 
     public static final int APP_WIDTH = 800;
     public static final int APP_HEIGHT = 480;

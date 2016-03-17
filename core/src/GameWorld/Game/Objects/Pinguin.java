@@ -65,7 +65,7 @@ public class Pinguin extends GameActor {
     public void draw (Batch batch, float parentAlpha) {
     
       batch.draw(pinguinTexture, 
-              getX() - getWidth() / 2, getY() - getHeight() / 2,
+              getX() , getY() - getHeight() / 2,
               getWidth() / 2 , getHeight() / 2, 
               getWidth(), getHeight(),
               1,1,

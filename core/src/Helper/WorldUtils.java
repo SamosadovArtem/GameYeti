@@ -8,6 +8,8 @@ package Helper;
 import Enums.UserDataType;
 import GameWorld.Game.Data.GroundUserData;
 import GameWorld.Game.Data.PinguinUserData;
+import GameWorld.Game.Data.SnakeUserData;
+import GameWorld.Game.Data.StopObjUserData;
 import GameWorld.Game.Data.UserData;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -28,9 +30,9 @@ public class WorldUtils {
         return w;
     }
 
-    public static Body createGround(World world) {
+    public static Body createGround(World world, float startPos) {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(new Vector2(Constants.GROUND_X, Constants.GROUND_Y));
+        bodyDef.position.set(new Vector2(Constants.GROUND_X + startPos, Constants.GROUND_Y));
         Body body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(Constants.GROUND_WIDTH / 2, Constants.GROUND_HEIGHT / 2);
@@ -40,6 +42,7 @@ public class WorldUtils {
         return body;
     }
 
+    
     public static Body createPinguin(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -57,6 +60,50 @@ public class WorldUtils {
         body.createFixture(fixtureDef);
         body.resetMassData();
         body.setUserData(new PinguinUserData());
+        body.getFixtureList().get(0).setUserData("PINGUIN");
+        box.dispose();
+        return body;
+    }
+    
+    public static Body createStopObj(World world, float x, float y, float width, float height) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.position.set(new Vector2(x, y + height));
+        Body body = world.createBody(bodyDef);
+        PolygonShape box = new PolygonShape();
+        box.setAsBox(width / 2, height / 2);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = box;
+        fixtureDef.density = 0.0f;
+        fixtureDef.friction = 0.0f;
+        fixtureDef.restitution = 0.5f;
+        body.createFixture(fixtureDef);
+        body.resetMassData();
+        body.setUserData(new StopObjUserData());
+        box.dispose();
+        return body;
+    }
+	
+	
+    public static Body createSnake(World world, float x, float y, float width, float height) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.position.set(new Vector2(x, y+height));
+        //   bodyDef.active = false;
+        Body body = world.createBody(bodyDef);
+        body.setGravityScale(Constants.RUNNER_GRAVITY_SCALE);
+        body.setFixedRotation(false);
+        PolygonShape box = new PolygonShape();
+        box.setAsBox(width/2, height/2);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = box;
+        fixtureDef.density = 0.0f;
+        fixtureDef.friction = 1.8f;
+        fixtureDef.restitution = 0.35f;
+        body.createFixture(fixtureDef);
+        body.resetMassData();
+        body.setUserData(new SnakeUserData());
+        body.getFixtureList().get(0).setUserData("SNAKE");
         box.dispose();
         return body;
     }

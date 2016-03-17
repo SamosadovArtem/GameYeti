@@ -5,6 +5,7 @@
  */
 package LocationGenerator;
 
+import Helper.Constants;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -13,8 +14,7 @@ import java.util.Random;
  * @author Admin
  */
 public final class Location {
-    static final int MIN_STEP = 150;
-    static final int MAX_STEP = 600;
+  
     static Random rnd = new Random();
     static ArrayList<Barrier> barriers = new ArrayList<>();
     static int pushCounter = 0;
@@ -44,28 +44,28 @@ public final class Location {
         return barriers;
     }
     private static int GetRandomLocation(){
-        return MIN_STEP + (int)(Math.random() * ((MAX_STEP - MIN_STEP) + 1));
+        return Constants.MIN_STEP + (int)(Math.random() * ((Constants.MAX_STEP - Constants.MIN_STEP) + 1));
     }
         private static BarrierTypes GetRandomType(){
         int randomValue = rnd.nextInt(2);
         if (pushCounter == 2) {
             pushCounter=0;
             stopCounter++;
-            return BarrierTypes.Stop;
+            return BarrierTypes.STOP;
         }
         if (stopCounter == 2) {
             stopCounter=0;
             pushCounter++;
-            return BarrierTypes.Push;
+            return BarrierTypes.PUSH;
         }
         switch (randomValue){
             case 0:
                 pushCounter++;
-                return BarrierTypes.Push;
+                return BarrierTypes.PUSH;
                 //break;
             case 1:
                 stopCounter++;
-                return BarrierTypes.Stop;
+                return BarrierTypes.STOP;
                 //break;
         }
         throw new IllegalStateException("Somthing wrong");

@@ -5,6 +5,7 @@
  */
 package Helper;
 
+import GameObjects.Map;
 import GameWorld.Maps.MapsWorld;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.physics.box2d.World;
@@ -41,6 +42,8 @@ public class MapsInputHandler implements InputProcessor{
         isTouched = true;
         world.isNotTouched = false;    
         _oldX = screenX;
+        world.stage.touchDown(screenX, screenY, pointer, button);
+        
         return true;
     }
 
@@ -53,11 +56,13 @@ public class MapsInputHandler implements InputProcessor{
     }
 
     @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {             
+    public boolean touchDragged(int screenX, int screenY, int pointer) { 
+        int temp = _oldX;
         if ((isTouched)&&(_oldX > screenX)){
+
             _oldX = screenX;
             if(world.stage.getCamera().position.x < max){
-                world.stage.getCamera().position.x+=15;
+                world.stage.getCamera().position.x+=temp-screenX;
             }
             System.out.println(screenX);
         }
@@ -65,7 +70,7 @@ public class MapsInputHandler implements InputProcessor{
         if ((isTouched)&&(_oldX<screenX)){
             _oldX = screenX;
             if(world.stage.getCamera().position.x > min){
-            world.stage.getCamera().position.x-=15;
+            world.stage.getCamera().position.x+=temp-screenX;
             }
             System.out.println(screenX);
         }

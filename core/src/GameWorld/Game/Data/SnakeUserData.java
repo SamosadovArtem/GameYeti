@@ -3,19 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Helper;
+package GameWorld.Game.Data;
 
-import com.badlogic.gdx.Game;
-import com.mygdx.game.screen.GameScreen;
+import Enums.UserDataType;
 
 /**
  *
  * @author Pablo
  */
-public class CheckGame extends Game {
-
-    @Override
-    public void create() {
-     //   setScreen(new GameScreen(this));
+public class SnakeUserData extends UserData{
+    
+    public SnakeUserData(){
+        super();
+        userDataType = UserDataType.SNAKE;
     }
 }

@@ -6,18 +6,15 @@
 package GameWorld.Game.Data;
 
 import Enums.UserDataType;
-import Helper.Constants;
-import com.badlogic.gdx.math.Vector2;
 
 /**
  *
- * @author Pablo
+ * @author qw
  */
-public class PinguinUserData extends UserData{
+public class StopObjUserData extends UserData {
     
-
-    public PinguinUserData() {
+    public StopObjUserData() {
         super();
-        userDataType = UserDataType.PINGUIN;
+        userDataType = UserDataType.STOPOBJ;
     }
 }

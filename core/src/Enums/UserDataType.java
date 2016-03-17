@@ -11,5 +11,7 @@ package Enums;
  */
 public enum UserDataType {    
     GROUND,
-    PINGUIN    
+    PINGUIN,
+    STOPOBJ,
+    SNAKE
 }

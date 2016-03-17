@@ -10,6 +10,7 @@ package LocationGenerator;
  * @author Admin
  */
 public enum BarrierTypes {
-Push,
-Stop
+	PUSH,
+	STOP,
+	JUMP
 }
