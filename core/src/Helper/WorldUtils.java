@@ -6,11 +6,6 @@
 package Helper;
 
 import Enums.UserDataType;
-import GameWorld.Game.Data.GroundUserData;
-import GameWorld.Game.Data.PinguinUserData;
-import GameWorld.Game.Data.SnakeUserData;
-import GameWorld.Game.Data.StopObjUserData;
-import GameWorld.Game.Data.UserData;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -37,7 +32,7 @@ public class WorldUtils {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(Constants.GROUND_WIDTH / 2, Constants.GROUND_HEIGHT / 2);
         body.createFixture(shape, Constants.GROUND_DENSITY);
-        body.setUserData(new GroundUserData());
+        body.getFixtureList().get(0).setUserData("GROUND");
         shape.dispose();
         return body;
     }
@@ -49,9 +44,9 @@ public class WorldUtils {
         bodyDef.position.set(new Vector2(Constants.RUNNER_X, Constants.RUNNER_Y));
         Body body = world.createBody(bodyDef);
         body.setGravityScale(Constants.RUNNER_GRAVITY_SCALE);
-        body.setFixedRotation(false);
+        body.setFixedRotation(true);
         PolygonShape box = new PolygonShape();
-        box.setAsBox(Constants.RUNNER_WIDTH, Constants.RUNNER_HEIGHT);
+        box.setAsBox(Constants.RUNNER_WIDTH/2, Constants.RUNNER_HEIGHT/2);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = box;
         fixtureDef.density = 0.0f;
@@ -59,7 +54,6 @@ public class WorldUtils {
         fixtureDef.restitution = 0.35f;
         body.createFixture(fixtureDef);
         body.resetMassData();
-        body.setUserData(new PinguinUserData());
         body.getFixtureList().get(0).setUserData("PINGUIN");
         box.dispose();
         return body;
@@ -79,11 +73,76 @@ public class WorldUtils {
         fixtureDef.restitution = 0.5f;
         body.createFixture(fixtureDef);
         body.resetMassData();
-        body.setUserData(new StopObjUserData());
+        body.getFixtureList().get(0).setUserData("STOPOBJ");
         box.dispose();
         return body;
     }
 	
+    public static Body createGiraff(World world, float x, float y, float widthBody
+        , float heightBody, float widthNeck, float heightNeck
+        , float widthHead, float heightHead) {
+        Body bodyB = getGiraffeBody(world, x, y + heightBody / 2, widthBody , heightBody);
+        Body bodyN = getGiraffeNeck(world, x - widthBody/2 + widthNeck/2 , y + heightNeck / 2 + heightBody, widthNeck , heightNeck);
+        Body bodyH = getGiraffeHead(world, x - widthBody/2 + widthNeck - widthHead/2, y + heightHead / 2 + heightNeck + heightBody, widthHead , heightHead);
+        return bodyB;
+    }
+    
+    private static Body getGiraffeBody(World world, float x, float y, float width, float height){
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.position.set(new Vector2(x, y));
+        Body body = world.createBody(bodyDef);
+        PolygonShape box = new PolygonShape();
+        box.setAsBox(width / 2, height / 2);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = box;
+        fixtureDef.density = 0.0f;
+        fixtureDef.friction = 0.0f;
+        fixtureDef.restitution = 0.0f;
+        body.createFixture(fixtureDef);
+        body.resetMassData();
+        //body.getFixtureList().get(0).setUserData("GIRAFFEBODY");
+        box.dispose();
+        return body;
+    }
+    
+    private static Body getGiraffeNeck(World world, float x, float y, float width, float height){
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.position.set(new Vector2(x, y));
+        Body body = world.createBody(bodyDef);
+        PolygonShape box = new PolygonShape();
+        box.setAsBox(width / 2, height / 2);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = box;
+        fixtureDef.density = 0.0f;
+        fixtureDef.friction = 0.0f;
+        fixtureDef.restitution = 0.0f;
+        body.createFixture(fixtureDef);
+        body.resetMassData();
+        //body.getFixtureList().get(0).setUserData("GIRAFFENECK");
+        box.dispose();
+        return body;
+    }
+    
+    private static Body getGiraffeHead(World world, float x, float y, float width, float height){
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.position.set(new Vector2(x, y));
+        Body body = world.createBody(bodyDef);
+        PolygonShape box = new PolygonShape();
+        box.setAsBox(width / 2, height / 2);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = box;
+        fixtureDef.density = 0.0f;
+        fixtureDef.friction = 0.0f;
+        fixtureDef.restitution = 0.0f;
+        body.createFixture(fixtureDef);
+        body.resetMassData();
+        //body.getFixtureList().get(0).setUserData("GIRAFFEHEAD");
+        box.dispose();
+        return body;
+    }
 	
     public static Body createSnake(World world, float x, float y, float width, float height) {
         BodyDef bodyDef = new BodyDef();
@@ -102,7 +161,6 @@ public class WorldUtils {
         fixtureDef.restitution = 0.35f;
         body.createFixture(fixtureDef);
         body.resetMassData();
-        body.setUserData(new SnakeUserData());
         body.getFixtureList().get(0).setUserData("SNAKE");
         box.dispose();
         return body;

@@ -5,8 +5,6 @@
  */
 package GameWorld.Game.Objects;
 
-import GameWorld.Game.Data.GroundUserData;
-import GameWorld.Game.Data.SnakeUserData;
 import Helper.Constants;
 import Helper.WorldUtils;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -34,11 +32,6 @@ public class Snake extends GameActor {
         this.width = width;
         this.height = height;
         this.snakeTexture = snakeTexture;
-    }
-
-    @Override
-    public GroundUserData getUserData() {
-        return (GroundUserData) userData;
     }
 
     @Override

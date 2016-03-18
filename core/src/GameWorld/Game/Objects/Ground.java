@@ -6,8 +6,6 @@
 package GameWorld.Game.Objects;
 
 import GameWorld.Game.Objects.GameActor;
-import GameWorld.Game.Data.GroundUserData;
-import GameWorld.Game.Data.UserData;
 import Helper.Constants;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -25,11 +23,6 @@ public class Ground extends GameActor{
     public Ground(Body body, TextureRegion groundTexture){
         super(body);
         this.groundTexture = groundTexture;
-    }
-
-    @Override
-    public GroundUserData getUserData() {
-       return (GroundUserData) userData;
     }
     
     @Override

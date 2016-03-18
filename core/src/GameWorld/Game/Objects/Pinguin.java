@@ -6,8 +6,6 @@
 package GameWorld.Game.Objects;
 
 import GameWorld.Game.Objects.GameActor;
-import GameWorld.Game.Data.PinguinUserData;
-import GameWorld.Game.Data.UserData;
 import Helper.Constants;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -54,12 +52,12 @@ public class Pinguin extends GameActor {
     
     @Override
     public float getWidth(){
-        return Constants.RUNNER_WIDTH*2;
+        return Constants.RUNNER_WIDTH;
     }
     
     @Override
     public float getHeight(){
-        return Constants.RUNNER_HEIGHT*2;
+        return Constants.RUNNER_HEIGHT;
     }
     
     public void draw (Batch batch, float parentAlpha) {
@@ -70,11 +68,6 @@ public class Pinguin extends GameActor {
               getWidth(), getHeight(),
               1,1,
               getRotation());   
-    }
-
-    @Override
-    public PinguinUserData getUserData() {
-        return (PinguinUserData) userData;
     }
     
     public void setPower(int p){

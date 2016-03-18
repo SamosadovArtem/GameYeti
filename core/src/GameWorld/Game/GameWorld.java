@@ -8,11 +8,11 @@ package GameWorld.Game;
 import GameWorld.AbstractWorld;
 import GameWorld.Game.Generator.Generator;
 import GameWorld.Game.Objects.GameActor;
+import GameWorld.Game.Objects.Giraff;
 import GameWorld.Game.Objects.Ground;
 import GameWorld.Game.Objects.Pinguin;
 import GameWorld.Game.Objects.Snake;
 import Helper.AssetLoader;
-import Helper.BodyUtils;
 import Helper.Constants;
 import Helper.GameContactListener;
 import Helper.Statistic;
@@ -22,6 +22,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -51,7 +52,7 @@ public class GameWorld extends AbstractWorld  implements ContactListener {
     private Label dirYText;
     private Label powText;
 
-    private final float TIME_STEP = 1 / 300f;
+    private final float TIME_STEP = 1 / 400f;
     private float accumulator = 0f;
 
     public GameWorld(Stage stage, GameLibGDX g) {
@@ -69,8 +70,13 @@ public class GameWorld extends AbstractWorld  implements ContactListener {
         initDirY();
         initPower();
         createObjects();		
-        snake = new Snake(AssetLoader.btn,300f,Constants.GROUND_Y+20f,100f,20f,world);
-        stage.addActor(snake);
+        //snake = new Snake(AssetLoader.btn,300f,Constants.GROUND_Y+20f,100f,20f,world);
+        //stage.addActor(snake);
+        
+        /*Giraff g = new Giraff(world, 300, Constants.GROUND_Y + Constants.GROUND_HEIGHT/2 + 40 , 100f
+        , 40f, 10f, 60f
+        , 40f, 20f, AssetLoader.btn);
+        stage.addActor(g);*/
     }
     
     private void createObjects(){
