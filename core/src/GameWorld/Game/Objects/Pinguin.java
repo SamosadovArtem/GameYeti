@@ -26,6 +26,8 @@ public class Pinguin extends GameActor {
     private boolean isIncrease;
     private boolean isPower;
     private boolean isDir;
+    private boolean visible = true;
+    private boolean isRide;
     private TextureRegion pinguinTexture;
 
     public Pinguin(Body body, TextureRegion pinguinTexture) {
@@ -39,6 +41,21 @@ public class Pinguin extends GameActor {
         isDir = true;
     }
     
+    public void show(){
+        visible = true;
+    }
+    
+    public void hide(){
+        visible = false;
+    }
+    
+	public boolean getIsRide(){
+        return isRide;
+    }
+    
+    public void setIsRide(boolean isRide){
+        this.isRide = isRide;
+    }
     
     @Override
     public float getX(){
@@ -62,12 +79,14 @@ public class Pinguin extends GameActor {
     
     public void draw (Batch batch, float parentAlpha) {
     
-      batch.draw(pinguinTexture, 
-              getX() , getY() - getHeight() / 2,
-              getWidth() / 2 , getHeight() / 2, 
-              getWidth(), getHeight(),
-              1,1,
-              getRotation());   
+        if(visible){
+            batch.draw(pinguinTexture, 
+                    getX() , getY() - getHeight() / 2,
+                    getWidth() / 2 , getHeight() / 2, 
+                    getWidth(), getHeight(),
+                    1,1,
+                    getRotation());   
+        }
     }
     
     public void setPower(int p){

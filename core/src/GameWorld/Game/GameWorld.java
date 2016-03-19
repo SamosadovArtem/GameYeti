@@ -7,11 +7,13 @@ package GameWorld.Game;
 
 import GameWorld.AbstractWorld;
 import GameWorld.Game.Generator.Generator;
+import GameWorld.Game.Objects.Antelope;
 import GameWorld.Game.Objects.GameActor;
 import GameWorld.Game.Objects.Giraff;
 import GameWorld.Game.Objects.Ground;
 import GameWorld.Game.Objects.Pinguin;
 import GameWorld.Game.Objects.Snake;
+import GameWorld.Game.Objects.Three;
 import Helper.AssetLoader;
 import Helper.Constants;
 import Helper.GameContactListener;
@@ -69,14 +71,11 @@ public class GameWorld extends AbstractWorld  implements ContactListener {
         initDirX();
         initDirY();
         initPower();
-        createObjects();		
-        //snake = new Snake(AssetLoader.btn,300f,Constants.GROUND_Y+20f,100f,20f,world);
-        //stage.addActor(snake);
-        
-        /*Giraff g = new Giraff(world, 300, Constants.GROUND_Y + Constants.GROUND_HEIGHT/2 + 40 , 100f
-        , 40f, 10f, 60f
-        , 40f, 20f, AssetLoader.btn);
-        stage.addActor(g);*/
+        createObjects();	
+        Three t = new Three(world, 200,Constants.GROUND_Y + Constants.GROUND_HEIGHT/2,
+                    10,70,70,10, AssetLoader.btn);
+        stage.addActor(t);
+       
     }
     
     private void createObjects(){
@@ -134,7 +133,7 @@ public class GameWorld extends AbstractWorld  implements ContactListener {
     
     private void checkHeight(){
         if(this.getPlayerY() >= Constants.APP_HEIGHT * 1.1){
-            pinguin.getBody().setLinearVelocity(new Vector2(0, 0));
+            pinguin.getBody().setLinearVelocity(new Vector2(10, 0));
         }
     }
     

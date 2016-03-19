@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 
 /**
  *
@@ -77,6 +78,54 @@ public class WorldUtils {
         box.dispose();
         return body;
     }
+    
+    public static Body createThree(World world, float x, float y, float widthBody
+        , float heightBody, float widthNeck, float heightNeck) {
+        Body bodyStem = getStemBody(world, x, y + heightBody / 2, widthBody , heightBody);
+        Body bodyFoliage = getFoliageBody(world, x, y + heightNeck / 2 + heightBody,
+                widthNeck , heightNeck);
+        return bodyStem;
+    }
+    
+    public static Body Foliage;
+    private static Body getFoliageBody(World world, float x, float y, float width, float height){
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.position.set(new Vector2(x, y));
+        Body body = world.createBody(bodyDef);
+        PolygonShape box = new PolygonShape();
+        box.setAsBox(width / 2, height / 2);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = box;
+        fixtureDef.density = 0.0f;
+        fixtureDef.friction = 0.0f;
+        fixtureDef.restitution = 0.4f;
+        body.createFixture(fixtureDef);
+        body.resetMassData();
+        body.getFixtureList().get(0).setUserData("FOLIAGEBODY");
+        box.dispose();
+        Foliage = body;
+        return body;
+    }
+    
+    private static Body getStemBody(World world, float x, float y, float width, float height){
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.position.set(new Vector2(x, y));
+        Body body = world.createBody(bodyDef);
+        PolygonShape box = new PolygonShape();
+        box.setAsBox(width / 2, height / 2);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = box;
+        fixtureDef.density = 0.0f;
+        fixtureDef.friction = 0.0f;
+        fixtureDef.restitution = 0.4f;
+        body.createFixture(fixtureDef);
+        body.resetMassData();
+        body.getFixtureList().get(0).setUserData("STEMBODY");
+        box.dispose();
+        return body;
+    }
 	
     public static Body createGiraff(World world, float x, float y, float widthBody
         , float heightBody, float widthNeck, float heightNeck
@@ -87,6 +136,7 @@ public class WorldUtils {
         return bodyB;
     }
     
+    public static Body GiraffeBody;
     private static Body getGiraffeBody(World world, float x, float y, float width, float height){
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -101,11 +151,11 @@ public class WorldUtils {
         fixtureDef.restitution = 0.0f;
         body.createFixture(fixtureDef);
         body.resetMassData();
-        //body.getFixtureList().get(0).setUserData("GIRAFFEBODY");
+        body.getFixtureList().get(0).setUserData("GIRAFFEBODY");
         box.dispose();
         return body;
     }
-    
+    public static Body GiraffeNeck;
     private static Body getGiraffeNeck(World world, float x, float y, float width, float height){
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -125,6 +175,7 @@ public class WorldUtils {
         return body;
     }
     
+    public static Body GiraffeHead;
     private static Body getGiraffeHead(World world, float x, float y, float width, float height){
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -141,6 +192,7 @@ public class WorldUtils {
         body.resetMassData();
         //body.getFixtureList().get(0).setUserData("GIRAFFEHEAD");
         box.dispose();
+        GiraffeHead = body;
         return body;
     }
 	
@@ -162,6 +214,54 @@ public class WorldUtils {
         body.createFixture(fixtureDef);
         body.resetMassData();
         body.getFixtureList().get(0).setUserData("SNAKE");
+        box.dispose();
+        return body;
+    }
+	
+	public static void createAntelope(World world, Body body, Body backBody) {
+        RevoluteJointDef jointDef = new RevoluteJointDef();
+        jointDef.initialize(backBody, body, backBody.getWorldCenter());
+        jointDef.collideConnected = true;
+        world.createJoint(jointDef);
+    }
+
+    public static Body createAntelopeBack(World world, float x, float y, float width, float height) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(new Vector2(x, y + height));
+        //   bodyDef.active = false;
+        Body body = world.createBody(bodyDef);
+        body.setGravityScale(0f);
+        body.setFixedRotation(false);
+        PolygonShape box = new PolygonShape();
+        box.setAsBox(width / 2, height / 2);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = box;
+        fixtureDef.density = 0.0f;
+        fixtureDef.friction = 1.8f;
+        fixtureDef.restitution = 0f;
+        body.createFixture(fixtureDef);
+        body.resetMassData();
+        box.dispose();
+        return body;
+    }
+
+    public static Body createAntelopeBody(World world, float x, float y, float width, float height) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(new Vector2(x, y + height));
+        Body body = world.createBody(bodyDef);
+        body.setGravityScale(0f);
+        body.setFixedRotation(false);
+        PolygonShape box = new PolygonShape();
+        box.setAsBox(width / 2, height / 2);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = box;
+        fixtureDef.density = 1.0f;
+        fixtureDef.friction = 1.8f;
+        fixtureDef.restitution = 0f;
+        body.createFixture(fixtureDef);
+        body.resetMassData();
         box.dispose();
         return body;
     }
