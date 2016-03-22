@@ -9,6 +9,7 @@ import GameWorld.Game.Objects.GameActor;
 import Helper.Constants;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
@@ -39,6 +40,13 @@ public class Pinguin extends GameActor {
         isIncrease = true;
         isPower = false;
         isDir = true;
+    }
+    
+    public void setAngle(float f){
+        
+        this.setRotation(f);
+            //this.getBody().setTransform(this.getBody().getPosition(), 
+             //   (float)Math.toRadians(angular));
     }
     
     public void show(){
@@ -78,14 +86,15 @@ public class Pinguin extends GameActor {
     }
     
     public void draw (Batch batch, float parentAlpha) {
-    
-        if(visible){
-            batch.draw(pinguinTexture, 
-                    getX() , getY() - getHeight() / 2,
-                    getWidth() / 2 , getHeight() / 2, 
-                    getWidth(), getHeight(),
-                    1,1,
-                    getRotation());   
+        if(delete()){
+            if(visible){
+                batch.draw(pinguinTexture, 
+                        getX() , getY() - getHeight() / 2,
+                        getWidth() / 2 , getHeight() / 2, 
+                        getWidth(), getHeight(),
+                        1,1,
+                        getRotation());   
+            }        
         }
     }
     
@@ -101,6 +110,7 @@ public class Pinguin extends GameActor {
     public void jump(){
         body.applyLinearImpulse(new Vector2(directionX * power * powerCof, directionY * power * powerCof),
                 body.getWorldCenter(), true);
+        //body.setTransform(body.getPosition(), (float)Math.toRadians(body.getLinearVelocity().angle()));
     }
     
     public int getPower() {

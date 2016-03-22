@@ -5,6 +5,7 @@
  */
 package Helper;
 
+import GameWorld.Game.GameWorld;
 import GameWorld.Game.Objects.Pinguin;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -16,11 +17,14 @@ import com.badlogic.gdx.InputProcessor;
 public class InputHandler implements InputProcessor {
     
     
-    private Pinguin pinguin;
+    private Pinguin pinguin;	
+    private GameWorld world;
     
-    public InputHandler(Pinguin pinguin) {
-        this.pinguin = pinguin;
+    public InputHandler(GameWorld world) {
+        this.pinguin = world.getPinguin();
+        this.world = world;
     }
+
     
     @Override
     public boolean keyDown(int keycode) {
@@ -39,17 +43,20 @@ public class InputHandler implements InputProcessor {
     
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if(!pinguin.moved()){          
+        world.stage.touchDown(screenX, screenY, pointer, button);
+
+        if (!pinguin.moved() && world.getJumpCountController().checkJump()) {
             if (!pinguin.getIsPower()) {
                 pinguin.setIsPower(true);
                 pinguin.setIsDir(false);
             } else if (!pinguin.getIsDir()) {
                 pinguin.jump();
+                world.getJumpCountController().jump();
                 pinguin.setIsPower(false);
                 pinguin.setIsDir(true);
                 pinguin.setPower(0);
                 pinguin.defaultPos();
-            }          
+            }
         }
         return true;
     }

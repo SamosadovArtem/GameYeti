@@ -5,8 +5,10 @@
  */
 package Helper;
 
+import GameWorld.Game.GameWorld;
 import GameWorld.Game.Objects.Antelope;
-import GameWorld.Game.Objects.Giraff;
+import GameWorld.Game.Objects.Coin;
+import GameWorld.Game.Objects.Giraffe;
 import GameWorld.Game.Objects.Pinguin;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
@@ -16,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.WorldManifold;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
  *
@@ -24,13 +27,16 @@ import com.badlogic.gdx.physics.box2d.WorldManifold;
 public class GameContactListener implements ContactListener {
 
     private Pinguin pinguin;
+    GameWorld w;
 
-    public GameContactListener(Pinguin pinguin) {
+    public GameContactListener(GameWorld w, Pinguin pinguin) {
         this.pinguin = pinguin;
+        this.w = w;
     }
 
     @Override
-    public void beginContact(Contact cntct) {
+    public void beginContact(Contact contact) {
+        coinsContact(contact);
     }
 
     @Override
@@ -47,7 +53,9 @@ public class GameContactListener implements ContactListener {
                 } 
                 antelopeContact(contact);
                 contactGiraffe(contact);
-                snakeContact(contact);
+                snakeContact(contact); 
+                coinsPreContact(contact);
+                deleteContact(contact);
             }
         }        
     }
@@ -56,14 +64,53 @@ public class GameContactListener implements ContactListener {
     public void postSolve(Contact contact, ContactImpulse ci) {
         
     }
-          
+       
+    private void deleteContact(Contact contact) {
+        if(contact.getFixtureA().getUserData().equals("DELETE") || contact.getFixtureB().getUserData().equals("DELETE") ){
+            contact.setEnabled(false);
+        }
+    }
+    
+    private void coinsContact(Contact contact) {
+        if(contact.getFixtureA().getUserData() != null && contact.getFixtureB().getUserData() != null ){
+            Coin g;
+            if(contact.getFixtureB().getUserData() instanceof Coin &&
+                contact.getFixtureA().getUserData().equals("PINGUIN")){ 
+                Gdx.app.log("PINGUIN", "COION");
+                g = (Coin)contact.getFixtureB().getUserData();
+                g.take(w.world, w.stage);
+                g.getBody().setUserData("DELETE");
+
+            } else if(contact.getFixtureA().getUserData() instanceof Coin &&
+                contact.getFixtureB().getUserData().equals("PINGUIN")){  
+                Gdx.app.log("PINGUIN", "COIN");
+                g = (Coin)contact.getFixtureA().getUserData();
+                g.take(w.world, w.stage);
+                g.getBody().setUserData("DELETE");
+            }
+        }
+    }
+    
+    private void coinsPreContact(Contact contact) {
+        if(contact.getFixtureA().getUserData() != null && contact.getFixtureB().getUserData() != null ){
+            Coin g;
+            if(contact.getFixtureB().getUserData() instanceof Coin &&
+                contact.getFixtureA().getUserData().equals("PINGUIN")){            
+                contact.setEnabled(false);
+
+            } else if(contact.getFixtureA().getUserData() instanceof Coin &&
+                contact.getFixtureB().getUserData().equals("PINGUIN")){  
+                contact.setEnabled(false);    
+            }
+        }
+    }
     
     private void antelopeContact(Contact contact) {
         antelopeBackContact(contact);
         antelopeBodyContact(contact);
     }
 	
-	private void antelopeBackContact(Contact contact) {
+    private void antelopeBackContact(Contact contact) {
         if (contact.getFixtureA().getUserData() instanceof Antelope) {
             contact.setEnabled(false);
             if (checkFixtureB(contact, "PINGUIN")) {
@@ -118,19 +165,19 @@ public class GameContactListener implements ContactListener {
     
     private void contactGiraffe(Contact contact){      
         
-        Giraff g;
-        if(contact.getFixtureB().getUserData() instanceof Giraff &&
+        Giraffe g;
+        if(contact.getFixtureB().getUserData() instanceof Giraffe &&
             contact.getFixtureA().getUserData().equals("PINGUIN")){            
             contact.setEnabled(false);
             Gdx.app.log("PINGUIN", "GIRAFFE");
-            g = (Giraff)contact.getFixtureB().getUserData();
+            g = (Giraffe)contact.getFixtureB().getUserData();
             g.throwPinguin(pinguin);
             
-        } else if(contact.getFixtureA().getUserData() instanceof Giraff &&
+        } else if(contact.getFixtureA().getUserData() instanceof Giraffe &&
             contact.getFixtureB().getUserData().equals("PINGUIN")){  
             contact.setEnabled(false); 
             Gdx.app.log("PINGUIN", "GIRAFFE");
-            g = (Giraff)contact.getFixtureA().getUserData();
+            g = (Giraffe)contact.getFixtureA().getUserData();
             g.throwPinguin(pinguin);
         }
                 

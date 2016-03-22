@@ -50,7 +50,9 @@ public class StopObj extends GameActor{
         return height;
     }
     
-    public void draw (Batch batch, float parentAlpha) {    
-      batch.draw(groundTexture, getX() - getWidth()/2, getY() - getHeight() / 2, getWidth(), getHeight());   
+    public void draw (Batch batch, float parentAlpha) {   
+        if(delete()){
+            batch.draw(groundTexture, getX() - getWidth()/2, getY() - getHeight() / 2, getWidth(), getHeight());   
+        }
     }
 }

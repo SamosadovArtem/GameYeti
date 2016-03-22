@@ -31,6 +31,7 @@ public class ButtonListener extends InputListener {
   //Метод, который будет вызываться при нажатии на кнопку
   public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
     //Устанавливаем флаг нажатия в "нажата"
+	this.getButton().action();
     this.getButton().setTouched(true);
     return true;
   }
@@ -39,7 +40,7 @@ public class ButtonListener extends InputListener {
     //Устанавливаем флаг нажатия в "отжата"
     this.getButton().setTouched(false);
     //Выполняем метод action кнопки
-    this.getButton().action();
+    //this.getButton().action();
   }
 }
 

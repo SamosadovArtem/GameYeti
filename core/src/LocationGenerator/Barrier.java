@@ -10,17 +10,22 @@ package LocationGenerator;
  * @author Artem
  */
 public class Barrier {
-    private int _location;
+    private int _locationX;
+    private int _locationY;
     private BarrierTypes _type;
     
-    public Barrier(int location, BarrierTypes type) {
+    public Barrier(int locationX,int locationY, BarrierTypes type) {
 
-                    _location = location;
+                    _locationX = locationX;
+                    _locationY = locationY;
                     _type = type;
         }
     
-    public int GetLocation(){
-        return this._location;
+    public int GetX(){
+        return this._locationX;
+    }
+    public int GetY(){
+        return this._locationY;
     }
     public BarrierTypes GetType(){
         return this._type;

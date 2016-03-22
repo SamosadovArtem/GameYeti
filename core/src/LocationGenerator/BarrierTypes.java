@@ -7,10 +7,13 @@ package LocationGenerator;
 
 /**
  *
- * @author Admin
+ * @author qw
  */
 public enum BarrierTypes {
-	PUSH,
-	STOP,
-	JUMP
+    SNAKE,
+    STOP,
+    TREE,
+    GIRAFFE,
+    ANTELOPHE,
+    COIN
 }

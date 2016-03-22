@@ -32,6 +32,7 @@ public class GameLibGDX extends ApplicationAdapter {
     public void setScreen (Screen screen) {
         if (this.screen != null) {
             this.screen.hide();
+            //this.screen.dispose();
         }
         this.screen = screen;
         if (this.screen != null) {

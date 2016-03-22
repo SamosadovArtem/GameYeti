@@ -46,6 +46,8 @@ public class Ground extends GameActor{
     }
     
     public void draw (Batch batch, float parentAlpha) {    
-      batch.draw(groundTexture, getX() - getWidth() / 2, getY() - getHeight() / 2, getWidth(), getHeight());   
+        if(delete()){
+            batch.draw(groundTexture, getX() - getWidth() / 2, getY() - getHeight() / 2, getWidth(), getHeight());   
+        }
     }
 }

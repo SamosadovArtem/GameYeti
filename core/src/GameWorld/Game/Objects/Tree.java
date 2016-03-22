@@ -15,7 +15,7 @@ import com.badlogic.gdx.physics.box2d.World;
  *
  * @author qw
  */
-public class Three extends GameActor{
+public class Tree extends GameActor{
     
     private TextureRegion groundTexture;
     private float widthStem;
@@ -27,7 +27,7 @@ public class Three extends GameActor{
     public Body foliage;
     
     
-    public Three(World world, float x, float y, float widthStem
+    public Tree(World world, float x, float y, float widthStem
         , float heightStem, float widthFoliage, float heightFoliage
         , TextureRegion groundTexture){
         this.body = WorldUtils.createThree(world, x, y, 
@@ -53,8 +53,10 @@ public class Three extends GameActor{
         return body.getPosition().y;
     }
     
-    public void draw (Batch batch, float parentAlpha) {    
-        batch.draw(groundTexture, getX() - widthStem/2, getY() - heightStem / 2, widthStem, heightStem);   
-        batch.draw(groundTexture, getX() - widthFoliage/2, getY() - heightStem / 2 + heightStem, widthFoliage, heightFoliage);
+    public void draw (Batch batch, float parentAlpha) {   
+        if(delete()){
+            batch.draw(groundTexture, getX() - widthStem/2, getY() - heightStem / 2, widthStem, heightStem);   
+            batch.draw(groundTexture, getX() - widthFoliage/2, getY() - heightStem / 2 + heightStem, widthFoliage, heightFoliage);
+        }
     }
 }

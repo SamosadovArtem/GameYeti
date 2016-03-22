@@ -39,6 +39,7 @@ public abstract class AbstractWorld {
         coinsText.setSize(stage.getWidth() * 0.2f, stage.getHeight() * 0.1f);         
         updateCoins();
         stage.addActor(coinsText);
+        updateCoins();
     }
     
     protected void updateCoins(){

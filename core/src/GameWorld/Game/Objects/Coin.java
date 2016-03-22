@@ -5,43 +5,53 @@
  */
 package GameWorld.Game.Objects;
 
-import Helper.Constants;
+import Helper.Statistic;
 import Helper.WorldUtils;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.JointEdge;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.utils.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
- * @author Pablo
+ * @author qw
  */
-public class Snake extends GameActor {
+public class Coin extends GameActor {
 
     private TextureRegion snakeTexture;
     private float width;
     private float height;
 
-    public Snake(TextureRegion snakeTexture, float x, float y, float width, float height, World world) {
+    public Coin(TextureRegion snakeTexture, float x, float y, float width, float height, World world) {
 
-        body = WorldUtils.createSnake(world, x, y, width, height);
+        body = WorldUtils.createCoin(world, x, y, width, height);
         this.width = width;
         this.height = height;
         this.snakeTexture = snakeTexture;
+        this.body.getFixtureList().get(0).setUserData(this);
     }
 
     @Override
     public float getX() {
-        return body.getPosition().x;
+        if(body != null){
+            return body.getPosition().x;
+        } else {
+            return 0;
+        }
     }
 
     @Override
     public float getY() {
-        return body.getPosition().y;
+        if(body != null){
+            return body.getPosition().y;
+        } else {
+            return 0;
+        }
     }
 
     @Override
@@ -58,5 +68,10 @@ public class Snake extends GameActor {
         if(delete()){
             batch.draw(snakeTexture, getX()-width/2, getY()-getHeight()/2, getWidth(), getHeight());
         }
+    }
+    
+    public void take(World w, Stage s){
+        Statistic.addCoins(1);
+        this.remove();      
     }
 }

@@ -75,39 +75,20 @@ public class Antelope extends GameActor {
     }
 
     public void draw(Batch batch, float parentAlpha) {
-        batch.draw(antelopeTexture, getX() - width / 2, getY(), getWidth(), getHeight() / 4);
-        batch.draw(antelopeTexture, getX() - width / 2, getY() - getHeight(), getWidth(), getHeight());
+        if(delete()){
+            batch.draw(antelopeTexture, getX() - width / 2, getY(), getWidth(), getHeight() / 4);
+            batch.draw(antelopeTexture, getX() - width / 2, getY() - getHeight(), getWidth(), getHeight());
+        }
 
     }
 
     public void ride(Pinguin pinguin) {
         if (!pinguin.getIsRide()) {
-            //  pinguin.setAntelope(this);
             antelopeThread = new AntelopeThread(pinguin, this);
             aThread = new Thread(antelopeThread);
             aThread.start();
         }
     }
-
-    /* private void checkRide() {
-        if (pinguin.getIsRide() && aThread == null) {
-            aThread = new Thread(antelopeThread);
-            aThread.start();
-        }
-    }
-
-    private void jumpAfterRide() {
-        if (antelopeThread.getCheck() && pinguin.getIsRide()) {
-            aThread = null;
-            pinguin.setIsRide(false);
-            pinguin.getAntelope().setIsUsed(true);
-            pinguin.getBody().setGravityScale(Constants.RUNNER_GRAVITY_SCALE);
-            pinguin.getBody().setLinearVelocity(new Vector2(200f, 200f));
-            pinguin.getAntelope().getBody().setActive(false);
-            pinguin.setAntelope(null);
-            antelopeThread = new AntelopeThread();
-        }
-    }*/
 }
 
 class AntelopeThread implements Runnable {

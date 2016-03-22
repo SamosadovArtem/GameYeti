@@ -27,4 +27,13 @@ public class GameActor extends Actor{
     public Body getBody(){
         return body;
     }
+    
+    public boolean delete(){
+        if(body == null){
+            this.remove();
+            return false;
+        }
+        return true;
+    }
+    
 }

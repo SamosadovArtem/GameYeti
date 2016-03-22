@@ -33,7 +33,7 @@ public class GameScreen extends AbstractScreen {
         Gdx.app.log("GameScreen", "initScene");
         this.world = new GameWorld(stage, game);
         this.renderer = new GameRenderer(world, stage); 
-        Gdx.input.setInputProcessor(new InputHandler(world.getPinguin()));
+        Gdx.input.setInputProcessor(new InputHandler(world));
     }
 
     @Override

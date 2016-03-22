@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  *
  * @author qw
  */
-public class Giraff extends GameActor{
+public class Giraffe extends GameActor{
     
     private TextureRegion groundTexture;
     private float widthBody;
@@ -39,7 +39,7 @@ public class Giraff extends GameActor{
     public Body head;
     
     
-    public Giraff(World world, float x, float y, float widthBody
+    public Giraffe(World world, float x, float y, float widthBody
         , float heightBody, float widthNeck, float heightNeck
         , float widthHead, float heightHead, TextureRegion groundTexture){
         this.body = WorldUtils.createGiraff(world, x, y, 
@@ -70,11 +70,13 @@ public class Giraff extends GameActor{
     }
     
     public void draw (Batch batch, float parentAlpha) {    
-        batch.draw(groundTexture, getX() - widthBody/2, getY() - heightBody / 2 - 40, 10, 40);   
-        batch.draw(groundTexture, getX() + widthBody/2 - 10, getY() - heightBody / 2 - 40, 10, 40);    
-        batch.draw(groundTexture, getX() - widthBody/2, getY() - heightBody / 2, widthBody, heightBody);   
-        batch.draw(groundTexture, getX() - widthBody/2, getY() + heightBody / 2 , widthNeck, heightNeck);   
-        batch.draw(groundTexture, getX() - widthBody/2 + widthNeck - widthHead, getY() + heightBody / 2 + heightNeck, widthHead, heightHead);   
+        if(delete()){
+            batch.draw(groundTexture, getX() - widthBody/2, getY() - heightBody / 2 - 40, 10, 40);   
+            batch.draw(groundTexture, getX() + widthBody/2 - 10, getY() - heightBody / 2 - 40, 10, 40);    
+            batch.draw(groundTexture, getX() - widthBody/2, getY() - heightBody / 2, widthBody, heightBody);   
+            batch.draw(groundTexture, getX() - widthBody/2, getY() + heightBody / 2 , widthNeck, heightNeck);   
+            batch.draw(groundTexture, getX() - widthBody/2 + widthNeck - widthHead, getY() + heightBody / 2 + heightNeck, widthHead, heightHead);   
+        }
     }
     
     public void throwPinguin(Pinguin p){
@@ -98,11 +100,11 @@ public class Giraff extends GameActor{
 
 class GiraffThrow implements Runnable {
     Pinguin pinguin;
-    Giraff giraff;
+    Giraffe giraff;
     
     float velX;
     
-    public GiraffThrow(Pinguin p, Giraff g){
+    public GiraffThrow(Pinguin p, Giraffe g){
         this.pinguin = p;        
         this.giraff = g;
         velX = pinguin.getBody().getLinearVelocity().x;

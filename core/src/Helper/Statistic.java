@@ -15,6 +15,7 @@ import com.badlogic.gdx.Preferences;
 public class Statistic {
     
     private static Preferences prefs;
+    private String bouhgtMaps;
     
     public static void load(){
         prefs = Gdx.app.getPreferences("YetiGame");
@@ -26,10 +27,20 @@ public class Statistic {
         if (!prefs.contains("coins")) {
             prefs.putInteger("coins", 0);
         }
+        
+        if (!prefs.contains("openMaps")) {
+            prefs.putString("openMaps", "0");
+        }
+        
+        //CloseMaps();
+        //addCoins(100);
     }
     
     public static int getCoins(){
         return prefs.getInteger("coins");
+    }
+    public static String getOpenMaps(){
+        return prefs.getString("openMaps");
     }
     
     public static void payCoins(int pay){
@@ -40,6 +51,15 @@ public class Statistic {
         } else {
             throw new IllegalArgumentException("You have no " + pay + " coins");
         }
+    }
+    public static void CloseMaps(){
+        prefs.putString("openMaps", "0");
+        prefs.flush();
+    }
+    public static void OpenMap(String mapNumber){
+        String oldMaps = getOpenMaps();
+        prefs.putString("openMaps", oldMaps+","+mapNumber);
+        prefs.flush();
     }
     
     public static void addCoins(int add){

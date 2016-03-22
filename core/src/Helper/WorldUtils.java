@@ -45,16 +45,17 @@ public class WorldUtils {
         bodyDef.position.set(new Vector2(Constants.RUNNER_X, Constants.RUNNER_Y));
         Body body = world.createBody(bodyDef);
         body.setGravityScale(Constants.RUNNER_GRAVITY_SCALE);
-        body.setFixedRotation(true);
+        body.setFixedRotation(false);
         PolygonShape box = new PolygonShape();
-        box.setAsBox(Constants.RUNNER_WIDTH/2, Constants.RUNNER_HEIGHT/2);
+        box.setAsBox(Constants.RUNNER_WIDTH/2, Constants.RUNNER_HEIGHT/2,
+                body.getLocalCenter(), 0);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = box;
         fixtureDef.density = 0.0f;
-        fixtureDef.friction = 1.8f;
+        fixtureDef.friction = 0.8f;
         fixtureDef.restitution = 0.35f;
         body.createFixture(fixtureDef);
-        body.resetMassData();
+        //body.resetMassData();
         body.getFixtureList().get(0).setUserData("PINGUIN");
         box.dispose();
         return body;
@@ -214,6 +215,25 @@ public class WorldUtils {
         body.createFixture(fixtureDef);
         body.resetMassData();
         body.getFixtureList().get(0).setUserData("SNAKE");
+        box.dispose();
+        return body;
+    }
+    
+    public static Body createCoin(World world, float x, float y, float width, float height) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.position.set(new Vector2(x, y+height));
+        //   bodyDef.active = false;
+        Body body = world.createBody(bodyDef);
+        PolygonShape box = new PolygonShape();
+        box.setAsBox(width/2, height/2);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = box;
+        fixtureDef.density = 0.0f;
+        fixtureDef.friction = 1.8f;
+        fixtureDef.restitution = 0.35f;
+        body.createFixture(fixtureDef);
+        body.resetMassData();
         box.dispose();
         return body;
     }
