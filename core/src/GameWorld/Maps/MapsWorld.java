@@ -6,18 +6,15 @@
 package GameWorld.Maps;
 
 import GameObjects.Button;
+import GameObjects.Interface;
 import GameObjects.Map;
 import GameWorld.AbstractWorld;
 import Helper.AssetLoader;
 import Helper.FontLoader;
 import Helper.Statistic;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.mygdx.game.GameLibGDX;
-import com.mygdx.game.screen.GameScreen;
 import java.util.ArrayList;
 
 /**
@@ -49,8 +46,8 @@ public class MapsWorld extends AbstractWorld {
     Boolean isTouchCancel = false;
     Boolean isDialog = false;
 
-    public MapsWorld(Stage stage, GameLibGDX g) {
-        super(stage, g);
+    public MapsWorld(Interface ui, GameLibGDX g) {
+        super(ui, g);
         Gdx.app.log("MapsWorld", "create");
 
         mapsList = LoadMaps(); //Там должны загружаться карты, но пока будут создаваться
@@ -61,26 +58,23 @@ public class MapsWorld extends AbstractWorld {
 
     @Override
     public void update(float delta) {
-            
-        
-                moveCamera();
-           
-            
-        confirmDialogButton.setX((float) (stage.getCamera().position.x - 
-                confirmDialogButton.getWidth() * 1.5));
 
-        cancelDialogButton.setX((float) (stage.getCamera().position.x + 
-                confirmDialogButton.getWidth() * 1.5));
-        
-        
-        backDialogButton.setX ((float) (confirmDialogButton.getX()- 
-                confirmDialogButton.getWidth()*1.5));
+        moveCamera();
+
+        confirmDialogButton.setX((float) (ui.getStage().getCamera().position.x
+                - confirmDialogButton.getWidth() * 1.5));
+
+        cancelDialogButton.setX((float) (ui.getStage().getCamera().position.x
+                + confirmDialogButton.getWidth() * 1.5));
+
+        backDialogButton.setX((float) (confirmDialogButton.getX()
+                - confirmDialogButton.getWidth() * 1.5));
 
         if (isTouchUnboughtMap) {
             System.out.println(mapsList.get(1).IsMapBought());
             isDialog = true;
 
-            if (confirmDialogButton.getY() >= stage.getHeight() / 2) {
+            if (confirmDialogButton.getY() >= ui.getStage().getHeight() / 2) {
                 isTouchUnboughtMap = false;
                 //isDialog = false;
             }
@@ -88,51 +82,51 @@ public class MapsWorld extends AbstractWorld {
                 MoveDialogWindow(true);
             }
         }
-            if (isTouchCancel) {
+        if (isTouchCancel) {
 
-            if (confirmDialogButton.getY() <=confirmDialogButton.getHeight()*(-5) ) {
+            if (confirmDialogButton.getY() <= confirmDialogButton.getHeight() * (-5)) {
                 isTouchCancel = false;
                 isDialog = false;
             }
             if (isTouchCancel) { // ИСПРАВЬ ПОТОМ ЭТО, ПОЖАЛУЙСТА
                 MoveDialogWindow(false);
-            
-           }
+
+            }
         }
 
     }
 
     private void createUI(ArrayList<Map> allMap) {
         for (int i = 0; i < allMap.size(); i++) {
-            stage.addActor(allMap.get(i));
+            ui.getStage().addActor(allMap.get(i));
         }
+        ui.addBack(game);
     }
-    public boolean isDialog(){
+
+    public boolean isDialog() {
         return isDialog;
     }
 
     private void MoveDialogWindow(Boolean isUP) {
-        if (isUP){
-        confirmDialogButton.setY(confirmDialogButton.getY() + 15);
+        if (isUP) {
+            confirmDialogButton.setY(confirmDialogButton.getY() + 15);
 
-        cancelDialogButton.setY(cancelDialogButton.getY() + 15);
-        
-        backDialogButton.setY(backDialogButton.getY() + 15);
-        }
-        else{
-        confirmDialogButton.setY(confirmDialogButton.getY() - 15 );
+            cancelDialogButton.setY(cancelDialogButton.getY() + 15);
 
-        cancelDialogButton.setY(cancelDialogButton.getY() - 15);
-        
-        backDialogButton.setY(backDialogButton.getY() - 15);
-            
+            backDialogButton.setY(backDialogButton.getY() + 15);
+        } else {
+            confirmDialogButton.setY(confirmDialogButton.getY() - 15);
+
+            cancelDialogButton.setY(cancelDialogButton.getY() - 15);
+
+            backDialogButton.setY(backDialogButton.getY() - 15);
+
         }
-            
+
     }
 
     private void CreateDialogWindow() {
 
-        
         this.confirmDialogButton = new Button("Confirm", firstButtonNormalState,
                 firstButtonNormalState, "cnf", FontLoader.font) {
             public void action() {
@@ -150,9 +144,9 @@ public class MapsWorld extends AbstractWorld {
                 System.out.println(mapToBuy.IsMapBought());
             }
         };
-        confirmDialogButton.setSize(stage.getWidth() * 0.1f, stage.getHeight() / 10);
-        confirmDialogButton.setPosition(stage.getCamera().position.x - 
-                confirmDialogButton.getWidth(), confirmDialogButton.getHeight()*(-5));
+        confirmDialogButton.setSize(ui.getStage().getWidth() * 0.1f, ui.getStage().getHeight() / 10);
+        confirmDialogButton.setPosition(ui.getStage().getCamera().position.x
+                - confirmDialogButton.getWidth(), confirmDialogButton.getHeight() * (-5));
 
         this.cancelDialogButton = new Button("Cancel", firstButtonNormalState,
                 firstButtonNormalState, "cnl", FontLoader.font) {
@@ -161,21 +155,21 @@ public class MapsWorld extends AbstractWorld {
                 isTouchCancel = true;
             }
         };
-        cancelDialogButton.setSize(stage.getWidth() * 0.1f, stage.getHeight() / 10);
-        cancelDialogButton.setPosition(stage.getCamera().position.x + 
-                confirmDialogButton.getWidth(), confirmDialogButton.getHeight()*(-5));
+        cancelDialogButton.setSize(ui.getStage().getWidth() * 0.1f, ui.getStage().getHeight() / 10);
+        cancelDialogButton.setPosition(ui.getStage().getCamera().position.x
+                + confirmDialogButton.getWidth(), confirmDialogButton.getHeight() * (-5));
 
-        this.backDialogButton = new Button("Back", firstButtonNormalState, 
+        this.backDialogButton = new Button("Back", firstButtonNormalState,
                 firstButtonNormalState, "Back", FontLoader.font);
-        backDialogButton.setSize(stage.getWidth() * 0.7f, stage.getHeight() / 2);
-        backDialogButton.setPosition(confirmDialogButton.getX()- 
-                confirmDialogButton.getWidth()*2, confirmDialogButton.getHeight()*-1 
-                        + confirmDialogButton.getHeight()*(-5));
-        
-        stage.addActor(backDialogButton);
-        stage.addActor(confirmDialogButton);
-        stage.addActor(cancelDialogButton);
-        
+        backDialogButton.setSize(ui.getStage().getWidth() * 0.7f, ui.getStage().getHeight() / 2);
+        backDialogButton.setPosition(confirmDialogButton.getX()
+                - confirmDialogButton.getWidth() * 2, confirmDialogButton.getHeight() * -1
+                + confirmDialogButton.getHeight() * (-5));
+
+        ui.getStage().addActor(backDialogButton);
+        ui.getStage().addActor(confirmDialogButton);
+        ui.getStage().addActor(cancelDialogButton);
+
     }
 
     private ArrayList<Map> LoadMaps() {
@@ -191,9 +185,7 @@ public class MapsWorld extends AbstractWorld {
 
     private ArrayList<Map> CreateMaps() {
         ArrayList<Map> allMap = MapsLoader.GetMaps(this);
-        
-        
-        
+
         mapLocations = MapsLoader.GetMapsLocations();
         return allMap;
     }
@@ -215,7 +207,7 @@ public class MapsWorld extends AbstractWorld {
     }
 
     public void calculateBtnPos() {
-        float camPosX = stage.getCamera().position.x;
+        float camPosX = ui.getStage().getCamera().position.x;
         float min = 100000;
         for (float f : mapLocations) {
             if (Math.abs(camPosX - f) < min) {
@@ -227,15 +219,15 @@ public class MapsWorld extends AbstractWorld {
     }
 
     protected void setCameraX(float x) {
-        stage.getCamera().position.x = x;
-        stage.getCamera().update();
+        ui.getStage().getCamera().position.x = x;
+        ui.getStage().getCamera().update();
     }
 
     protected float getCameraX() {
-        return stage.getCamera().position.x;
+        return ui.getStage().getCamera().position.x;
     }
-    
-    public GameLibGDX GetGame(){
+
+    public GameLibGDX GetGame() {
         return this.game;
     }
 

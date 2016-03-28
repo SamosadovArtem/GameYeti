@@ -6,49 +6,31 @@
 package GameWorld.Game;
 
 import GameObjects.Button;
+import GameObjects.Interface;
 import GameWorld.AbstractWorld;
 import GameWorld.Game.Generator.Generator;
-import GameWorld.Game.Objects.Antelope;
 import GameWorld.Game.Objects.EndGameWindow;
 import GameWorld.Game.Objects.GameActor;
-import GameWorld.Game.Objects.Giraffe;
 import GameWorld.Game.Objects.Ground;
 import GameWorld.Game.Objects.Pinguin;
-import GameWorld.Game.Objects.Snake;
-import GameWorld.Game.Objects.Tree;
 import Helper.AssetLoader;
 import Helper.Constants;
 import Helper.FontLoader;
 import Helper.GameContactListener;
 import Helper.JumpCountController;
-import Helper.Statistic;
 import Helper.WorldUtils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.GameLibGDX;
 import com.mygdx.game.screen.DebugScreen;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  *
@@ -57,6 +39,7 @@ import java.util.List;
 public class GameWorld extends AbstractWorld {
 
     public World world;
+    
     private Ground ground, ground2;
     private Pinguin pinguin;	
     private JumpCountController jumpCountController;
@@ -74,8 +57,8 @@ public class GameWorld extends AbstractWorld {
     private float maxX = 0;
     private int objectsGenerateNum = 30;
 
-    public GameWorld(Stage stage, GameLibGDX g) {
-        super(stage, g);
+    public GameWorld(Interface ui, GameLibGDX g) {
+        super(ui, g);
         setUpWorld();
         Gdx.app.log("GameWorld", "create");
     }
@@ -83,7 +66,7 @@ public class GameWorld extends AbstractWorld {
     private void setUpWorld() {
        world = WorldUtils.createWorld();
         jumpCountController = new JumpCountController(3);
-        endGameWindow = new EndGameWindow(stage);
+        endGameWindow = new EndGameWindow(ui.getStage());
 
         setUpGround();
         setUpRunner();
@@ -93,13 +76,14 @@ public class GameWorld extends AbstractWorld {
         initDirY();
         initPower();
         initJumpCount();
-        createObjects((int) maxX, objectsGenerateNum);        
+        createObjects((int) maxX, objectsGenerateNum);   
+        ui.addBack(game);
     }
     
     private void createObjects(int startPos, int count){
         Generator g = new Generator(world, (int)Constants.GROUND_Y ,startPos, count);
         for(GameActor t: g.getObj()){
-            stage.addActor(t);
+            ui.getStage().addActor(t);
             if(t.getBody().getPosition().x > maxX){
                 maxX = t.getBody().getPosition().x;
             }
@@ -115,8 +99,8 @@ public class GameWorld extends AbstractWorld {
     private void setUpGround() {
         ground = new Ground(WorldUtils.createGround(world, 0f), AssetLoader.btn);        
         ground2 = new Ground(WorldUtils.createGround(world, Constants.GROUND_WIDTH), AssetLoader.btn);
-        stage.addActor(ground);
-        stage.addActor(ground2);
+        ui.getStage().addActor(ground);
+        ui.getStage().addActor(ground2);
     }
 	
 	
@@ -132,31 +116,31 @@ public class GameWorld extends AbstractWorld {
                 world.destroyBody(ground2.getBody());
                 ground2 = new Ground(WorldUtils.createGround(world, Constants.GROUND_WIDTH
                         + ground.getBody().getPosition().x), AssetLoader.btn);
-                stage.addActor(ground2);
+                ui.getStage().addActor(ground2);
             } else if(gr2- dlt >= pinguinX){
                 world.destroyBody(ground.getBody());
                 ground = new Ground(WorldUtils.createGround(world, ground2.getBody().getPosition().x -
                         Constants.GROUND_WIDTH), AssetLoader.btn);
-                stage.addActor(ground);
+                ui.getStage().addActor(ground);
             }
         } else {
             if(pinguinX >= gr2 + dlt){
                 world.destroyBody(ground.getBody());
                 ground = new Ground(WorldUtils.createGround(world, Constants.GROUND_WIDTH
                         + ground2.getBody().getPosition().x), AssetLoader.btn);
-                stage.addActor(ground);
+                ui.getStage().addActor(ground);
             } else if(gr1 >= pinguinX - dlt){
                 world.destroyBody(ground2.getBody());
                 ground2 = new Ground(WorldUtils.createGround(world, ground.getBody().getPosition().x -
                         Constants.GROUND_WIDTH), AssetLoader.btn);
-                stage.addActor(ground2);
+                ui.getStage().addActor(ground2);
             }
         }
     }
 
     private void setUpRunner() {
         pinguin = new Pinguin(WorldUtils.createPinguin(world), AssetLoader.btn);
-        stage.addActor(pinguin);
+        ui.getStage().addActor(pinguin);
     }
 
     @Override
@@ -185,13 +169,13 @@ public class GameWorld extends AbstractWorld {
             world.step(TIME_STEP, 6, 1);
             accumulator -= TIME_STEP;
         }
-        moveUI();
+        //moveUI();
         initHit();  
         setAngularPinguin();
         checkHeight();		
         unlimitedGame();            
         drawJumpCount();        
-        debugButton.setPosition(stage.getCamera().position.x + stage.getWidth() / 3, stage.getCamera().position.y + stage.getHeight() / 3);
+     //   debugButton.setPosition(stage.getCamera().position.x + stage.getWidth() / 3, stage.getCamera().position.y + stage.getHeight() / 3);
     }
     
     private void unlimitedGame(){
@@ -213,13 +197,6 @@ public class GameWorld extends AbstractWorld {
         }
         pinguin.setAngle(angle);
         
-    }
-    
-    private void moveUI() {
-        dirXText.setX(stage.getCamera().position.x - stage.getWidth() / 2);
-        dirYText.setX(stage.getCamera().position.x - stage.getWidth() / 2);
-        powText.setX(stage.getCamera().position.x - stage.getWidth() / 2);
-        jumpCountText.setX(stage.getCamera().position.x - stage.getWidth() / 2);
     }
 
     private void initHit() {
@@ -259,9 +236,9 @@ public class GameWorld extends AbstractWorld {
         dirXText = new Label("", labelS);
         dirXText.setAlignment(Align.center);
         dirXText.setFontScale(1);
-        dirXText.setSize(stage.getWidth() * 0.4f, stage.getHeight() / 5);
+        dirXText.setSize(ui.getStage().getWidth() * 0.4f, ui.getStage().getHeight() / 5);
         dirXText.setPosition(0, 350);
-        stage.addActor(dirXText);
+        ui.getGuiStage().addActor(dirXText);
     }
 
     private void initDirY() {
@@ -271,9 +248,9 @@ public class GameWorld extends AbstractWorld {
         dirYText = new Label("", labelS);
         dirYText.setAlignment(Align.center);
         dirYText.setFontScale(1);
-        dirYText.setSize(stage.getWidth() * 0.4f, stage.getHeight() / 5);
+        dirYText.setSize(ui.getStage().getWidth() * 0.4f, ui.getStage().getHeight() / 5);
         dirYText.setPosition(0, 400);
-        stage.addActor(dirYText);
+        ui.getGuiStage().addActor(dirYText);
     }
 
     private void initPower() {
@@ -283,9 +260,9 @@ public class GameWorld extends AbstractWorld {
         powText = new Label("", labelS);
         powText.setAlignment(Align.center);
         powText.setFontScale(1);
-        powText.setSize(stage.getWidth() * 0.4f, stage.getHeight() / 5);
+        powText.setSize(ui.getStage().getWidth() * 0.4f, ui.getStage().getHeight() / 5);
         powText.setPosition(0, 300);
-        stage.addActor(powText);
+        ui.getGuiStage().addActor(powText);
     }
 
     private void initJumpCount() {
@@ -295,9 +272,9 @@ public class GameWorld extends AbstractWorld {
         jumpCountText = new Label("", labelS);
         jumpCountText.setAlignment(Align.center);
         jumpCountText.setFontScale(1);
-        jumpCountText.setSize(stage.getWidth() * 0.4f, stage.getHeight() / 5);
-        jumpCountText.setPosition(-100, 250);
-        stage.addActor(jumpCountText);
+        jumpCountText.setSize(ui.getStage().getWidth() * 0.4f,  ui.getStage().getHeight() / 5);
+        jumpCountText.setPosition(0, 250);
+        ui.getGuiStage().addActor(jumpCountText);
     }
 
     private void addDebugButton(TextureRegion normalState, TextureRegion pressedState) {
@@ -305,15 +282,16 @@ public class GameWorld extends AbstractWorld {
             public void action() {
                 Gdx.app.log("check", "check");
 
-                stage.getActors().clear();
+                ui.getStage().getActors().clear();
                 game.setScreen(new DebugScreen(game));
 
             }
         };
-        debugButton.setSize(stage.getWidth() * 0.4f / 3, stage.getHeight() / 6);
-        debugButton.setPosition(stage.getCamera().position.x + stage.getWidth() / 3, stage.getCamera().position.y + stage.getHeight() / 3);
+        debugButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
+        debugButton.setPosition(ui.getStage().getCamera().position.x + ui.getStage().getWidth() / 3,
+                ui.getStage().getCamera().position.y + ui.getStage().getHeight() / 3);
 
-        stage.addActor(debugButton);
+        ui.getGuiStage().addActor(debugButton);
     }
 
     public JumpCountController getJumpCountController() {

@@ -59,14 +59,15 @@ public final class Location {
             distance = allBarriers.get(i+1).GetX() - allBarriers.get(i).GetX();
             if ((distance>(Constants.MAX_STEP - Constants.MIN_STEP)/2)&&
                     (allBarriers.get(i).GetType()!=BarrierTypes.COIN)&&
-                    (allBarriers.get(i+1).GetType()!=BarrierTypes.COIN)){
+                    (allBarriers.get(i+1).GetType()!=BarrierTypes.COIN)&&
+                    (isGenarateCoin())){
              Barrier coin = new Barrier(allBarriers.get(i).GetX()+distance/2, 
                      GetRandomY(), BarrierTypes.COIN);
              allBarriers.add(coin);
              Gdx.app.log("hui","Новая монета " + coin.GetX() + " Между " + 
                      allBarriers.get(i).GetX() + "Тип = "+ allBarriers.get(i).GetType() + 
                      " и " + allBarriers.get(i+1).GetX() + " Тип = "+ 
-                     allBarriers.get(i+1).GetType());
+                     allBarriers.get(i+1).GetType()+ "Высота - "+ coin.GetY());
             }
         }
         //allBarriers.addAll(coinsList);
@@ -74,13 +75,31 @@ public final class Location {
         return allBarriers;
     }
         private static int GetRandomY(){
+            /*
            float grY = Constants.GROUND_Y+Constants.GROUND_HEIGHT/2;
-           int yCoordinate = rnd.nextInt((int) (Constants.APP_HEIGHT - Constants.GROUND_Y+Constants.GROUND_HEIGHT/2)) + (int)grY;
+           int yCoordinate = rnd.nextInt((int) (Constants.APP_HEIGHT - 
+                   Constants.GROUND_Y+Constants.GROUND_HEIGHT)) + (int)grY;
+           if (yCoordinate<Constants.GROUND_Y){throw new IndexOutOfBoundsException("no");}
+           */
+           float grY = Constants.GROUND_Y+Constants.GROUND_HEIGHT/8;
+           int yCoordinate = rnd.nextInt((int) (Constants.APP_HEIGHT - 
+                   (Constants.GROUND_Y+Constants.GROUND_HEIGHT)))+(int)grY;
+            
+           
+            Float a = Constants.GROUND_Y;//120
+            
+            Float b = Constants.GROUND_HEIGHT;//60
+            
+            int c = Constants.APP_HEIGHT;//480
+            
            return yCoordinate;
         }
         private static BarrierTypes GetRandomType(){
         //int randomValue = rnd.nextInt(2);
         int randomValue = rnd.nextInt(typeCount);
+        
+        //не монетка
+        
         
         if (typeCounter[randomValue]==2){
             typeCounter[randomValue]=0;
@@ -88,11 +107,33 @@ public final class Location {
             while (randomValue==oldRandom){  //Если 2 раза подряд появилось, то нельзя повторять
                 randomValue = rnd.nextInt(typeCount);
             }
+            
+            if (BarrierTypes.values()[randomValue]!=BarrierTypes.COIN){
+            
+                typeCounter[randomValue]++;
+            
+                return BarrierTypes.values()[randomValue];
+            }else{
+                
+                typeCounter[1]++; //Если монетка, то лучше стоп добавим
+                
+                return BarrierTypes.STOP; // И вернем
+                
+            }
+            
+        }
+        
+        
+        if (BarrierTypes.values()[randomValue]!=BarrierTypes.COIN){
             typeCounter[randomValue]++;
             return BarrierTypes.values()[randomValue];
+        } else{
+            typeCounter[0]++; //А тут - если не монетка, то пусть змейка
+            
+            return BarrierTypes.SNAKE;
         }
-        typeCounter[randomValue]++;
-        return BarrierTypes.values()[randomValue];
+        
+ 
         
 //        if (pushCounter == 2) {
 //            pushCounter=0;
@@ -116,5 +157,12 @@ public final class Location {
 //        }
 //        throw new IllegalStateException("Somthing wrong");
     }
+        private static boolean isGenarateCoin(){
+            int random = rnd.nextInt(2);
+            if (random==1){
+                return true;
+            }
+            return false;
+        }
 
 }

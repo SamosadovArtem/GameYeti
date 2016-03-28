@@ -5,6 +5,7 @@
  */
 package GameWorld.Maps;
 
+import GameObjects.Interface;
 import GameWorld.Renderer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -17,12 +18,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 public class MapsRenderer extends Renderer {
 
     MapsWorld world;
-    Stage stage;
+    private Interface ui;
     
-    public MapsRenderer(MapsWorld world, Stage stage) {
+    public MapsRenderer(MapsWorld world, Interface ui) {
         super();
         this.world = world;
-        this.stage = stage;
+        this.ui = ui;
         Gdx.app.log("MapsRenderer", "create");
     }
 
@@ -31,7 +32,7 @@ public class MapsRenderer extends Renderer {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
-        stage.draw();
+        ui.draw();
     }
     
 }

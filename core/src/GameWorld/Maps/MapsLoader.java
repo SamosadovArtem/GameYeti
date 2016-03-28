@@ -9,10 +9,8 @@ import GameObjects.Map;
 import Helper.AssetLoader;
 import Helper.FontLoader;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.screen.GameScreen;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -41,9 +39,9 @@ public final class MapsLoader {
                 }
             }
         };
-        tempMap.setSize(world.stage.getWidth() * 0.4f, world.stage.getHeight() / 5);
-        tempMap.setPosition((world.stage.getWidth() - tempMap.getWidth()) / 2,
-                (world.stage.getHeight() - tempMap.getHeight()) / 2);
+        tempMap.setSize(world.getUI().getStage().getWidth() * 0.4f, world.getUI().getStage().getHeight() / 5);
+        tempMap.setPosition((world.getUI().getStage().getWidth() - tempMap.getWidth()) / 2,
+                (world.getUI().getStage().getHeight() - tempMap.getHeight()) / 2);
 
         allMaps.add(tempMap);
         mapLocations.add(tempMap.getX() + tempMap.getWidth() / 2);
@@ -62,9 +60,9 @@ public final class MapsLoader {
             }
         };
         tempMap2.SetPrice(20);
-        tempMap2.setSize(world.stage.getWidth() * 0.4f, world.stage.getHeight() / 5);
-        tempMap2.setPosition((world.stage.getWidth() - tempMap.getWidth()) / 2 + tempMap2.getWidth() * 2,
-                (world.stage.getHeight() - tempMap.getHeight()) / 2);
+        tempMap2.setSize(world.getUI().getStage().getWidth() * 0.4f, world.getUI().getStage().getHeight() / 5);
+        tempMap2.setPosition((world.getUI().getStage().getWidth() - tempMap.getWidth()) / 2 + tempMap2.getWidth() * 2,
+                (world.getUI().getStage().getHeight() - tempMap.getHeight()) / 2);
 
         allMaps.add(tempMap2);
         mapLocations.add(tempMap2.getX() + tempMap2.getWidth() / 2);

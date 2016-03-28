@@ -6,6 +6,7 @@
 package GameWorld.Game.Objects;
 
 import GameWorld.Game.Objects.GameActor;
+import Helper.AssetLoader;
 import Helper.Constants;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -46,7 +47,7 @@ public class Pinguin extends GameActor {
         
         this.setRotation(f);
             //this.getBody().setTransform(this.getBody().getPosition(), 
-             //   (float)Math.toRadians(angular));
+            //(float)Math.toRadians(angular));
     }
     
     public void show(){
@@ -94,8 +95,31 @@ public class Pinguin extends GameActor {
                         getWidth(), getHeight(),
                         1,1,
                         getRotation());   
+                if (!moved()) {                    
+                    drawPower(batch);
+                    if (!getIsDir()) {
+                        drawDirection(batch);
+                    }
+                }
             }        
         }
+    }
+    
+    private void drawPower(Batch batch){
+        batch.draw(AssetLoader.textureBtnNormal, getX() - getHeight() , getY() - getHeight() / 2, 
+                getHeight(), getWidth() * (getPower() / 100.0f), 
+            0 , (int)(AssetLoader.textureBtnNormal.getHeight() * ( 1.0f - getPower() / 100.0f)),
+            (int)AssetLoader.textureBtnNormal.getWidth(), 
+            (int)(AssetLoader.textureBtnNormal.getHeight() * (getPower() / 100.0f)), false, false);
+    }
+    
+    private void drawDirection(Batch batch){
+        batch.draw(pinguinTexture, 
+                        getX() + getWidth() , getY() - getHeight() / 2,
+                        getHeight() / 4 , getHeight() / 4, 
+                        getWidth(), getHeight() / 2,
+                        1,1,
+                        new Vector2(directionX, directionY).angle());
     }
     
     public void setPower(int p){

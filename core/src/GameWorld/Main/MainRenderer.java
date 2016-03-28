@@ -5,14 +5,12 @@
  */
 package GameWorld.Main;
 
+import GameObjects.Interface;
 import GameWorld.Renderer;
-import GameWorld.AbstractWorld;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
  *
@@ -23,12 +21,12 @@ public class MainRenderer extends Renderer {
        
     private ShapeRenderer shapeRenderer;
     MainWorld world;
-    Stage stage;
+    private Interface ui;
     
-    public MainRenderer(MainWorld world, Stage stage) {
+    public MainRenderer(MainWorld world, Interface ui) {
         super();
         this.world = world;
-        this.stage = stage;
+        this.ui = ui;
         Gdx.app.log("MainRenderer", "create");
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(cam.combined);
@@ -72,7 +70,7 @@ public class MainRenderer extends Renderer {
                 world.getRect().width, world.getRect().height);
 
         shapeRenderer.end();
-        stage.draw();
+        ui.draw();
     }
     
 }

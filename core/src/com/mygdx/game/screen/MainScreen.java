@@ -9,8 +9,6 @@ import GameWorld.Main.MainRenderer;
 import GameWorld.Main.MainWorld;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.GameLibGDX;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  *
@@ -20,23 +18,23 @@ public class MainScreen extends AbstractScreen {
 
     public MainWorld world;
     public MainRenderer render;
-    
+
     public MainScreen(GameLibGDX game) {
         super(game);
         Gdx.app.log("MainScreen", "main screen created");
     }
 
     @Override
-    protected void initScene() {  
+    protected void initScene() {
         Gdx.app.log("MainScreen", "initScene");
-        this.world = new MainWorld(stage, game);
-        this.render = new MainRenderer(world, stage);        
+        this.world = new MainWorld(ui, game);
+        this.render = new MainRenderer(world, ui);
     }
-    
+
     @Override
     public void render(float delta) {
         world.update(delta);
         render.render();
     }
-    
+
 }

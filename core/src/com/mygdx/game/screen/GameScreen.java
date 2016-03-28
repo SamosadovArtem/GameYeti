@@ -31,24 +31,24 @@ public class GameScreen extends AbstractScreen {
     @Override
     protected void initScene() {
         Gdx.app.log("GameScreen", "initScene");
-        this.world = new GameWorld(stage, game);
-        this.renderer = new GameRenderer(world, stage); 
+        this.world = new GameWorld(ui, game);
+        this.renderer = new GameRenderer(world, ui);
         Gdx.input.setInputProcessor(new InputHandler(world));
     }
 
     @Override
     public void render(float delta) {
         world.update(delta);
-        moveCamera();                
+        moveCamera();
         //Gdx.app.log("GameWorld", "xPos" + world.getPinguin().getBody().getPosition().x);
         //Gdx.app.log("GameWorld", "xPosCam" + stage.getCamera().position.x);
-        renderer.render();      
+        renderer.render();
     }
-    
-    private void moveCamera(){
+
+    private void moveCamera() {
         float speed = 0;
-        if(world.getPlayerX() != getCameraX() + stage.getWidth() * 0.3f){
-            speed = (world.getPlayerX() - getCameraX() + stage.getWidth() * 0.3f) / cameraCoff;
+        if (world.getPlayerX() != getCameraX() + ui.getStage().getWidth() * 0.3f) {
+            speed = (world.getPlayerX() - getCameraX() + ui.getStage().getWidth() * 0.3f) / cameraCoff;
         }
         setCameraX(getCameraX() + speed);
     }

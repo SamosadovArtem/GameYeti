@@ -5,6 +5,7 @@
  */
 package GameWorld.Buffs;
 
+import GameObjects.Interface;
 import GameWorld.AbstractWorld;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -16,13 +17,13 @@ import com.mygdx.game.GameLibGDX;
  */
 public class BuffsWorld extends AbstractWorld {
 
-    public BuffsWorld(Stage stage, GameLibGDX g){        
-        super(stage, g);
+    public BuffsWorld(Interface ui, GameLibGDX g) {
+        super(ui, g);
         Gdx.app.log("BuffsWorld", "create");
     }
-    
+
     @Override
     public void update(float delta) {
     }
-    
+
 }

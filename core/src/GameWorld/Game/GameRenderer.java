@@ -5,6 +5,7 @@
  */
 package GameWorld.Game;
 
+import GameObjects.Interface;
 import GameWorld.Buffs.BuffsWorld;
 import GameWorld.Renderer;
 import GameWorld.AbstractWorld;
@@ -23,27 +24,27 @@ import java.util.Set;
  * @author qw
  */
 public class GameRenderer extends Renderer {
-        
+
     private Box2DDebugRenderer renderer;
     private GameWorld world;
-    private Stage stage;
+    private Interface ui;
 
-    public GameRenderer(GameWorld world, Stage stage) {
+    public GameRenderer(GameWorld world, Interface ui) {
         super();
         this.world = world;
-        this.stage = stage;
-        
+        this.ui = ui;
+
         renderer = new Box2DDebugRenderer();
         renderer.setDrawVelocities(true);
-        stage.getCamera().position.x = stage.getWidth() * 0.3f;
+        ui.getStage().getCamera().position.x = ui.getStage().getWidth() * 0.3f;
         Gdx.app.log("GameRenderer", "create");
     }
-    
+
     @Override
-    public void render(){
-        Gdx.gl.glClearColor(0, 0,0, 0);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);       
+    public void render() {
+        Gdx.gl.glClearColor(0, 0, 0, 0);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.render(world.world, cam.combined);
-        stage.draw();
+        ui.draw();
     }
 }

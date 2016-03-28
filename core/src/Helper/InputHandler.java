@@ -43,7 +43,8 @@ public class InputHandler implements InputProcessor {
     
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        world.stage.touchDown(screenX, screenY, pointer, button);
+        world.getUI().getStage().touchDown(screenX, screenY, pointer, button);
+        world.getUI().getGuiStage().touchDown(screenX, screenY, pointer, button);
 
         if (!pinguin.moved() && world.getJumpCountController().checkJump()) {
             if (!pinguin.getIsPower()) {

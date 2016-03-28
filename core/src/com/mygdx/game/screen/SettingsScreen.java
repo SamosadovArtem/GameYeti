@@ -5,28 +5,27 @@
  */
 package com.mygdx.game.screen;
 
-import GameWorld.Game.Debug.DebugRenderer;
-import GameWorld.Game.Debug.DebugWorld;
-import GameWorld.Game.GameWorld;
+import GameWorld.Settings.SettingsRenderer;
+import GameWorld.Settings.SettingsWorld;
 import com.mygdx.game.GameLibGDX;
 
 /**
  *
  * @author Pablo
  */
-public class DebugScreen extends AbstractScreen {
+public class SettingsScreen extends AbstractScreen {
 
-    private DebugWorld world;
-    private DebugRenderer renderer;
+    private SettingsWorld world;
+    private SettingsRenderer renderer;
 
-    public DebugScreen(GameLibGDX game) {
+    public SettingsScreen(GameLibGDX game) {
         super(game);
     }
 
     @Override
     protected void initScene() {
-        this.world = new DebugWorld(ui, game);
-        this.renderer = new DebugRenderer(world, ui);
+        this.world = new SettingsWorld(ui, game);
+        this.renderer = new SettingsRenderer(world, ui);
     }
 
     @Override
@@ -40,4 +39,5 @@ public class DebugScreen extends AbstractScreen {
         world.getUI().dispose();
         // game.dispose();
     }
+
 }

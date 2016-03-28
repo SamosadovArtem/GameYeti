@@ -12,13 +12,11 @@ import GameWorld.Game.Objects.Giraffe;
 import GameWorld.Game.Objects.Pinguin;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.WorldManifold;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
  *
@@ -78,14 +76,14 @@ public class GameContactListener implements ContactListener {
                 contact.getFixtureA().getUserData().equals("PINGUIN")){ 
                 Gdx.app.log("PINGUIN", "COION");
                 g = (Coin)contact.getFixtureB().getUserData();
-                g.take(w.world, w.stage);
+                g.take(w.world, w.getUI().getStage());
                 g.getBody().setUserData("DELETE");
 
             } else if(contact.getFixtureA().getUserData() instanceof Coin &&
                 contact.getFixtureB().getUserData().equals("PINGUIN")){  
                 Gdx.app.log("PINGUIN", "COIN");
                 g = (Coin)contact.getFixtureA().getUserData();
-                g.take(w.world, w.stage);
+                g.take(w.world, w.getUI().getStage());
                 g.getBody().setUserData("DELETE");
             }
         }

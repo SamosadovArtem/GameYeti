@@ -42,7 +42,7 @@ public class MapsInputHandler implements InputProcessor{
         isTouched = true;
         world.isNotTouched = false;    
         _oldX = screenX;
-        world.stage.touchDown(screenX, screenY, pointer, button);
+        world.getUI().getStage().touchDown(screenX, screenY, pointer, button);
         
         return true;
     }
@@ -61,16 +61,16 @@ public class MapsInputHandler implements InputProcessor{
         if ((isTouched)&&(_oldX > screenX)){
 
             _oldX = screenX;
-            if(world.stage.getCamera().position.x < max){
-                world.stage.getCamera().position.x+=temp-screenX;
+            if(world.getUI().getStage().getCamera().position.x < max){
+                world.getUI().getStage().getCamera().position.x+=temp-screenX;
             }
             System.out.println(screenX);
         }
 
         if ((isTouched)&&(_oldX<screenX)){
             _oldX = screenX;
-            if(world.stage.getCamera().position.x > min){
-            world.stage.getCamera().position.x+=temp-screenX;
+            if(world.getUI().getStage().getCamera().position.x > min){
+            world.getUI().getStage().getCamera().position.x+=temp-screenX;
             }
             System.out.println(screenX);
         }

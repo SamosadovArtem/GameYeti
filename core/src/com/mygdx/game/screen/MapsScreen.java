@@ -21,31 +21,30 @@ public class MapsScreen extends AbstractScreen {
 
     public MapsWorld world;
     public MapsRenderer render;
-    
+
     public MapsScreen(GameLibGDX game) {
         super(game);
         Gdx.app.log("MapScreen", "main screen created");
-        
+
         MapsInputHandler mph = new MapsInputHandler(world.GetButtonPositions(), world);
-        
-        
-        
+
         Gdx.input.setInputProcessor(mph);
     }
 
     @Override
     protected void initScene() {
         Gdx.app.log("MainScreen", "initScene");
-        this.world = new MapsWorld(stage, game);
-        this.render = new MapsRenderer(world, stage); 
+        this.world = new MapsWorld(ui, game);
+        this.render = new MapsRenderer(world, ui);
     }
-    
+
     @Override
     public void render(float delta) {
         world.update(delta);
         render.render();
     }
-    
+
     @Override
-    public void show(){}
+    public void show() {
+    }
 }

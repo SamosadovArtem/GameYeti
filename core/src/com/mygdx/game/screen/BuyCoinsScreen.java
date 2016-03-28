@@ -6,8 +6,6 @@
 package com.mygdx.game.screen;
 
 import GameWorld.BuyCoins.BuyCoinsWorld;
-import GameWorld.Main.MainRenderer;
-import GameWorld.Main.MainWorld;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.GameLibGDX;
 
@@ -19,19 +17,19 @@ public class BuyCoinsScreen extends AbstractScreen {
 
     public BuyCoinsWorld world;
     public BuyCoinsRenderer render;
-    
+
     public BuyCoinsScreen(GameLibGDX game) {
         super(game);
         Gdx.app.log("BuyCoinsScreen", "main screen created");
     }
-    
+
     @Override
     protected void initScene() {
         Gdx.app.log("BuyCoinsScreen", "initScene");
-        this.world = new BuyCoinsWorld(stage, game);
+        this.world = new BuyCoinsWorld(ui, game);
         this.render = new BuyCoinsRenderer(world);
-    }    
-    
+    }
+
     @Override
     public void render(float delta) {
         world.update(delta);
