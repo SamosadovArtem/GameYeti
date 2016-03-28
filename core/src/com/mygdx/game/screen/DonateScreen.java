@@ -9,7 +9,6 @@ package com.mygdx.game.screen;
  *
  * @author AS
  */
-import GameWorld.World;
 import GameWorld.Buffs.BuffsWorld;
 import GameWorld.Main.MainRenderer;
 import GameWorld.Main.MainWorld;
@@ -33,7 +32,7 @@ public class DonateScreen extends AbstractScreen{
     @Override
     public void initScene(){
         Gdx.app.log("DonateScreen","created");
-        this.world = new DonateWorld(stage, game);
-        renderer = new DonateRenderer(this.world,stage);
+        this.world = new DonateWorld(ui, game);
+        renderer = new DonateRenderer(this.world, ui);
     }
 }

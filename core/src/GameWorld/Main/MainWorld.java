@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.mygdx.game.GameLibGDX;
+import com.mygdx.game.screen.DonateScreen;
 import com.mygdx.game.screen.GameScreen;
 import com.mygdx.game.screen.MapsScreen;
 import com.mygdx.game.screen.SettingsScreen;
@@ -107,7 +108,7 @@ public class MainWorld extends AbstractWorld {
     private void topButton(TextureRegion normalState, TextureRegion pressedState) {
         topButton = new Button("Top", normalState, pressedState, "TOP", FontLoader.font) {
             public void action() {
-                //game.setScreen(new MapsScreen(game));                
+                game.setScreen(new DonateScreen(game));                
             }
         };
         topButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
