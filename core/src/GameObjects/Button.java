@@ -73,18 +73,20 @@ public class Button extends Actor {
   }
   //Метод отрисовки кнопки (вызывается в цикле при отрисовке сцены)
   public void draw (Batch batch, float parentAlpha) {
-    //Если кнопка нажата, то рисуем текстуру нажатого состояния, если нет - нормального
-    if (!getTouched()) {
-      batch.draw(textureNormal, getX(), getY(), getWidth(), getHeight());
-    } else {
-      batch.draw(textureTouched, getX(), getY(), getWidth(), getHeight());
-    }
-    //Устанавливаем цвет фона
-    BitmapFont font = new BitmapFont();
-    font.setFixedWidthGlyphs(text);
-    this.getFont().setColor(0,0,0,1);
-    //Рисуем текст по центру кнопки
-   this.getFont().draw(batch, this.getText(), this.getX(), 
-            this.getY() + this.getHeight() /2 + this.getFont().getCapHeight() / 2);
-   }
+      //Если кнопка нажата, то рисуем текстуру нажатого состояния, если нет - нормального
+      if (!getTouched()) {
+        batch.draw(textureNormal, getX(), getY(), getWidth(), getHeight());
+      } else {
+        batch.draw(textureTouched, getX(), getY(), getWidth(), getHeight());
+      }
+      //Устанавливаем цвет фона
+      BitmapFont font = new BitmapFont();
+      font.setFixedWidthGlyphs(text);
+      this.getFont().setColor(0,0,0,1);
+      //Рисуем текст по центру кнопки
+    this.getFont().drawMultiLine (batch, this.getText(), this.getX(),
+            this.getY() + this.getHeight() / 2 + this.getFont().getCapHeight() / 2, this.getWidth() * 1.0f, BitmapFont.HAlignment.CENTER);
+     /*this.getFont().drawMultiLine(batch, this.getText(), this.getX(),
+             this.getY() + this.getHeight() / 2 + this.getFont().getCapHeight() / 2, Align.center);*/
+     }
 }
