@@ -22,9 +22,9 @@ public final class MapsLoader {
     private static TextureRegion firstButtonnPressedState = AssetLoader.btnPress;
     private static TextureRegion firstButtonUnboughtState = AssetLoader.btn;
     private static ArrayList<Float> mapLocations;
-    public static ArrayList<Map> GetMaps(MapsWorld world){
+    public static ArrayList<Map> GetMaps( final MapsWorld world){
         allMaps = new ArrayList<Map>();
-        mapLocations = new ArrayList<>();
+        mapLocations = new ArrayList<Float>();
         
           Map tempMap = new Map("0", firstButtonNormalState,
                 firstButtonnPressedState, firstButtonUnboughtState, "0", FontLoader.font){

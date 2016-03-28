@@ -25,7 +25,7 @@ public class MapsWorld extends AbstractWorld {
 
     public ArrayList<Map> mapsList = new ArrayList<Map>();
 
-    ArrayList<Float> mapLocations = new ArrayList<>();
+    ArrayList<Float> mapLocations = new ArrayList<Float>();
 
     public boolean isNotTouched = false;
 
@@ -175,10 +175,13 @@ public class MapsWorld extends AbstractWorld {
     private ArrayList<Map> LoadMaps() {
         String openMaps = Statistic.getOpenMaps();
         ArrayList<Map> allMap = CreateMaps();
-        String[] mapsArray = openMaps.split(",");
+        String[] mapsArray = new String[]{"0"};// openMaps.split(",");
         for (int i = 0; i < mapsArray.length; i++) {
-            allMap.get(Integer.parseInt(mapsArray[i])).BuyMap();
-            int a = 7;
+            try {
+                allMap.get(Integer.valueOf(mapsArray[i])).BuyMap();
+            } catch (Exception e){
+
+            }
         }
         return allMap;
     }

@@ -71,7 +71,7 @@ public class Interface {
         guiStage.addActor(coinText);
     }
     
-    public void addBack(GameLibGDX game){
+    public void addBack(final GameLibGDX game){
         Button backButton;
         backButton = new Button("Top", AssetLoader.btn, AssetLoader.btnPress, "TOP", FontLoader.font) {
             public void action() {

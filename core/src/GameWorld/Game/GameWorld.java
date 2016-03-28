@@ -149,19 +149,22 @@ public class GameWorld extends AbstractWorld {
 
         addGround();
         Array<Body> bodies = new Array<Body>();       
-        world.getBodies(bodies); 
-        
-        for(Body bod: bodies){ 
-            if(pinguin.getBody().getPosition().x - bod.getPosition().x >= Constants.APP_WIDTH * 5){
+        world.getBodies(bodies);
+
+        for (Body bod : bodies) {
+            if (pinguin.getBody().getPosition().x - bod.getPosition().x >= Constants.APP_WIDTH * 5
+                    && bod != null) {
                 bod.setUserData("DELETE");
                 bod.getFixtureList().get(0).setUserData("DELETE");
             }
         }
-        
-        for(Body bod: bodies){ 
-            if(bod.getFixtureList().get(0).getUserData() != null
-                    && bod.getFixtureList().get(0).getUserData().equals("DELETE")){
-                world.destroyBody(bod); 
+
+        for (Body bod : bodies) {
+            if (bod.getFixtureList().get(0).getUserData() != null
+                    && bod.getFixtureList().get(0).getUserData().equals("DELETE")) {
+                if (world.isLocked()) {
+                    world.destroyBody(bod);
+                }
             }
         }
         

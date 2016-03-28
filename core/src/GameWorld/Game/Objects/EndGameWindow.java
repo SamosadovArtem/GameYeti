@@ -48,7 +48,7 @@ public class EndGameWindow extends AbstractWindow {
     }
 
     @Override
-    protected void initButtons(GameLibGDX game) {
+    protected void initButtons(final GameLibGDX game) {
         Button restartButton = new Button("Restart", normalState, pressedState, "RESTART", FontLoader.font) {
             public void action() {
                 Gdx.app.log("check", "check");

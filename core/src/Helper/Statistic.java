@@ -29,7 +29,7 @@ public class Statistic {
         }
         
         if (!prefs.contains("openMaps")) {
-            prefs.putString("openMaps", "0");
+            prefs.putString("openMaps", "0,1,");
         }
         
         //CloseMaps();
@@ -39,6 +39,7 @@ public class Statistic {
     public static int getCoins(){
         return prefs.getInteger("coins");
     }
+
     public static String getOpenMaps(){
         return prefs.getString("openMaps");
     }
