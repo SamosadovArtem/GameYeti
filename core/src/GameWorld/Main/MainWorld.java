@@ -24,6 +24,7 @@ import com.mygdx.game.screen.DonateScreen;
 import com.mygdx.game.screen.GameScreen;
 import com.mygdx.game.screen.MapsScreen;
 import com.mygdx.game.screen.SettingsScreen;
+import com.mygdx.game.screen.StatisticScreen;
 
 /**
  *
@@ -95,7 +96,7 @@ public class MainWorld extends AbstractWorld {
     private void buffsButton(TextureRegion normalState, TextureRegion pressedState) {
         buffsButton = new Button("Buffs", normalState, pressedState, "BUFF", FontLoader.font) {
             public void action() {
-                //game.setScreen(new MapsScreen(game));                
+                game.setScreen(new StatisticScreen(game));                
             }
         };
         buffsButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);

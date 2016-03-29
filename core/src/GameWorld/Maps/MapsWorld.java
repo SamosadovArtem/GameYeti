@@ -71,7 +71,6 @@ public class MapsWorld extends AbstractWorld {
                 - confirmDialogButton.getWidth() * 1.5));
 
         if (isTouchUnboughtMap) {
-            System.out.println(mapsList.get(1).IsMapBought());
             isDialog = true;
 
             if (confirmDialogButton.getY() >= ui.getStage().getHeight() / 2) {
@@ -139,9 +138,6 @@ public class MapsWorld extends AbstractWorld {
                 } catch (IllegalArgumentException e) {
                     System.err.println(e.getMessage());
                 }
-
-                System.out.println(mapToBuy.getName());
-                System.out.println(mapToBuy.IsMapBought());
             }
         };
         confirmDialogButton.setSize(ui.getStage().getWidth() * 0.1f, ui.getStage().getHeight() / 10);

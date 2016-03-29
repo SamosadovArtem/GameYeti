@@ -24,6 +24,8 @@ import com.mygdx.game.screen.MainScreen;
 public class Interface {
 
     private Stage stage, guiStage;
+    private int coin = Statistic.getCoins();
+    private Label coinText;
 
     public Interface(Stage stage, Stage guiStage) {
         this.stage = stage;
@@ -45,6 +47,7 @@ public class Interface {
     }
 
     public void draw() {
+        updateCoins();
         stage.draw();
         guiStage.draw();
     }
@@ -57,18 +60,25 @@ public class Interface {
         return stage.getHeight();
     }
 
-    private void addCoins() {
-        Label coinText;
+    private void addCoins() {        
         Label.LabelStyle labelS = new Label.LabelStyle();
         labelS.font = new BitmapFont();
         labelS.fontColor = Color.WHITE;
         coinText = new Label("", labelS);
         coinText.setAlignment(Align.center);
         coinText.setFontScale(1);
-        coinText.setSize(guiStage.getWidth()*9/5, getStage().getHeight() / 5);
-        coinText.setPosition(0, 400);
+        coinText.setSize(guiStage.getWidth()*9/5, guiStage.getHeight() / 5);
+        coinText.setPosition(0, guiStage.getHeight() * 3 / 5);
         coinText.setText("Coins: " + Statistic.getCoins());
         guiStage.addActor(coinText);
+    }
+    
+    
+    private void updateCoins(){
+        if(coin != Statistic.getCoins()){
+            coin = Statistic.getCoins();
+            coinText.setText("Coins: " + coin);
+        }
     }
     
     public void addBack(final GameLibGDX game){
@@ -77,7 +87,6 @@ public class Interface {
             public void action() {
                 Gdx.app.log("check", "check");
                 game.setScreen(new MainScreen(game));
-
             }
         };
         backButton.setSize(getStage().getWidth() * 0.4f / 3, getStage().getHeight() / 6);

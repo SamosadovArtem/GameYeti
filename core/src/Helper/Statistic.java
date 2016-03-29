@@ -32,8 +32,45 @@ public class Statistic {
             prefs.putString("openMaps", "0,1,");
         }
         
-        //CloseMaps();
-        //addCoins(100);
+        if (!prefs.contains("allGames")) {
+            prefs.putInteger("allGames", 0);
+        }
+        
+        if (!prefs.contains("allJumps")) {
+            prefs.putInteger("allJumps", 0);
+        }
+        
+        if (!prefs.contains("allLength")) {
+            prefs.putInteger("allLength", 0);
+        }
+        
+    }
+    
+    public static int getGames(){
+        return prefs.getInteger("allGames");
+    }
+    
+    public static void playGame(){
+        prefs.putInteger("allGames", getGames() + 1);
+        prefs.flush();
+    }
+    
+    public static int getJumps(){
+        return prefs.getInteger("allJumps");
+    }
+    
+    public static void jump(){
+        prefs.putInteger("allJumps", getJumps() + 1);
+        prefs.flush();
+    }
+    
+    public static int getLength(){
+        return prefs.getInteger("allLength");
+    }
+    
+    public static void setLength(int l){
+        prefs.putInteger("allLength", getLength() + l);
+        prefs.flush();
     }
     
     public static int getCoins(){

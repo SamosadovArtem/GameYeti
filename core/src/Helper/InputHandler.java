@@ -64,6 +64,8 @@ public class InputHandler implements InputProcessor {
     
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        world.getUI().getStage().touchUp(screenX, screenY, pointer, button);
+        world.getUI().getGuiStage().touchUp(screenX, screenY, pointer, button);
         return false;
     }
     

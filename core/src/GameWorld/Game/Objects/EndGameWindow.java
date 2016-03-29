@@ -8,6 +8,7 @@ package GameWorld.Game.Objects;
 import GameObjects.Button;
 import GameObjects.AbstractWindow;
 import Helper.FontLoader;
+import Helper.Statistic;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -26,12 +27,19 @@ import com.mygdx.game.screen.MainScreen;
  */
 public class EndGameWindow extends AbstractWindow {
 
+    private int highscore = 0;
+    
     public EndGameWindow(Stage stage) {
         super(stage);
         width = stage.getWidth() / 2;
         height = stage.getHeight() * 4 / 5;
     }
 
+    public void initHighscore(int score){
+        highscore = score;
+        Statistic.setHighScore(score);
+    }
+    
     @Override
     protected void initText() {
         Label textLabel;
@@ -45,6 +53,15 @@ public class EndGameWindow extends AbstractWindow {
         textLabel.setText("GAME OVER");
         textLabel.setPosition(xPos, yPos + height / 5);
         stage.addActor(textLabel);
+        
+        Label scoreLabel;
+        scoreLabel = new Label("", labelS);
+        scoreLabel.setAlignment(Align.center);
+        scoreLabel.setFontScale(1);
+        scoreLabel.setSize(width / 3, height / 6);
+        scoreLabel.setText("" + highscore);
+        scoreLabel.setPosition(xPos, yPos + height / 4);
+        stage.addActor(scoreLabel);
     }
 
     @Override

@@ -8,6 +8,7 @@ package com.mygdx.game.screen;
 import GameWorld.Game.GameRenderer;
 import GameWorld.Game.GameWorld;
 import Helper.InputHandler;
+import Helper.Statistic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
@@ -34,6 +35,7 @@ public class GameScreen extends AbstractScreen {
         this.world = new GameWorld(ui, game);
         this.renderer = new GameRenderer(world, ui);
         Gdx.input.setInputProcessor(new InputHandler(world));
+        Statistic.playGame();
     }
 
     @Override

@@ -43,6 +43,7 @@ public class MapsInputHandler implements InputProcessor{
         world.isNotTouched = false;    
         _oldX = screenX;
         world.getUI().getStage().touchDown(screenX, screenY, pointer, button);
+        world.getUI().getGuiStage().touchDown(screenX, screenY, pointer, button);
         
         return true;
     }
@@ -51,7 +52,9 @@ public class MapsInputHandler implements InputProcessor{
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         isTouched = false; 
         world.calculateBtnPos();
-        world.isNotTouched = true;        
+        world.isNotTouched = true;  
+        world.getUI().getStage().touchUp(screenX, screenY, pointer, button);
+        world.getUI().getGuiStage().touchUp(screenX, screenY, pointer, button);
         return true;
     }
 

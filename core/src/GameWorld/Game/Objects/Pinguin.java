@@ -8,6 +8,7 @@ package GameWorld.Game.Objects;
 import GameWorld.Game.Objects.GameActor;
 import Helper.AssetLoader;
 import Helper.Constants;
+import Helper.Statistic;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -134,6 +135,7 @@ public class Pinguin extends GameActor {
     public void jump(){
         body.applyLinearImpulse(new Vector2(directionX * power * powerCof, directionY * power * powerCof),
                 body.getWorldCenter(), true);
+        Statistic.jump();
         //body.setTransform(body.getPosition(), (float)Math.toRadians(body.getLinearVelocity().angle()));
     }
     
