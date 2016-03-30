@@ -115,7 +115,6 @@ public class GameContactListener implements ContactListener {
                 //contact.setEnabled(true);
                 Antelope ant = (Antelope) contact.getFixtureA().getUserData();
                 ant.ride(pinguin);
-                Gdx.app.log("check", "check");
             }
         }
         if (contact.getFixtureB().getUserData() instanceof Antelope) {
@@ -125,7 +124,6 @@ public class GameContactListener implements ContactListener {
                 //  antelopeRide((Antelope) contact.getFixtureB().getUserData());
                 Antelope ant = (Antelope) contact.getFixtureB().getUserData();
                 ant.ride(pinguin);
-                Gdx.app.log("check", "check");
             }
         }
     }
@@ -167,14 +165,12 @@ public class GameContactListener implements ContactListener {
         if(contact.getFixtureB().getUserData() instanceof Giraffe &&
             contact.getFixtureA().getUserData().equals("PINGUIN")){            
             contact.setEnabled(false);
-            Gdx.app.log("PINGUIN", "GIRAFFE");
             g = (Giraffe)contact.getFixtureB().getUserData();
             g.throwPinguin(pinguin);
             
         } else if(contact.getFixtureA().getUserData() instanceof Giraffe &&
             contact.getFixtureB().getUserData().equals("PINGUIN")){  
             contact.setEnabled(false); 
-            Gdx.app.log("PINGUIN", "GIRAFFE");
             g = (Giraffe)contact.getFixtureA().getUserData();
             g.throwPinguin(pinguin);
         }

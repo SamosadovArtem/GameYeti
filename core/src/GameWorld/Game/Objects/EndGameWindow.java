@@ -13,6 +13,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
@@ -28,18 +29,19 @@ import com.mygdx.game.screen.MainScreen;
 public class EndGameWindow extends AbstractWindow {
 
     private int highscore = 0;
-    
+
     public EndGameWindow(Stage stage) {
         super(stage);
         width = stage.getWidth() / 2;
-        height = stage.getHeight() * 4 / 5;
+        height = stage.getHeight() * 3 / 5;
     }
 
-    public void initHighscore(int score){
+    public void initHighscore(int score) {
         highscore = score;
         Statistic.setHighScore(score);
+        Statistic.setLength(score);
     }
-    
+
     @Override
     protected void initText() {
         Label textLabel;
@@ -51,17 +53,19 @@ public class EndGameWindow extends AbstractWindow {
         textLabel.setFontScale(1);
         textLabel.setSize(width / 3, height / 6);
         textLabel.setText("GAME OVER");
-        textLabel.setPosition(xPos, yPos + height / 5);
-        stage.addActor(textLabel);
-        
+        textLabel.setPosition(xPos + width / 2 - textLabel.getWidth() / 2,
+                yPos + height - textLabel.getHeight());
+        group.addActor(textLabel);
+
         Label scoreLabel;
         scoreLabel = new Label("", labelS);
         scoreLabel.setAlignment(Align.center);
         scoreLabel.setFontScale(1);
         scoreLabel.setSize(width / 3, height / 6);
         scoreLabel.setText("" + highscore);
-        scoreLabel.setPosition(xPos, yPos + height / 4);
-        stage.addActor(scoreLabel);
+        scoreLabel.setPosition(xPos + width / 2 - scoreLabel.getWidth() / 2,
+                yPos + height * 2 / 3);
+        group.addActor(scoreLabel);
     }
 
     @Override
@@ -74,8 +78,8 @@ public class EndGameWindow extends AbstractWindow {
             }
         };
         restartButton.setSize(width / 5, height / 6);
-        restartButton.setPosition(xPos - width * 1 / 3, yPos);
-        stage.addActor(restartButton);
+        restartButton.setPosition(xPos, yPos);
+        group.addActor(restartButton);
 
         Button backButton = new Button("Back", normalState, pressedState, "BACK", FontLoader.font) {
             public void action() {
@@ -85,7 +89,7 @@ public class EndGameWindow extends AbstractWindow {
             }
         };
         backButton.setSize(width / 5, height / 6);
-        backButton.setPosition(xPos + width * 1 / 3, yPos);
-        stage.addActor(backButton);
+        backButton.setPosition(xPos + width - backButton.getWidth(), yPos);
+        group.addActor(backButton);
     }
 }

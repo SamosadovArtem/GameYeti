@@ -48,7 +48,6 @@ public class MapsWorld extends AbstractWorld {
 
     public MapsWorld(Interface ui, GameLibGDX g) {
         super(ui, g);
-        Gdx.app.log("MapsWorld", "create");
 
         mapsList = LoadMaps(); //Там должны загружаться карты, но пока будут создаваться
         //drawMaps(maplsList);
