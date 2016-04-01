@@ -16,43 +16,54 @@ import com.badlogic.gdx.physics.box2d.World;
  *
  * @author qw
  */
-public class StopObj extends GameActor{
-    
+public class StopObj extends GameActor {
+
     private TextureRegion groundTexture;
     private float width;
     private float height;
-    
-    
-    public StopObj(World world, float x, float y, float width, float height, TextureRegion groundTexture){
+
+    public StopObj(World world, float x, float y, float width, float height, TextureRegion groundTexture) {
         this.body = WorldUtils.createStopObj(world, x, y, width, height);
-        this. width = width;
+        this.width = width;
         this.height = height;
         this.groundTexture = groundTexture;
     }
-    
+
+    public StopObj(Body body, float x, float y, float width, float height, TextureRegion groundTexture) {
+        this.body = body;
+        this.width = width;
+        this.height = height;
+        this.groundTexture = groundTexture;
+        this.mapActor = true;
+    }
+
     @Override
-    public float getX(){
+    public float getX() {
         return body.getPosition().x;
     }
-    
+
     @Override
-    public float getY(){
-        return body.getPosition().y;
+    public float getY() {
+        if (!mapActor) {
+            return body.getPosition().y;
+        } else {
+            return body.getPosition().y - Constants.GROUND_Y - Constants.GROUND_HEIGHT / 2;
+        }
     }
-    
+
     @Override
-    public float getWidth(){
+    public float getWidth() {
         return width;
     }
-    
+
     @Override
-    public float getHeight(){
+    public float getHeight() {
         return height;
     }
-    
-    public void draw (Batch batch, float parentAlpha) {   
-        if(delete()){
-            batch.draw(groundTexture, getX() - getWidth()/2, getY() - getHeight() / 2, getWidth(), getHeight());   
+
+    public void draw(Batch batch, float parentAlpha) {
+        if (delete() && checkDraw()) {
+            batch.draw(groundTexture, getX() - getWidth() / 2, getY() - getHeight() / 2, getWidth(), getHeight());
         }
     }
 }

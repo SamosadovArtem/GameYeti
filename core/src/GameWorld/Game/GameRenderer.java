@@ -26,14 +26,16 @@ import java.util.Set;
 public class GameRenderer extends Renderer {
 
     private Box2DDebugRenderer renderer;
+    private GameMap map;
     private GameWorld world;
     private Interface ui;
 
-    public GameRenderer(GameWorld world, Interface ui) {
+    public GameRenderer(GameWorld world, Interface ui, GameMap map) {
         super();
         this.world = world;
         this.ui = ui;
-
+        this.map = map;
+        
         renderer = new Box2DDebugRenderer();
         renderer.setDrawVelocities(true);
         ui.getStage().getCamera().position.x = ui.getStage().getWidth() * 0.3f;
@@ -44,7 +46,8 @@ public class GameRenderer extends Renderer {
     public void render() {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        //renderer.render(world.world, cam.combined);
-        ui.draw();
+        renderer.render(world.world, cam.combined);
+        map.draw();
+        ui.draw();        
     }
 }

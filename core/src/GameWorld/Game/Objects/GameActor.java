@@ -5,6 +5,9 @@
  */
 package GameWorld.Game.Objects;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
@@ -12,28 +15,45 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  *
  * @author Pablo
  */
-public class GameActor extends Actor{
-    
+public class GameActor extends Actor {
+
     protected Body body;
-    
-    public GameActor(Body body){
+    protected boolean mapActor = false;
+
+    public GameActor(Body body) {
         this.body = body;
     }
-    
-    public GameActor(){
-        
+
+    public GameActor() {
+
     }
-    
-    public Body getBody(){
+
+    public Body getBody() {
         return body;
     }
-    
-    public boolean delete(){
-        if(body == null){
+
+    public void setBody(Body body) {
+        this.body = body;
+    }
+
+    public boolean delete() {
+        if (body == null) {
             this.remove();
             return false;
         }
         return true;
     }
-    
+
+    protected boolean checkDraw() {
+        Camera camera = this.getStage().getCamera();
+
+        float upX = camera.position.x + camera.viewportWidth / 1.5f;
+        float downX = camera.position.x - camera.viewportWidth / 1.5f;
+
+        if (body.getPosition().x > upX
+                || body.getPosition().x < downX) {
+            return false;
+        }
+        return true;
+    }
 }

@@ -27,11 +27,18 @@ public class Snake extends GameActor {
     private float height;
 
     public Snake(TextureRegion snakeTexture, float x, float y, float width, float height, World world) {
-
         body = WorldUtils.createSnake(world, x, y, width, height);
         this.width = width;
         this.height = height;
         this.snakeTexture = snakeTexture;
+    }
+
+    public Snake(Body body, TextureRegion snakeTexture, float x, float y, float width, float height) {
+        this.body = body;
+        this.width = width;
+        this.height = height;
+        this.snakeTexture = snakeTexture;
+        this.mapActor = true;
     }
 
     @Override
@@ -41,7 +48,11 @@ public class Snake extends GameActor {
 
     @Override
     public float getY() {
-        return body.getPosition().y;
+        if (mapActor) {
+            return body.getPosition().y - Constants.GROUND_Y - Constants.GROUND_HEIGHT / 2;
+        } else {
+            return body.getPosition().y;
+        }
     }
 
     @Override
@@ -55,8 +66,8 @@ public class Snake extends GameActor {
     }
 
     public void draw(Batch batch, float parentAlpha) {
-        if(delete()){
-            batch.draw(snakeTexture, getX()-width/2, getY()-getHeight()/2, getWidth(), getHeight());
+        if (delete() && checkDraw()) {
+            batch.draw(snakeTexture, getX() - width / 2, getY() - getHeight() / 2, getWidth(), getHeight());
         }
     }
 }
