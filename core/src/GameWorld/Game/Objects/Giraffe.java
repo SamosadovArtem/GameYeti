@@ -59,6 +59,22 @@ public class Giraffe extends GameActor{
         WorldUtils.GiraffeHead.getFixtureList().get(0).setUserData(this);
     }
     
+    public Giraffe(Body body, float x, float y, float widthBody
+        , float heightBody, float widthNeck, float heightNeck
+        , float widthHead, float heightHead, TextureRegion groundTexture){
+        this.body = body;
+        this.widthBody = widthBody;
+        this.heightBody = heightBody;
+        
+        this.widthNeck = widthNeck;
+        this.heightNeck = heightNeck;
+    
+        this.widthHead = widthHead;
+        this.heightHead = heightHead;
+        this.groundTexture = groundTexture;
+        this.mapActor = true;
+    }
+    
     @Override
     public float getX(){
         return body.getPosition().x;
@@ -66,7 +82,11 @@ public class Giraffe extends GameActor{
     
     @Override
     public float getY(){
-        return body.getPosition().y;
+        if(mapActor){
+            return body.getPosition().y - Constants.GROUND_Y - Constants.GROUND_HEIGHT / 2;
+        } else {
+            return body.getPosition().y;
+        }
     }
     
     public void draw (Batch batch, float parentAlpha) {    

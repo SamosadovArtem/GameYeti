@@ -5,6 +5,7 @@
  */
 package GameWorld.Game.Objects;
 
+import Helper.Constants;
 import Helper.WorldUtils;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -43,6 +44,21 @@ public class Tree extends GameActor{
         foliage = WorldUtils.Foliage;
     }
     
+    public Tree(Body body, float x, float y, float widthStem
+        , float heightStem, float widthFoliage, float heightFoliage
+        , TextureRegion groundTexture){
+        this.body = body;
+        this.widthStem = widthStem;
+        this.heightStem = heightStem;
+        
+        this.widthFoliage = widthFoliage;
+        this.heightFoliage = heightFoliage;
+    
+        this.groundTexture = groundTexture;
+        foliage = WorldUtils.Foliage;
+        this.mapActor = true;
+    }
+    
     @Override
     public float getX(){
         return body.getPosition().x;
@@ -50,7 +66,11 @@ public class Tree extends GameActor{
     
     @Override
     public float getY(){
-        return body.getPosition().y;
+        if(mapActor){
+            return body.getPosition().y - Constants.GROUND_Y - Constants.GROUND_HEIGHT / 2;
+        } else {
+            return body.getPosition().y;
+        }
     }
     
     public void draw (Batch batch, float parentAlpha) {   

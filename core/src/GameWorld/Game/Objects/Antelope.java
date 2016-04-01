@@ -45,6 +45,14 @@ public class Antelope extends GameActor {
         body.getFixtureList().get(0).setUserData(this);
         downBody.getFixtureList().get(0).setUserData("ANTELOPE");
     }
+    
+    public Antelope(Body body, TextureRegion antelopeTexture, float x, float y, float width, float height) {
+        this.body = body;
+        this.width = width;
+        this.height = height;
+        this.antelopeTexture = antelopeTexture;
+        this.mapActor = true;
+    }
 
     @Override
     public float getX() {
@@ -53,7 +61,11 @@ public class Antelope extends GameActor {
 
     @Override
     public float getY() {
-        return body.getPosition().y;
+        if(mapActor){
+            return body.getPosition().y - Constants.GROUND_Y - Constants.GROUND_HEIGHT / 2;
+        } else {
+            return body.getPosition().y;
+        }
     }
 
     @Override

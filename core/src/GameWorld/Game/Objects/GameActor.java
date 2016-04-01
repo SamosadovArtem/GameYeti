@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class GameActor extends Actor{
     
     protected Body body;
+    protected boolean mapActor = false;
     
     public GameActor(Body body){
         this.body = body;
@@ -26,6 +27,10 @@ public class GameActor extends Actor{
     
     public Body getBody(){
         return body;
+    }
+    
+    public void setBody(Body body){
+        this.body = body;
     }
     
     public boolean delete(){

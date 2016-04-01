@@ -27,6 +27,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.Array;
@@ -41,6 +42,7 @@ public class GameWorld extends AbstractWorld {
 
     public World world;
 
+    private GameMap map = new GameMap();
     private Ground ground, ground2;
     private Pinguin pinguin;
     private JumpCountController jumpCountController;
@@ -72,20 +74,29 @@ public class GameWorld extends AbstractWorld {
         world.setContactListener(new GameContactListener(this, pinguin));
         initJumpCount();
         createObjects((int) maxX, objectsGenerateNum);
-        ui.addBack(game);
+        ui.addBack(game);        
     }
 
     private void createObjects(int startPos, int count) {
         Generator g = new Generator(world, (int) Constants.GROUND_Y, startPos, count);
-        for (GameActor t : g.getObj()) {
-            ui.getStage().addActor(t);
+        //map.addUnits(g.getList(), (int) Constants.GROUND_Y, world);
+        for (GameActor t : g.getObj()) {            
+            //map.getStage().addActor(t);        
+            ui.getStage().addActor(t);        
             if (t.getBody().getPosition().x > maxX) {
                 maxX = t.getBody().getPosition().x;
             }
             Gdx.app.log("GameWorld", "genegate x=" + maxX);
         }
+        for (GameActor t : g.getMapObj()) {       
+            map.getStage().addActor(t);     
+        }
     }
 
+    public GameMap getMap(){
+        return map;
+    }
+    
     private void drawJumpCount() {
         jumpCountText.setText("Count of jumps: " + jumpCountController.getCountOfJump());
     }
@@ -151,7 +162,8 @@ public class GameWorld extends AbstractWorld {
     }
 
     @Override
-    public void update(float delta) {
+    public void update(float delta) {        
+        
         accumulator += delta;
 
         addGround();
@@ -185,6 +197,7 @@ public class GameWorld extends AbstractWorld {
         checkHeight();
         unlimitedGame();
         drawJumpCount();
+        map.focusCameraX(pinguin);
         //   debugButton.setPosition(stage.getCamera().position.x + stage.getWidth() / 3, stage.getCamera().position.y + stage.getHeight() / 3);
     }
 

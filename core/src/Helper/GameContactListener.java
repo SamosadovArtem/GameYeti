@@ -76,15 +76,17 @@ public class GameContactListener implements ContactListener {
                 contact.getFixtureA().getUserData().equals("PINGUIN")){ 
                 Gdx.app.log("PINGUIN", "COION");
                 g = (Coin)contact.getFixtureB().getUserData();
-                g.take(w.world, w.getUI().getStage());
                 g.getBody().setUserData("DELETE");
+                g.getBody().getFixtureList().get(0).setUserData("DELETE");
+                g.take();                
 
             } else if(contact.getFixtureA().getUserData() instanceof Coin &&
                 contact.getFixtureB().getUserData().equals("PINGUIN")){  
                 Gdx.app.log("PINGUIN", "COIN");
                 g = (Coin)contact.getFixtureA().getUserData();
-                g.take(w.world, w.getUI().getStage());
                 g.getBody().setUserData("DELETE");
+                g.getBody().getFixtureList().get(0).setUserData("DELETE");
+                g.take();                
             }
         }
     }

@@ -20,14 +20,21 @@ public class StopObj extends GameActor{
     
     private TextureRegion groundTexture;
     private float width;
-    private float height;
-    
+    private float height;    
     
     public StopObj(World world, float x, float y, float width, float height, TextureRegion groundTexture){
         this.body = WorldUtils.createStopObj(world, x, y, width, height);
         this. width = width;
         this.height = height;
         this.groundTexture = groundTexture;
+    }
+    
+    public StopObj(Body body, float x, float y, float width, float height, TextureRegion groundTexture){
+        this.body = body;
+        this. width = width;
+        this.height = height;
+        this.groundTexture = groundTexture;
+        this.mapActor = true;
     }
     
     @Override
@@ -37,7 +44,11 @@ public class StopObj extends GameActor{
     
     @Override
     public float getY(){
-        return body.getPosition().y;
+        if(!mapActor){
+            return body.getPosition().y;
+        } else {
+            return body.getPosition().y - Constants.GROUND_Y - Constants.GROUND_HEIGHT / 2;
+        }
     }
     
     @Override

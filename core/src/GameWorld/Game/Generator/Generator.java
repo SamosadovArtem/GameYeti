@@ -29,39 +29,60 @@ import java.util.Random;
  */
 public class Generator {
     private List<GameActor> objects = new ArrayList<GameActor>();
+    private List<GameActor> mapObjects = new ArrayList<GameActor>();
+    private List<Barrier> barr;
     
     public Generator(World world, int y, int startPosition, int barriersCount){
-        List<Barrier> barr = Location.GetBarrierList(startPosition, barriersCount, true);
+        barr = Location.GetBarrierList(startPosition, barriersCount, true);
         
         for(Barrier b : barr){
             switch(b.GetType()){
                 case STOP:
-                    objects.add(new StopObj(world, b.GetX(), y,
+                    StopObj s = new StopObj(world, b.GetX(), y, 30, 60,
+                        AssetLoader.btn);
+                    StopObj ms = new StopObj(s.getBody(), b.GetX(),  - Constants.GROUND_HEIGHT / 2,
                         30, 60,
-                        AssetLoader.btn));
+                        AssetLoader.btn);
+                    objects.add(s);
+                    mapObjects.add(ms);
                     break;
                 case SNAKE:
-                    objects.add(new Snake(AssetLoader.btn, b.GetX() ,Constants.GROUND_Y+20f,100f,20f,world));
+                    Snake snake = new Snake(AssetLoader.btn, b.GetX() ,Constants.GROUND_Y+20f, 100f, 20f, world);
+                    Snake mapSnake = new Snake(snake.getBody(),AssetLoader.btn, b.GetX() ,Constants.GROUND_Y+20f, 100f, 20f);
+                    objects.add(snake);
+                    mapObjects.add(mapSnake);
                     break;
                 case ANTELOPHE:
-                    objects.add(new Antelope(AssetLoader.btn,b.GetX(),Constants.GROUND_Y,100f,30f,world));
+                    Antelope a = new Antelope(AssetLoader.btn,b.GetX(),Constants.GROUND_Y,100f,30f,world);
+                    Antelope ma = new Antelope(a.getBody(), AssetLoader.btn,b.GetX(),Constants.GROUND_Y,100f,30f);
+                    objects.add(a);
+                    mapObjects.add(ma);
                     break;
                 case TREE:
-                    objects.add(new Tree(world, b.GetX(),Constants.GROUND_Y + Constants.GROUND_HEIGHT/2,
-                    10,70,70,10, AssetLoader.btn));
+                    Tree t = new Tree(world, b.GetX(),Constants.GROUND_Y + Constants.GROUND_HEIGHT/2,
+                    10,70,70,10, AssetLoader.btn);
+                    Tree mt = new Tree(t.getBody(), b.GetX(),Constants.GROUND_Y + Constants.GROUND_HEIGHT/2,
+                    10,70,70,10, AssetLoader.btn);
+                    objects.add(t);
+                    mapObjects.add(mt);
                     break;
                 case GIRAFFE:
-                    objects.add(new Giraffe(world, b.GetX(), Constants.GROUND_Y + Constants.GROUND_HEIGHT/2 + 40 , 100f
+                    Giraffe g = new Giraffe(world, b.GetX(), Constants.GROUND_Y + Constants.GROUND_HEIGHT/2 + 40 , 100f
                     , 40f, 10f, 60f
-                    , 40f, 20f, AssetLoader.btn));
+                    , 40f, 20f, AssetLoader.btn);
+                    Giraffe mg = new Giraffe(g.getBody(), b.GetX(), Constants.GROUND_Y + Constants.GROUND_HEIGHT/2 + 40 , 100f
+                    , 40f, 10f, 60f
+                    , 40f, 20f, AssetLoader.btn);
+                    objects.add(g);
+                    mapObjects.add(mg);
                     break;
                 case COIN:
-                    objects.add(new Coin(AssetLoader.btn, b.GetX() , b.GetY() + 40f, 40f, 40f, world));
+                    Coin c = new Coin(AssetLoader.btn, b.GetX() , b.GetY() + 40f, 40f, 40f, world);
+                    Coin mc = new Coin(c.getBody(), AssetLoader.btn, b.GetX() , b.GetY() + 40f, 40f, 40f);
+                    objects.add(c);
+                    mapObjects.add(mc);
                     break;
                 default:
-                    objects.add(new StopObj(world, b.GetX(), y,
-                        30, 60,
-                        AssetLoader.btn));
                     break;
             }
         }
@@ -70,5 +91,13 @@ public class Generator {
     
     public List<GameActor> getObj(){
         return objects;
+    }
+    
+    public List<GameActor> getMapObj(){
+        return mapObjects;
+    }
+    
+    public List<Barrier> getList(){
+        return barr;
     }
 }

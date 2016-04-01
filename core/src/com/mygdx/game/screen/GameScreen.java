@@ -33,7 +33,7 @@ public class GameScreen extends AbstractScreen {
     protected void initScene() {
         Gdx.app.log("GameScreen", "initScene");
         this.world = new GameWorld(ui, game);
-        this.renderer = new GameRenderer(world, ui);
+        this.renderer = new GameRenderer(world, ui, world.getMap());
         Gdx.input.setInputProcessor(new InputHandler(world));
         Statistic.playGame();
     }

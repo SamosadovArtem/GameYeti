@@ -5,10 +5,12 @@
  */
 package GameWorld.Game.Objects;
 
+import Helper.Constants;
 import Helper.Statistic;
 import Helper.WorldUtils;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.JointEdge;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -28,12 +30,19 @@ public class Coin extends GameActor {
     private float height;
 
     public Coin(TextureRegion snakeTexture, float x, float y, float width, float height, World world) {
-
         body = WorldUtils.createCoin(world, x, y, width, height);
         this.width = width;
         this.height = height;
         this.snakeTexture = snakeTexture;
         this.body.getFixtureList().get(0).setUserData(this);
+    }
+    
+    public Coin(Body body, TextureRegion snakeTexture, float x, float y, float width, float height) {
+        this.body = body;
+        this.width = width;
+        this.height = height;
+        this.snakeTexture = snakeTexture;
+        this.mapActor = true;
     }
 
     @Override
@@ -47,7 +56,9 @@ public class Coin extends GameActor {
 
     @Override
     public float getY() {
-        if(body != null){
+        if(mapActor){
+            return body.getPosition().y - Constants.GROUND_Y - Constants.GROUND_HEIGHT / 2;
+        } else if(body != null){
             return body.getPosition().y;
         } else {
             return 0;
@@ -65,12 +76,14 @@ public class Coin extends GameActor {
     }
 
     public void draw(Batch batch, float parentAlpha) {
-        if(delete()){
+        if(body.getFixtureList().get(0).getUserData().equals("DELETE")){
+            this.remove();
+        } else if(delete()){
             batch.draw(snakeTexture, getX()-width/2, getY()-getHeight()/2, getWidth(), getHeight());
         }
     }
     
-    public void take(World w, Stage s){
+    public void take(){
         Statistic.addCoins(1);
         this.remove();      
     }
