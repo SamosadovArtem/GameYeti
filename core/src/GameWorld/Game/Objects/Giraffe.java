@@ -23,122 +23,117 @@ import java.util.logging.Logger;
  *
  * @author qw
  */
-public class Giraffe extends GameActor{
-    
+public class Giraffe extends GameActor {
+
     private TextureRegion groundTexture;
     private float widthBody;
     private float heightBody;
-    
+
     private float widthNeck;
     private float heightNeck;
-    
+
     public float widthHead;
     public float heightHead;
     private boolean isActive = true;
-    
+
     public Body head;
-    
-    
-    public Giraffe(World world, float x, float y, float widthBody
-        , float heightBody, float widthNeck, float heightNeck
-        , float widthHead, float heightHead, TextureRegion groundTexture){
-        this.body = WorldUtils.createGiraff(world, x, y, 
-                widthBody, heightBody, 
+
+    public Giraffe(World world, float x, float y, float widthBody, float heightBody, float widthNeck, float heightNeck, float widthHead, float heightHead, TextureRegion groundTexture) {
+        this.body = WorldUtils.createGiraff(world, x, y,
+                widthBody, heightBody,
                 widthNeck, heightNeck,
                 widthHead, heightHead);
         this.widthBody = widthBody;
         this.heightBody = heightBody;
-        
+
         this.widthNeck = widthNeck;
         this.heightNeck = heightNeck;
-    
+
         this.widthHead = widthHead;
         this.heightHead = heightHead;
         this.groundTexture = groundTexture;
         head = WorldUtils.GiraffeHead;
         WorldUtils.GiraffeHead.getFixtureList().get(0).setUserData(this);
     }
-    
-    public Giraffe(Body body, float x, float y, float widthBody
-        , float heightBody, float widthNeck, float heightNeck
-        , float widthHead, float heightHead, TextureRegion groundTexture){
+
+    public Giraffe(Body body, float x, float y, float widthBody, float heightBody, float widthNeck, float heightNeck, float widthHead, float heightHead, TextureRegion groundTexture) {
         this.body = body;
         this.widthBody = widthBody;
         this.heightBody = heightBody;
-        
+
         this.widthNeck = widthNeck;
         this.heightNeck = heightNeck;
-    
+
         this.widthHead = widthHead;
         this.heightHead = heightHead;
         this.groundTexture = groundTexture;
         this.mapActor = true;
     }
-    
+
     @Override
-    public float getX(){
+    public float getX() {
         return body.getPosition().x;
     }
-    
+
     @Override
-    public float getY(){
-        if(mapActor){
+    public float getY() {
+        if (mapActor) {
             return body.getPosition().y - Constants.GROUND_Y - Constants.GROUND_HEIGHT / 2;
         } else {
             return body.getPosition().y;
         }
     }
-    
-    public void draw (Batch batch, float parentAlpha) {    
-        if(delete()){
-            batch.draw(groundTexture, getX() - widthBody/2, getY() - heightBody / 2 - 40, 10, 40);   
-            batch.draw(groundTexture, getX() + widthBody/2 - 10, getY() - heightBody / 2 - 40, 10, 40);    
-            batch.draw(groundTexture, getX() - widthBody/2, getY() - heightBody / 2, widthBody, heightBody);   
-            batch.draw(groundTexture, getX() - widthBody/2, getY() + heightBody / 2 , widthNeck, heightNeck);   
-            batch.draw(groundTexture, getX() - widthBody/2 + widthNeck - widthHead, getY() + heightBody / 2 + heightNeck, widthHead, heightHead);   
+
+    public void draw(Batch batch, float parentAlpha) {
+        if (delete() && checkDraw()) {
+            batch.draw(groundTexture, getX() - widthBody / 2, getY() - heightBody / 2 - 40, 10, 40);
+            batch.draw(groundTexture, getX() + widthBody / 2 - 10, getY() - heightBody / 2 - 40, 10, 40);
+            batch.draw(groundTexture, getX() - widthBody / 2, getY() - heightBody / 2, widthBody, heightBody);
+            batch.draw(groundTexture, getX() - widthBody / 2, getY() + heightBody / 2, widthNeck, heightNeck);
+            batch.draw(groundTexture, getX() - widthBody / 2 + widthNeck - widthHead, getY() + heightBody / 2 + heightNeck, widthHead, heightHead);
         }
     }
-    
-    public void throwPinguin(Pinguin p){
-        if(isActive()){
+
+    public void throwPinguin(Pinguin p) {
+        if (isActive()) {
             setActive(false);
             GiraffThrow gt = new GiraffThrow(p, this);
             Thread t = new Thread(gt);
-            t.start();   
+            t.start();
         }
     }
-    
-    public boolean isActive(){
+
+    public boolean isActive() {
         return isActive;
     }
-    
-    public void setActive(boolean a){
+
+    public void setActive(boolean a) {
         isActive = a;
     }
 }
 
-
 class GiraffThrow implements Runnable {
+
     Pinguin pinguin;
     Giraffe giraff;
-    
+
     float velX;
-    
-    public GiraffThrow(Pinguin p, Giraffe g){
-        this.pinguin = p;        
+
+    public GiraffThrow(Pinguin p, Giraffe g) {
+        this.pinguin = p;
         this.giraff = g;
         velX = pinguin.getBody().getLinearVelocity().x;
     }
-    
+
     @Override()
-    public void run(){
+    public void run() {
         try {
-            
-            Gdx.app.log("","iawdawdnlkwa");
+
+            Gdx.app.log("", "iawdawdnlkwa");
             pinguin.hide();
             pinguin.getBody().setLinearVelocity(0, 0);
             pinguin.getBody().setGravityScale(0);
-            for(int i = 0; i<=20;i++){
+            for (int i = 0; i <= 20; i++) {
                 pinguin.getBody().setLinearVelocity(giraff.head.getPosition().x - pinguin.getBody().getPosition().x - giraff.widthHead,
                         giraff.head.getPosition().y - pinguin.getBody().getPosition().y);
                 sleep(100);
@@ -146,26 +141,26 @@ class GiraffThrow implements Runnable {
             throwPinguin();
             pinguin.show();
             sleep(1000);
-            giraff.setActive(true);            
-            
+            giraff.setActive(true);
+
         } catch (InterruptedException ex) {
             Logger.getLogger(GiraffThrow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private void throwPinguin(){        
-        float x=0;
-        if(velX >= 0){
-            if(velX>=50 && velX <=200){
+
+    private void throwPinguin() {
+        float x = 0;
+        if (velX >= 0) {
+            if (velX >= 50 && velX <= 200) {
                 x = velX * 1.3f;
             } else {
                 x = 200;
             }
-        } else{
+        } else {
             x = 200;
         }
         pinguin.getBody().setGravityScale(Constants.RUNNER_GRAVITY_SCALE);
-        
+
         pinguin.getBody().setLinearVelocity(x, 150);
     }
 }

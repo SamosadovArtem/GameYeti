@@ -32,7 +32,7 @@ public class Snake extends GameActor {
         this.height = height;
         this.snakeTexture = snakeTexture;
     }
-    
+
     public Snake(Body body, TextureRegion snakeTexture, float x, float y, float width, float height) {
         this.body = body;
         this.width = width;
@@ -48,7 +48,7 @@ public class Snake extends GameActor {
 
     @Override
     public float getY() {
-        if(mapActor){
+        if (mapActor) {
             return body.getPosition().y - Constants.GROUND_Y - Constants.GROUND_HEIGHT / 2;
         } else {
             return body.getPosition().y;
@@ -66,8 +66,8 @@ public class Snake extends GameActor {
     }
 
     public void draw(Batch batch, float parentAlpha) {
-        if(delete()){
-            batch.draw(snakeTexture, getX()-width/2, getY()-getHeight()/2, getWidth(), getHeight());
+        if (delete() && checkDraw()) {
+            batch.draw(snakeTexture, getX() - width / 2, getY() - getHeight() / 2, getWidth(), getHeight());
         }
     }
 }

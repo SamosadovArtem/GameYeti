@@ -36,7 +36,7 @@ public class Coin extends GameActor {
         this.snakeTexture = snakeTexture;
         this.body.getFixtureList().get(0).setUserData(this);
     }
-    
+
     public Coin(Body body, TextureRegion snakeTexture, float x, float y, float width, float height) {
         this.body = body;
         this.width = width;
@@ -47,7 +47,7 @@ public class Coin extends GameActor {
 
     @Override
     public float getX() {
-        if(body != null){
+        if (body != null) {
             return body.getPosition().x;
         } else {
             return 0;
@@ -56,9 +56,9 @@ public class Coin extends GameActor {
 
     @Override
     public float getY() {
-        if(mapActor){
+        if (mapActor) {
             return body.getPosition().y - Constants.GROUND_Y - Constants.GROUND_HEIGHT / 2;
-        } else if(body != null){
+        } else if (body != null) {
             return body.getPosition().y;
         } else {
             return 0;
@@ -76,15 +76,15 @@ public class Coin extends GameActor {
     }
 
     public void draw(Batch batch, float parentAlpha) {
-        if(body.getFixtureList().get(0).getUserData().equals("DELETE")){
+        if (body.getFixtureList().get(0).getUserData().equals("DELETE")) {
             this.remove();
-        } else if(delete()){
-            batch.draw(snakeTexture, getX()-width/2, getY()-getHeight()/2, getWidth(), getHeight());
+        } else if (delete() && checkDraw()) {
+            batch.draw(snakeTexture, getX() - width / 2, getY() - getHeight() / 2, getWidth(), getHeight());
         }
     }
-    
-    public void take(){
+
+    public void take() {
         Statistic.addCoins(1);
-        this.remove();      
+        this.remove();
     }
 }

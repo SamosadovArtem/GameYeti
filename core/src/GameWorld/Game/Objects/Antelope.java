@@ -87,7 +87,7 @@ public class Antelope extends GameActor {
     }
 
     public void draw(Batch batch, float parentAlpha) {
-        if(delete()){
+        if(delete() && checkDraw()){
             batch.draw(antelopeTexture, getX() - width / 2, getY(), getWidth(), getHeight() / 4);
             batch.draw(antelopeTexture, getX() - width / 2, getY() - getHeight(), getWidth(), getHeight());
         }

@@ -5,6 +5,8 @@
  */
 package GameWorld.Game.Objects;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -13,47 +15,45 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  *
  * @author Pablo
  */
-public class GameActor extends Actor{
-    
+public class GameActor extends Actor {
+
     protected Body body;
     protected boolean mapActor = false;
-    
-    public GameActor(Body body){
+
+    public GameActor(Body body) {
         this.body = body;
     }
-    
-    public GameActor(){
-        
+
+    public GameActor() {
+
     }
-    
-    public Body getBody(){
+
+    public Body getBody() {
         return body;
     }
-    
-    public void setBody(Body body){
+
+    public void setBody(Body body) {
         this.body = body;
     }
-    
-    public boolean delete(){
-        if(body == null){
+
+    public boolean delete() {
+        if (body == null) {
             this.remove();
             return false;
         }
         return true;
     }
-    
-  /*  public boolean isVisible(OrthographicCamera camera) {		
 
-    float upX = camera.position.x + camera;
-    float upY = camera.position.y + (+ Game.HEIGHT / 2 + Game.OFFSET) * camera.zoom;
+    protected boolean checkDraw() {
+        Camera camera = this.getStage().getCamera();
 
-    float downX = camera.position.x + (+ Game.WIDTH  / 2 + Game.OFFSET) * camera.zoom;
-    float downY = camera.position.y + (- Game.HEIGHT / 2 - Game.OFFSET) * camera.zoom;	
+        float upX = camera.position.x + camera.viewportWidth / 1.5f;
+        float downX = camera.position.x - camera.viewportWidth / 1.5f;
 
-    if (upX <= x && upY >= y &&	downX >= x && downY <= y) {
-
-	return true;
+        if (body.getPosition().x > upX
+                || body.getPosition().x < downX) {
+            return false;
+        }
+        return true;
     }
-    return false;
-}*/
 }
