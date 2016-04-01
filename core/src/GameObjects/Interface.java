@@ -25,12 +25,13 @@ public class Interface {
 
     private Stage stage, guiStage;
     private int coin = Statistic.getCoins();
-    private Label coinText;
+    private Label coinText, fpsText;
 
     public Interface(Stage stage, Stage guiStage) {
         this.stage = stage;
         this.guiStage = guiStage;
         addCoins();
+        addFPS();
     }
 
     public Stage getStage() {
@@ -51,37 +52,36 @@ public class Interface {
         stage.draw();
         guiStage.draw();
     }
-    
-    public float getWidth(){
+
+    public float getWidth() {
         return stage.getWidth();
     }
-    
-    public float getHeight(){
+
+    public float getHeight() {
         return stage.getHeight();
     }
 
-    private void addCoins() {        
+    private void addCoins() {
         Label.LabelStyle labelS = new Label.LabelStyle();
         labelS.font = new BitmapFont();
         labelS.fontColor = Color.WHITE;
         coinText = new Label("", labelS);
         coinText.setAlignment(Align.center);
         coinText.setFontScale(1);
-        coinText.setSize(guiStage.getWidth()*9/5, guiStage.getHeight() / 5);
+        coinText.setSize(guiStage.getWidth() * 9 / 5, guiStage.getHeight() / 5);
         coinText.setPosition(0, guiStage.getHeight() * 3 / 5);
         coinText.setText("Coins: " + Statistic.getCoins());
         guiStage.addActor(coinText);
     }
-    
-    
-    private void updateCoins(){
-        if(coin != Statistic.getCoins()){
+
+    private void updateCoins() {
+        if (coin != Statistic.getCoins()) {
             coin = Statistic.getCoins();
             coinText.setText("Coins: " + coin);
         }
     }
-    
-    public void addBack(final GameLibGDX game){
+
+    public void addBack(final GameLibGDX game) {
         Button backButton;
         backButton = new Button("Top", AssetLoader.btn, AssetLoader.btnPress, "TOP", FontLoader.font) {
             public void action() {
@@ -91,8 +91,25 @@ public class Interface {
         };
         backButton.setSize(getStage().getWidth() * 0.4f / 3, getStage().getHeight() / 6);
         backButton.setPosition(0,
-               getStage().getHeight()*5/6);
+                getStage().getHeight() * 5 / 6);
 
         getGuiStage().addActor(backButton);
+    }
+
+    private void addFPS() {
+        Label.LabelStyle labelS = new Label.LabelStyle();
+        labelS.font = new BitmapFont();
+        labelS.fontColor = Color.RED;
+        fpsText = new Label("", labelS);
+        fpsText.setAlignment(Align.center);
+        fpsText.setFontScale(1);
+        fpsText.setSize(guiStage.getWidth() * 9 / 5, guiStage.getHeight() / 5);
+        fpsText.setPosition(0, guiStage.getHeight() * 2 / 5);
+        fpsText.setText("FPS: " + 0);
+        guiStage.addActor(fpsText);
+    }
+
+    public void updateFps(float value) {
+        fpsText.setText("FPS: " + (int) value);
     }
 }

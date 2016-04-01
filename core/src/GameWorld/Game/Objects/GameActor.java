@@ -5,6 +5,7 @@
  */
 package GameWorld.Game.Objects;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
@@ -41,4 +42,18 @@ public class GameActor extends Actor{
         return true;
     }
     
+  /*  public boolean isVisible(OrthographicCamera camera) {		
+
+    float upX = camera.position.x + camera;
+    float upY = camera.position.y + (+ Game.HEIGHT / 2 + Game.OFFSET) * camera.zoom;
+
+    float downX = camera.position.x + (+ Game.WIDTH  / 2 + Game.OFFSET) * camera.zoom;
+    float downY = camera.position.y + (- Game.HEIGHT / 2 - Game.OFFSET) * camera.zoom;	
+
+    if (upX <= x && upY >= y &&	downX >= x && downY <= y) {
+
+	return true;
+    }
+    return false;
+}*/
 }
