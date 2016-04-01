@@ -29,7 +29,7 @@ public class Statistic {
         }
         
         if (!prefs.contains("openMaps")) {
-            prefs.putString("openMaps", "0,1,");
+            prefs.putString("openMaps", "0");
         }
         
         if (!prefs.contains("allGames")) {
@@ -44,6 +44,7 @@ public class Statistic {
             prefs.putInteger("allLength", 0);
         }
         
+        CloseMaps();
     }
     
     public static int getGames(){
@@ -77,8 +78,10 @@ public class Statistic {
         return prefs.getInteger("coins");
     }
 
-    public static String getOpenMaps(){
-        return prefs.getString("openMaps");
+    public static String[] getOpenMaps(){
+        String mapsString = prefs.getString("openMaps");
+        String[] mapsArray = mapsString.split(",");
+        return mapsArray;
     }
     
     public static void payCoins(int pay){
@@ -95,7 +98,7 @@ public class Statistic {
         prefs.flush();
     }
     public static void OpenMap(String mapNumber){
-        String oldMaps = getOpenMaps();
+        String oldMaps = prefs.getString("openMaps");
         prefs.putString("openMaps", oldMaps+","+mapNumber);
         prefs.flush();
     }

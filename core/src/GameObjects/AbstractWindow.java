@@ -57,6 +57,7 @@ public abstract class AbstractWindow {
     }
 
     public void createWindow(GameLibGDX game) {
+        group = new Group();
         show();
         isCreated = true;
         xPos = stage.getCamera().position.x - width / 2;
@@ -67,8 +68,12 @@ public abstract class AbstractWindow {
         stage.addActor(group);
         scroll();
     }
+    
+    public void deleteWindow(){
+        group.remove();
+    }
 
-    private void scroll() {
+    protected void scroll() {
         swt = new ScrollWindowThread();
         thread = new Thread(swt);
         thread.start();
