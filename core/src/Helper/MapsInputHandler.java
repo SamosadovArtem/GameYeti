@@ -59,7 +59,8 @@ public class MapsInputHandler implements InputProcessor{
     }
 
     @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) { 
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        if (!world.isDialog()){
         int temp = _oldX;
         if ((isTouched)&&(_oldX > screenX)){
 
@@ -67,7 +68,6 @@ public class MapsInputHandler implements InputProcessor{
             if(world.getUI().getStage().getCamera().position.x < max){
                 world.getUI().getStage().getCamera().position.x+=temp-screenX;
             }
-            System.out.println(screenX);
         }
 
         if ((isTouched)&&(_oldX<screenX)){
@@ -75,9 +75,10 @@ public class MapsInputHandler implements InputProcessor{
             if(world.getUI().getStage().getCamera().position.x > min){
             world.getUI().getStage().getCamera().position.x+=temp-screenX;
             }
-            System.out.println(screenX);
         }
         return true; 
+        }
+        return false;
     }
     
     @Override
