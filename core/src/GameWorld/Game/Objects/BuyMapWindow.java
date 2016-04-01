@@ -22,6 +22,9 @@ import com.mygdx.game.screen.MainScreen;
 import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
 
 /**
  *
@@ -31,30 +34,26 @@ public class BuyMapWindow extends AbstractWindow {
     
     private static BuyMapWindow instance;
 
-    private unScrollWindowThread mapSwt;
     private Thread mapThread;
     
     private int mapCost = 0;
     private MapsWorld mapsWorld;
 
-    private BuyMapWindow(Stage stage, MapsWorld mapsWorld) {
+    public BuyMapWindow(Stage stage, MapsWorld mapsWorld) {
         super(stage);
         width = stage.getWidth() / 2;
         height = stage.getHeight() * 3 / 5;
         this.mapsWorld = mapsWorld;
     }
-    
-    public void Check(GameLibGDX game){  //ЧЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕК
-        super.createWindow(game);
-    }
+
     
 
-        public static BuyMapWindow GetInstance(Stage stage, MapsWorld mapsWorld){
-        if (instance==null){
-            instance = new BuyMapWindow(stage, mapsWorld);
-        }
-        return instance;
-    }
+//        public static BuyMapWindow GetInstance(Stage stage, MapsWorld mapsWorld){
+//        if (instance==null){
+//            instance = new BuyMapWindow(stage, mapsWorld);
+//        }
+//        return instance;
+//    }
 
     @Override
     protected void initText() {
@@ -87,6 +86,7 @@ public class BuyMapWindow extends AbstractWindow {
         Button buyButton = new Button("Buy", normalState, pressedState, "BUY", FontLoader.font) {
             public void action() {
                 Gdx.app.log("check", "CONFIRM");
+                
                 mapsWorld.touchConfirm();
                 //game.setScreen(new GameScreen(game));
             }
@@ -100,6 +100,13 @@ public class BuyMapWindow extends AbstractWindow {
                 Gdx.app.log("check", "CANCEL");
 
                 mapsWorld.setIsCancel(true);
+                
+                mapsWorld.getBuyMapWindow().setCheck(true);
+                
+                mapsWorld.getBuyMapWindow().deleteWindow();
+                
+                
+                
             }
         };
         cancelButton.setSize(width / 5, height / 6);
@@ -107,36 +114,13 @@ public class BuyMapWindow extends AbstractWindow {
         group.addActor(cancelButton);
     }
     
-        public void unScroll() {
-        mapSwt = new unScrollWindowThread();
-        mapThread = new Thread(mapSwt);
-        mapThread.start();
-        if (group.getY()<=0){
-            this.deleteWindow();
-        }
-        
-        
-    }
+//        public void unScroll() {
+//
+//            this.deleteWindow();
+//        
+//        
+//    }
     
-        public class unScrollWindowThread implements Runnable {
-
-        public unScrollWindowThread() {
-        }
-
-        @Override
-        public void run() {
-            do {
-                group.setY(group.getY() - 1);
-                try {
-                    sleep(10);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(AbstractWindow.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } while (group.getY() > 0);
-            
-        }
-
-    }
         
 
     

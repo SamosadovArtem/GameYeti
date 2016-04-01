@@ -5,6 +5,7 @@
  */
 package GameWorld.Maps;
 
+import GameObjects.AbstractWindow;
 import GameObjects.Button;
 import GameObjects.Interface;
 import GameObjects.Map;
@@ -54,10 +55,7 @@ public class MapsWorld extends AbstractWorld {
     public MapsWorld(Interface ui, GameLibGDX g) {
         super(ui, g);
 
-        //buyMapWindow = new BuyMapWindow(ui.getStage(), this);
-        buyMapWindow = BuyMapWindow.GetInstance(ui.getStage(), this);
-        //buyMapWindow.createWindow(game);
-        //buyMapWindow.unScroll();
+        buyMapWindow = new BuyMapWindow(ui.getGuiStage(),this);
         mapsList = LoadMaps(); 
 
         createUI(mapsList);
@@ -68,27 +66,18 @@ public class MapsWorld extends AbstractWorld {
     public void update(float delta) {
 
         moveCamera();
-        
-        if (!isDialog){
-        }
 
-
-
-        if (isTouchUnboughtMap) {
-            
-            isDialog = true;
-           //buyMapWindow.createWindow(game);
-           //BuyMapWindow.GetInstance(ui.getStage(), this).createWindow(game);
-           buyMapWindow.createWindow(game);
-           //buyMapWindow.Check(game);
-           isTouchUnboughtMap = false;
-        }
-        if (isTouchCancel) {
-
-            if (isTouchCancel) { 
-                buyMapWindow.unScroll();
-                isTouchCancel = false;
-                isDialog = false;
+//        if (isTouchUnboughtMap) {
+//            
+//            isDialog = true;
+//           //buyMapWindow.createWindow(game);
+//           isTouchUnboughtMap = false;
+//        }
+//
+//            if (isTouchCancel) { 
+//                //buyMapWindow.unScroll();
+//                isTouchCancel = false;
+//                isDialog = false;
                 
                 /*
 я хачу умирець
@@ -99,9 +88,7 @@ public class MapsWorld extends AbstractWorld {
         скрою((
 
 */
-    }
         }
-    }
 
     private void createUI(ArrayList<Map> allMap) {
         for (int i = 0; i < allMap.size(); i++) {
@@ -175,12 +162,14 @@ public class MapsWorld extends AbstractWorld {
         return ui.getStage().getCamera().position.x;
     }
 
-    public GameLibGDX GetGame() {
+    public GameLibGDX getGame() {
         return this.game;
     }
     public void setIsCancel(boolean flag){
         this.isTouchCancel = flag;
     }
+    
+   
     
     public void touchConfirm(){
                         try {
@@ -191,6 +180,9 @@ public class MapsWorld extends AbstractWorld {
                 } catch (IllegalArgumentException e) {
                     System.err.println(e.getMessage());
                 }
+    }
+    public BuyMapWindow getBuyMapWindow(){
+        return this.buyMapWindow;
     }
     
 

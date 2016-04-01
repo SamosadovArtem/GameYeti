@@ -213,7 +213,7 @@ public class GameWorld extends AbstractWorld {
         boolean check = !pinguin.moved() && !endGameWindow.getIsVisible();
         if (!jumpCountController.checkJump() && check) {
             endGameWindow.initHighscore((int) pinguin.getX());
-            endGameWindow.createWindow(game);
+            endGameWindow.showWindow(game);
             int i = 0;
         } else if (check) {
             if (!pinguin.getIsPower()) {

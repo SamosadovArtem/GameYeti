@@ -13,6 +13,7 @@ import com.mygdx.game.GameLibGDX;
 import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.lang.Thread.sleep;
 
 /**
  *
@@ -56,8 +57,7 @@ public abstract class AbstractWindow {
         return isVisible;
     }
 
-    public void createWindow(GameLibGDX game) {
-        group = new Group();
+    public void showWindow(GameLibGDX game) {
         show();
         isCreated = true;
         xPos = stage.getCamera().position.x - width / 2;
@@ -70,7 +70,7 @@ public abstract class AbstractWindow {
     }
     
     public void deleteWindow(){
-        group.remove();
+        group.setPosition(group.getX(), 0);
     }
 
     protected void scroll() {
@@ -89,6 +89,14 @@ public abstract class AbstractWindow {
         background.setSize(width, height);
         group.addActor(background);
     }
+    
+    public void setCheck(boolean flag){
+        check = flag;
+    }
+    
+    public boolean getCheck(){
+        return check;
+    }
 
     public class ScrollWindowThread implements Runnable {
 
@@ -97,17 +105,19 @@ public abstract class AbstractWindow {
 
         @Override
         public void run() {
-            do {
+            while (group.getY() <= stage.getHeight() * 5 / 6 && !check) {
                 group.setY(group.getY() + 1);
                 try {
                     sleep(10);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(AbstractWindow.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } while (group.getY() < stage.getHeight() * 5 / 6 && !check);
+            } 
         }
 
     }
+    
+    
 
     public void checkClick(float x, float y) {
         if ((x < xPos || y < yPos

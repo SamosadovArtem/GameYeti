@@ -32,10 +32,11 @@ public final class MapsLoader {
             public void action() {
                 System.out.println(this.IsMapBought());
                 if (IsMapBought()) {
-                    world.GetGame().setScreen(new GameScreen(world.GetGame()));
+                    world.getGame().setScreen(new GameScreen(world.getGame()));
                 } else {
-                    world.mapToBuy = this;
-                    world.isTouchUnboughtMap = true;
+                    //world.mapToBuy = this;
+                    //world.isTouchUnboughtMap = true;
+                    world.buyMapWindow.showWindow(world.getGame());
                 }
             }
         };
@@ -52,10 +53,14 @@ public final class MapsLoader {
             public void action() {
                 System.out.println(this.IsMapBought());
                 if (IsMapBought()) {
-                    world.GetGame().setScreen(new GameScreen(world.GetGame()));
+                    world.getGame().setScreen(new GameScreen(world.getGame()));
                 } else {
                     world.mapToBuy = this;
                     world.isTouchUnboughtMap = true;
+                    
+                    world.buyMapWindow.setCheck(false);
+                    
+                    world.buyMapWindow.showWindow(world.getGame());
                 }
             }
         };

@@ -44,7 +44,9 @@ public class MapsInputHandler implements InputProcessor{
         _oldX = screenX;
         world.getUI().getStage().touchDown(screenX, screenY, pointer, button);
         world.getUI().getGuiStage().touchDown(screenX, screenY, pointer, button);
-        
+//        if(!world.getBuyMapWindow().getCheck()){
+//        world.getBuyMapWindow().checkClick(screenX, screenY);
+//        }
         return true;
     }
 
