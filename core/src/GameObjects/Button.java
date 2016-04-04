@@ -80,14 +80,14 @@ public class Button extends Actor {
         batch.draw(textureTouched, getX(), getY(), getWidth(), getHeight());
       }
       //Устанавливаем цвет фона
-      BitmapFont font = new BitmapFont();
-      font.setFixedWidthGlyphs(text);
-      this.getFont().setColor(0,0,0,1);
+      //BitmapFont font = new BitmapFont();
+      //font.setFixedWidthGlyphs(text);
+      //this.getFont().setColor(0,0,0,1);
       //Рисуем текст по центру кнопки
     /*this.getFont().drawMultiLine (batch, this.getText(), this.getX(),
             this.getY() + this.getHeight() / 2 + this.getFont().getCapHeight() / 2,
-            this.getWidth() * 1.0f, BitmapFont.HAlignment.CENTER);*/
+            this.getWidth() * 1.0f, BitmapFont.HAlignment.CENTER);
      this.getFont().draw(batch, this.getText(), this.getX(),
-             this.getY() + this.getHeight() / 2 + this.getFont().getCapHeight() / 2);
+             this.getY() + this.getHeight() / 2 + this.getFont().getCapHeight() / 2);*/
      }
 }
