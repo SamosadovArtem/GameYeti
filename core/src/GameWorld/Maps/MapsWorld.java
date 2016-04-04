@@ -65,6 +65,7 @@ public class MapsWorld extends AbstractWorld {
     @Override
     public void update(float delta) {
 
+        ui.updateFps(1 / delta);
         moveCamera();
 
 //        if (isTouchUnboughtMap) {

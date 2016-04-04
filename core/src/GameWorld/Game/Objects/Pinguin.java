@@ -54,9 +54,12 @@ public class Pinguin extends GameActor {
     public void show(){
         visible = true;
     }
-    
+
     public void hide(){
         visible = false;
+    }
+    public boolean isVisible(){
+        return visible;
     }
     
 	public boolean getIsRide(){

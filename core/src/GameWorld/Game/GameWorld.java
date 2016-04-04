@@ -65,7 +65,7 @@ public class GameWorld extends AbstractWorld {
     
     private void setUpWorld() {
         world = WorldUtils.createWorld();
-        jumpCountController = new JumpCountController(3);
+        jumpCountController = new JumpCountController(10);
         endGameWindow = new EndGameWindow(ui.getGuiStage());
         setUpGround();
         addTablets(ground.getX(), ground2.getX() + ground2.getWidth());
@@ -163,7 +163,7 @@ public class GameWorld extends AbstractWorld {
     
     @Override
     public void update(float delta) {        
-        
+
         ui.updateFps(1 / delta);
         
         accumulator += delta;
@@ -171,7 +171,7 @@ public class GameWorld extends AbstractWorld {
         addGround();
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
-        
+        /*
         for (Body bod : bodies) {
             if (pinguin.getBody().getPosition().x - bod.getPosition().x >= Constants.APP_WIDTH * 5
                     && bod != null) {
@@ -188,24 +188,22 @@ public class GameWorld extends AbstractWorld {
                 }
             }
         }
-        
+        */
         while (accumulator >= delta) {
             world.step(TIME_STEP, 6, 1);
             accumulator -= TIME_STEP;
         }
-        //moveUI();
         initHit();
         setAngularPinguin();
         checkHeight();
         unlimitedGame();
         drawJumpCount();
         map.focusCameraX(pinguin);
-        //   debugButton.setPosition(stage.getCamera().position.x + stage.getWidth() / 3, stage.getCamera().position.y + stage.getHeight() / 3);
     }
     
     private void unlimitedGame() {
-        if (Math.abs(maxX - pinguin.getBody().getPosition().x) <= Constants.APP_WIDTH * 1) {
-            createObjects((int) maxX, objectsGenerateNum);
+        if (Math.abs(maxX - pinguin.getBody().getPosition().x) <= Constants.APP_WIDTH * 4) {
+            createObjects((int) maxX, 5);
         }
     }
     

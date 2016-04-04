@@ -44,6 +44,8 @@ public class GameMap {
         mapStage.getCamera().position.x = p.getX() + Constants.GROUND_WIDTH / 5;
         mapStage.getCamera().update();
         player.setPosition(p.getX() + Constants.RUNNER_WIDTH / 2, p.getY() - Constants.GROUND_Y - Constants.GROUND_HEIGHT / 2);
+
+        player.setVisible(p.isVisible());
     }
     
     public Stage getStage(){
