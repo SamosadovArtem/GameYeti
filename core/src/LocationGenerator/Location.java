@@ -64,10 +64,6 @@ public final class Location {
              Barrier coin = new Barrier(allBarriers.get(i).GetX()+distance/2, 
                      GetRandomY(), BarrierTypes.COIN);
              allBarriers.add(coin);
-             Gdx.app.log("hui","Новая монета " + coin.GetX() + " Между " + 
-                     allBarriers.get(i).GetX() + "Тип = "+ allBarriers.get(i).GetType() + 
-                     " и " + allBarriers.get(i+1).GetX() + " Тип = "+ 
-                     allBarriers.get(i+1).GetType()+ "Высота - "+ coin.GetY());
             }
         }
         //allBarriers.addAll(coinsList);

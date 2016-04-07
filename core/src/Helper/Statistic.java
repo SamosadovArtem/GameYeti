@@ -22,26 +22,32 @@ public class Statistic {
 
         if (!prefs.contains("highScore")) {
             prefs.putInteger("highScore", 0);
+            prefs.flush();
         }
         
         if (!prefs.contains("coins")) {
             prefs.putInteger("coins", 0);
+            prefs.flush();
         }
         
         if (!prefs.contains("openMaps")) {
             prefs.putString("openMaps", "0");
+            prefs.flush();
         }
         
         if (!prefs.contains("allGames")) {
             prefs.putInteger("allGames", 0);
+            prefs.flush();
         }
         
         if (!prefs.contains("allJumps")) {
             prefs.putInteger("allJumps", 0);
+            prefs.flush();
         }
         
         if (!prefs.contains("allLength")) {
             prefs.putInteger("allLength", 0);
+            prefs.flush();
         }
         
         CloseMaps();

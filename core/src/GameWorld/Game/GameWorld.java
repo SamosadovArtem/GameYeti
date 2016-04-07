@@ -87,7 +87,6 @@ public class GameWorld extends AbstractWorld {
             if (t.getBody().getPosition().x > maxX) {
                 maxX = t.getBody().getPosition().x;
             }
-            Gdx.app.log("GameWorld", "genegate x=" + maxX);
         }
         for (GameActor t : g.getMapObj()) {            
             map.getStage().addActor(t);            

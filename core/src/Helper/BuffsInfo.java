@@ -23,18 +23,21 @@ public class BuffsInfo {
     private static String jumpPowerTag = "jumpPowerBuff";
 
     public static void load(){
-        prefs = Gdx.app.getPreferences("YetiGame");
+        prefs = Gdx.app.getPreferences("YetiGameBuffs");
 
         if (!prefs.contains(gravTag)) {
             prefs.putString(gravTag, "0,0");
+            prefs.flush();
         }
 
         if (!prefs.contains(jumpCountTag)) {
             prefs.putString(jumpCountTag, "0,0");
+            prefs.flush();
         }
 
         if (!prefs.contains(jumpPowerTag)) {
             prefs.putString(jumpPowerTag, "0,0");
+            prefs.flush();
         }
     }
 
@@ -80,15 +83,14 @@ public class BuffsInfo {
     }
 
     private static int getLevel(String tag){
-        String str = prefs.getString(tag);
-        Gdx.app.log("LOG",str);
+        String str = new String(prefs.getString(tag));
         String[] strArr = str.split(",");
         return Integer.valueOf(strArr[0]);
     }
 
     private static long getTime(String tag){
-        String str = prefs.getString(tag);
-        String[] strArr = str.split("[,]");
+        String str = new String(prefs.getString(tag));
+        String[] strArr = str.split(",");
         return Long.valueOf(strArr[1]);
     }
 }
