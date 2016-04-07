@@ -6,15 +6,19 @@
 package GameObjects.Buffs;
 
 import Enums.BuffType;
+import Helper.MyTimer;
 
 /**
  *
  * @author Pablo
  */
 public class GravityBuff extends Buff{
-    
-    public GravityBuff(long length, BuffType type, int value) {
-        super(length, type, value);
+
+    private float gravityVal = 0;
+
+    public GravityBuff(MyTimer time, int level, float value) {
+        super(time, BuffType.GRAVITY, level);
+        gravityVal = value;
     }
     
 }

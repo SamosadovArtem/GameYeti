@@ -14,15 +14,17 @@ import java.util.GregorianCalendar;
  * @author qw
  */
 public class MyTimer {
-    
-    private Date start;
+
     private Date finish;
     
-    public MyTimer(long length){
-        start = new Date();
-        finish = new Date(start.getTime() + length * 1000l);
+    public MyTimer(Date now, long length){
+        finish = new Date(now.getTime() + length * 1000l);
     }
-    
+
+    public MyTimer(long finishLength){
+        finish = new Date(finishLength);
+    }
+
     public TimeConverter getTimeLeft(){
         Date nowTime = getDateNow();
         long t = finish.getTime() - nowTime.getTime(); 
@@ -39,10 +41,6 @@ public class MyTimer {
     
     public Date getDateNow(){
         return new Date();
-    }
-    
-    public Date getDateStart(){
-        return start;
     }
     
     public Date getDateFinish(){

@@ -6,15 +6,19 @@
 package GameObjects.Buffs;
 
 import Enums.BuffType;
+import Helper.MyTimer;
 
 /**
  *
  * @author Pablo
  */
 public class JumpCountBuff extends Buff{
-    
-    public JumpCountBuff(long length,int value) {
-        super(length, BuffType.JUMPCOUNT,value);
+
+    private int count = 3;
+
+    public JumpCountBuff(MyTimer time, int level, int value) {
+        super(time, BuffType.JUMPCOUNT, level);
+        count = value;
     }
     
 }

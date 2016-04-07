@@ -6,6 +6,7 @@
 package GameObjects.Buffs;
 
 import Enums.BuffType;
+import Helper.MyTimer;
 
 /**
  *
@@ -13,8 +14,11 @@ import Enums.BuffType;
  */
 public class JumpPowerBuff extends Buff {
 
-    public JumpPowerBuff(long length, int value) {
-        super(length, BuffType.JUMPPOWER, value);
+    private float power;
+
+    public JumpPowerBuff(MyTimer time, int level, float value) {
+        super(time, BuffType.JUMPPOWER, level);
+        power = value;
     }
 
 }

@@ -17,29 +17,20 @@ public abstract class Buff {
     private MyTimer timer;
     private boolean isActive;
     private BuffType type;
-    private int value;
     private int level;
 
-    public Buff(long length, BuffType type, int value) {
-        timer = new MyTimer(length);
+    public Buff(MyTimer time, BuffType type, int level) {
+        timer = time;
         isActive = true;
         this.type = type;
-        this.value = value;
-        this.level = 0;
-    }
-
-    public void setIsActive() {
-        if (!timer.getTimeStatus()) {
-            isActive = false;
-        }
+        this.level = level;
     }
 
     public boolean getIsActive() {
+        if (!timer.getTimeStatus()) {
+            isActive = false;
+        };
         return isActive;
-    }
-
-    public int getValue() {
-        return value;
     }
 
     public BuffType getType() {
@@ -52,5 +43,9 @@ public abstract class Buff {
     
     public void increaseLevel(){
         level++;
+    }
+
+    public String getSaveData(){
+        return level+","+timer.getDateFinish().getTime();
     }
 }
