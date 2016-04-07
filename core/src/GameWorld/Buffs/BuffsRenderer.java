@@ -11,6 +11,7 @@ import GameWorld.AbstractWorld;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.sun.prism.paint.Color;
 
 
 /**
@@ -29,7 +30,8 @@ public class BuffsRenderer extends Renderer {
 
     @Override
     public void render() {
-        Gdx.gl.glClearColor(1, 0, 1, 1);
+        Gdx.gl.glClearColor(0,0,0,0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        world.getUI().draw();
     }  
 }

@@ -18,12 +18,14 @@ public abstract class Buff {
     private boolean isActive;
     private BuffType type;
     private int value;
+    private int level;
 
     public Buff(long length, BuffType type, int value) {
         timer = new MyTimer(length);
         isActive = true;
         this.type = type;
         this.value = value;
+        this.level = 0;
     }
 
     public void setIsActive() {
@@ -42,5 +44,13 @@ public abstract class Buff {
 
     public BuffType getType() {
         return type;
+    }
+    
+    public int getLevel(){
+        return level;
+    }
+    
+    public void increaseLevel(){
+        level++;
     }
 }

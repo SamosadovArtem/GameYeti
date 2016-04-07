@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.mygdx.game.GameLibGDX;
+import com.mygdx.game.screen.BuffsScreen;
 import com.mygdx.game.screen.DonateScreen;
 import com.mygdx.game.screen.GameScreen;
 import com.mygdx.game.screen.MapsScreen;
@@ -33,7 +34,7 @@ import com.mygdx.game.screen.StatisticScreen;
 public class MainWorld extends AbstractWorld {
 
     //////////////////////////
-    Button mapsScreenButton, settingsButton, buffsButton, topButton;
+    Button mapsScreenButton, settingsButton, buffsButton, topButton, statisticsButton;
     Label highscoreText;
 
     public MainWorld(Interface ui, GameLibGDX g) {
@@ -62,6 +63,7 @@ public class MainWorld extends AbstractWorld {
 
         playButton(normalState, pressedState);
         settingsButton(normalState, pressedState);
+        statisticButton(normalState, pressedState);
         buffsButton(normalState, pressedState);
         topButton(normalState, pressedState);
         initHighscore();
@@ -87,7 +89,7 @@ public class MainWorld extends AbstractWorld {
             }
         };
         settingsButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
-        settingsButton.setPosition((ui.getStage().getWidth() - mapsScreenButton.getWidth()) / 2,
+        settingsButton.setPosition(ui.getStage().getWidth()/5-settingsButton.getWidth()/2,
                 mapsScreenButton.getY() - mapsScreenButton.getHeight());
 
         ui.getGuiStage().addActor(settingsButton);
@@ -96,14 +98,27 @@ public class MainWorld extends AbstractWorld {
     private void buffsButton(TextureRegion normalState, TextureRegion pressedState) {
         buffsButton = new Button("Buffs", normalState, pressedState, "BUFF", FontLoader.font) {
             public void action() {
-                game.setScreen(new StatisticScreen(game));                
+                game.setScreen(new BuffsScreen(game));                
             }
         };
         buffsButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
-        buffsButton.setPosition(settingsButton.getX() + settingsButton.getWidth(),
+        buffsButton.setPosition(ui.getStage().getWidth()*3/5 - buffsButton.getWidth()/2,
                 mapsScreenButton.getY() - mapsScreenButton.getHeight());
 
         ui.getGuiStage().addActor(buffsButton);
+    }
+    
+    private void statisticButton(TextureRegion normalState, TextureRegion pressedState){
+         statisticsButton = new Button("Buffs", normalState, pressedState, "BUFF", FontLoader.font) {
+            public void action() {
+                game.setScreen(new StatisticScreen(game));                
+            }
+        };
+        statisticsButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
+        statisticsButton.setPosition(ui.getStage().getWidth()*2/5-statisticsButton.getWidth()/2,
+                mapsScreenButton.getY() - mapsScreenButton.getHeight());
+
+        ui.getGuiStage().addActor(statisticsButton);
     }
 
     private void topButton(TextureRegion normalState, TextureRegion pressedState) {
@@ -113,7 +128,7 @@ public class MainWorld extends AbstractWorld {
             }
         };
         topButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
-        topButton.setPosition(buffsButton.getX() + buffsButton.getWidth(),
+        topButton.setPosition(ui.getStage().getWidth()*4/5 - buffsButton.getWidth()/2,
                 mapsScreenButton.getY() - mapsScreenButton.getHeight());
 
         ui.getGuiStage().addActor(topButton);
