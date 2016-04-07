@@ -33,9 +33,10 @@ public class Pinguin extends GameActor {
     private boolean isRide;
     private TextureRegion pinguinTexture;
 
-    public Pinguin(Body body, TextureRegion pinguinTexture) {
+    public Pinguin(Body body, TextureRegion pinguinTexture, int powerCof) {
         super(body);
         this.pinguinTexture = pinguinTexture;
+        this.powerCof = powerCof;
         power = 0;
         directionX = 0f;
         directionY = 1f;

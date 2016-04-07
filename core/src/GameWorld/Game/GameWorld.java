@@ -15,6 +15,7 @@ import GameWorld.Game.Objects.Ground;
 import GameWorld.Game.Objects.Pinguin;
 import GameWorld.Game.Objects.Tablet;
 import Helper.AssetLoader;
+import Helper.BuffsInfo;
 import Helper.Constants;
 import Helper.FontLoader;
 import Helper.GameContactListener;
@@ -64,12 +65,12 @@ public class GameWorld extends AbstractWorld {
     }
     
     private void setUpWorld() {
-        world = WorldUtils.createWorld();
-        jumpCountController = new JumpCountController(10);
+        world = WorldUtils.createWorld(BuffsInfo.getGravityBuff().getGravity());
+        jumpCountController = new JumpCountController(BuffsInfo.getJumpCountBuff().getCount());
         endGameWindow = new EndGameWindow(ui.getGuiStage());
         setUpGround();
         addTablets(ground.getX(), ground2.getX() + ground2.getWidth());
-        setUpRunner();
+        setUpRunner(BuffsInfo.getJumpPowerBuff().getPower());
         addDebugButton(AssetLoader.btn, AssetLoader.btnPress);
         world.setContactListener(new GameContactListener(this, pinguin));
         initJumpCount();
@@ -156,8 +157,8 @@ public class GameWorld extends AbstractWorld {
         }
     }
     
-    private void setUpRunner() {
-        pinguin = new Pinguin(WorldUtils.createPinguin(world), AssetLoader.btn);
+    private void setUpRunner(int coff) {
+        pinguin = new Pinguin(WorldUtils.createPinguin(world), AssetLoader.btn, coff);
         ui.getStage().addActor(pinguin);
     }
     

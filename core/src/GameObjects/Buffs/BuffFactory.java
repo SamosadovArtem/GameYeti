@@ -10,7 +10,7 @@ public class BuffFactory {
 
     private static float GRAV_VALUE = -10.0f;
     private static int JUMP_COUNT_VALUE = 3;
-    private static float JUMP_POWER_VALUE = 5.0f;
+    private static int JUMP_POWER_VALUE = 5;
 
     public static GravityBuff getGravityBuff(MyTimer time, int level){
         return new GravityBuff(time, level, GRAV_VALUE);

@@ -21,8 +21,8 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
  */
 public class WorldUtils {
 
-    public static World createWorld() {
-        World w = new World(Constants.WORLD_GRAVITY, true);
+    public static World createWorld(float val) {
+        World w = new World(new Vector2(0, val), true);
         return w;
     }
 

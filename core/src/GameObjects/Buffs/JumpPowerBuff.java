@@ -14,11 +14,14 @@ import Helper.MyTimer;
  */
 public class JumpPowerBuff extends Buff {
 
-    private float power;
+    private int power;
 
-    public JumpPowerBuff(MyTimer time, int level, float value) {
+    public JumpPowerBuff(MyTimer time, int level, int value) {
         super(time, BuffType.JUMPPOWER, level);
         power = value;
     }
 
+    public int getPower(){
+        return power;
+    }
 }

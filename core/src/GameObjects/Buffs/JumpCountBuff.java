@@ -20,5 +20,9 @@ public class JumpCountBuff extends Buff{
         super(time, BuffType.JUMPCOUNT, level);
         count = value;
     }
+
+    public int getCount(){
+        return count;
+    }
     
 }

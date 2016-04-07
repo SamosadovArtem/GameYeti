@@ -81,7 +81,8 @@ public class BuffsInfo {
 
     private static int getLevel(String tag){
         String str = prefs.getString(tag);
-        String[] strArr = str.split("[,]");
+        Gdx.app.log("LOG",str);
+        String[] strArr = str.split(",");
         return Integer.valueOf(strArr[0]);
     }
 

@@ -20,5 +20,8 @@ public class GravityBuff extends Buff{
         super(time, BuffType.GRAVITY, level);
         gravityVal = value;
     }
-    
+
+    public float getGravity(){
+        return gravityVal;
+    }
 }
