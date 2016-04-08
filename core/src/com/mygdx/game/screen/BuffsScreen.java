@@ -38,4 +38,9 @@ public class BuffsScreen extends AbstractScreen {
         world.update(delta);
         render.render();
     }
+    
+    @Override
+    public void hide() {
+        this.world.getThread().interrupt();
+    }
 }

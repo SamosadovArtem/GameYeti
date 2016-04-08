@@ -44,6 +44,10 @@ public abstract class Buff {
     public void increaseLevel(){
         level++;
     }
+    
+    public MyTimer getTimer(){
+        return timer;
+    }
 
     public String getSaveData(){
         return level+","+timer.getDateFinish().getTime();
