@@ -77,7 +77,7 @@ public class BuffsInfo {
         return BuffFactory.getJumpPowerBuff(new MyTimer(finish), lvl);
     }
 
-    public static void saveJumpPowerBuf(Buff jp){
+    public static void saveJumpPowerBuff(Buff jp){
         prefs.putString(jumpPowerTag, jp.getSaveData());
         prefs.flush();
     }

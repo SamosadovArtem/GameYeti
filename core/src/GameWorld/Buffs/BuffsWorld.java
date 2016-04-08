@@ -29,9 +29,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.mygdx.game.GameLibGDX;
 import static java.lang.Thread.sleep;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.lang.Thread.sleep;
 
 /**
  *
@@ -39,44 +42,42 @@ import java.util.logging.Logger;
  */
 public class BuffsWorld extends AbstractWorld {
 
-    private Label jumpCountLabel;
     private Thread tr;
     private BuffsThread t;
-    private BuffContainer bc;
+
+    private List<BuffContainer> containerList = new ArrayList();
+    private List<Buff> buffList;
 
     public BuffsWorld(Interface ui, GameLibGDX g) {
         super(ui, g);
         setUpWorld();
-        t = new BuffsThread(bc);
+        t = new BuffsThread(containerList);
         tr = new Thread(t);
         tr.start();
     }
 
     private void setUpWorld() {
-        TextureRegion normalState = AssetLoader.btn;
-        TextureRegion pressedState = AssetLoader.btnPress;
 
-        jumpCountLabel();
-        bc = new BuffContainer(BuffsInfo.getGravityBuff(),
-                ui.getWidth()/5,ui.getHeight()*4/5,ui.getWidth()*3/5,ui.getHeight()/4,ui.getGuiStage());
+        buffList = BuffsInfo.getBuffs();
+        initContainers();
         ui.addBack(game);
+    }
+
+    private void initContainers() {
+        float width = ui.getWidth() * 3 / 5;
+        float height = ui.getHeight() / 4;
+        float space = ui.getHeight() / 15;
+
+        containerList.add(new BuffContainer(BuffsInfo.getJumpCountBuff(), ui.getWidth() / 5,
+                ui.getHeight() - space, width, height, ui.getGuiStage()));
+        containerList.add(new BuffContainer(BuffsInfo.getGravityBuff(), ui.getWidth() / 5,
+                ui.getHeight() - height - space * 2, width, height, ui.getGuiStage()));
+        containerList.add(new BuffContainer(BuffsInfo.getJumpPowerBuff(), ui.getWidth() / 5,
+                ui.getHeight() - height * 2 - space * 3, width, height, ui.getGuiStage()));
     }
 
     @Override
     public void update(float delta) {
-    }
-
-    private void jumpCountLabel() {
-        Label.LabelStyle labelS = new Label.LabelStyle();
-        labelS.font = new BitmapFont();
-        labelS.fontColor = Color.WHITE;
-        jumpCountLabel = new Label("", labelS);
-        jumpCountLabel.setAlignment(Align.center);
-        jumpCountLabel.setFontScale(2);
-        jumpCountLabel.setSize(ui.getStage().getWidth() * 0.4f, ui.getStage().getHeight() / 5);
-        jumpCountLabel.setPosition(ui.getStage().getWidth() / 2,
-                ui.getStage().getHeight() / 2);
-        ui.getGuiStage().addActor(jumpCountLabel);
     }
 
     public Thread getThread() {
@@ -87,22 +88,23 @@ public class BuffsWorld extends AbstractWorld {
 class BuffsThread implements Runnable {
 
     public boolean isActive = true;
-    Label l;
-    TimeConverter tc = new TimeConverter(30 * 1000l);
-    private BuffContainer bc;
+    private List<BuffContainer> list;
 
-    public BuffsThread(BuffContainer bc) {
-        this.bc = bc;
-
+    public BuffsThread(List<BuffContainer> list) {
+        this.list = list;
     }
 
     @Override
     public void run() {
         try {
-            while (tc.getStatus()) {
+            for (BuffContainer bc : list) {
+                    bc.update();
+                }
+            while (true) {
+                for (BuffContainer bc : list) {
+                    bc.update();
+                }
                 sleep(1000);
-                bc.update();
-                Gdx.app.log("Timer", "tick");
                 if (!isActive) {
                     break;
                 }

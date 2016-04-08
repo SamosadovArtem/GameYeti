@@ -17,19 +17,19 @@ public class BuffFactory {
     private static int JUMP_COUNT_LVL_MAX = 3;
     private static int JUMP_POWER_LVL_MAX = 5;
     ///////////////////BUFFS COST///////////////////////////
-    private static int GRAV_COST = 300;
-    private static int JUMP_COUNT_COST = 500;
-    private static int JUMP_POWER_COST = 300;
+    private static int GRAV_COST = 1;
+    private static int JUMP_COUNT_COST = 1;
+    private static int JUMP_POWER_COST = 1;
     
     public static GravityBuff getGravityBuff(MyTimer time, int level){
         return new GravityBuff(time, level, GRAV_LVL_MAX, GRAV_VALUE, GRAV_COST);
     }
 
     public static JumpCountBuff getJumpCountBuff(MyTimer time, int level){
-        return new JumpCountBuff(time, level, JUMP_COUNT_VALUE);
+        return new JumpCountBuff(time, level, JUMP_COUNT_LVL_MAX, JUMP_COUNT_VALUE, JUMP_COUNT_COST);
     }
 
     public static JumpPowerBuff getJumpPowerBuff(MyTimer time, int level){
-        return new JumpPowerBuff(time, level, JUMP_POWER_VALUE);
+        return new JumpPowerBuff(time, level, JUMP_POWER_LVL_MAX, JUMP_POWER_VALUE, JUMP_POWER_COST);
     }
 }

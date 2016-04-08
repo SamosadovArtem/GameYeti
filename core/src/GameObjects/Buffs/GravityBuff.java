@@ -51,9 +51,9 @@ public class GravityBuff extends Buff{
         }
         return c * cost;
     }   
-    
+        
     public boolean checkUpdate(int allCoins){
-        if(allCoins >= getCoast(level)){
+        if(allCoins >= getCoast(level) && level != 0){
             return true;
         } else {
             return false;
@@ -61,7 +61,7 @@ public class GravityBuff extends Buff{
     }
     
     public boolean checkUpgrade(int allCoins){
-        if(allCoins >= getCoast(level + 1)){
+        if(allCoins >= getCoast(level + 1) && level < levelMax){
             return true;
         } else {
             return false;

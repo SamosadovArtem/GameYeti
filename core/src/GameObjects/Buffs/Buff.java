@@ -24,9 +24,16 @@ public abstract class Buff {
 
     public Buff(MyTimer time, BuffType type, int level) {
         timer = time;
-        isActive = true;
+
         this.type = type;
-        this.level = level;
+
+        if (timer.getTimeStatus()) {
+            this.level = level;
+            isActive = true;
+        } else {
+            this.level = 0;
+            isActive = false;
+        }
     }
 
     public boolean getIsActive() {
@@ -39,35 +46,35 @@ public abstract class Buff {
     public BuffType getType() {
         return type;
     }
-    
-    public int getLevel(){
+
+    public int getLevel() {
         return level;
     }
-    
-    public void increaseLevel(){
+
+    public void increaseLevel() {
         level++;
     }
-    
-    public MyTimer getTimer(){
+
+    public MyTimer getTimer() {
         return timer;
     }
 
-    public String getSaveData(){
-        return level+","+timer.getDateFinish().getTime();
+    public String getSaveData() {
+        return level + "," + timer.getDateFinish().getTime();
     }
-    
-    public void updateTimer(long time){
-        timer = new MyTimer(new Date(),time);
+
+    public void updateTimer(long time) {
+        timer = new MyTimer(new Date(), time);
     }
-    
+
     public abstract void upgrade();
-    
+
     public abstract void update();
-    
-    public abstract int getCoast(int level);    
-    
+
+    public abstract int getCoast(int level);
+
     public abstract boolean checkUpdate(int allCoins);
-    
+
     public abstract boolean checkUpgrade(int allCoins);
-    
+
 }

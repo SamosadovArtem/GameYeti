@@ -17,9 +17,11 @@ public class JumpCountBuff extends Buff{
 
     private int count = 3;
 
-    public JumpCountBuff(MyTimer time, int level, int value) {
+    public JumpCountBuff(MyTimer time,int level, int lvlMax, int value, int cost) { 
         super(time, BuffType.JUMPCOUNT, level);
         count = value;
+        this.levelMax = lvlMax;
+        this.cost = cost;
     }
 
     public int getCount(){
@@ -30,27 +32,27 @@ public class JumpCountBuff extends Buff{
         if(level != levelMax){
             updateTimer(1*24*60*60);
             increaseLevel();
-            BuffsInfo.saveGravityBuff(this);
+            BuffsInfo.saveJumpCountBuff(this);
         }
     }
     
     public void update(){
         if(level != 0){
             updateTimer(1*24*60*60);
-            BuffsInfo.saveGravityBuff(this);
+            BuffsInfo.saveJumpCountBuff(this);
         }
     }
     
     public int getCoast(int lvl){
         int c = 1;
         for(int i = 0; i < lvl;i++){
-            c+=i*2;
+            c+=2;
         }
         return c * cost;
     }
     
     public boolean checkUpdate(int allCoins){
-        if(allCoins >= getCoast(level)){
+        if(allCoins >= getCoast(level) && level != 0){
             return true;
         } else {
             return false;
@@ -58,7 +60,7 @@ public class JumpCountBuff extends Buff{
     }
     
     public boolean checkUpgrade(int allCoins){
-        if(allCoins >= getCoast(level + 1)){
+        if(allCoins >= getCoast(level + 1) && level < levelMax){
             return true;
         } else {
             return false;
