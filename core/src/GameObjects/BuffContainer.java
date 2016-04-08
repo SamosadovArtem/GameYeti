@@ -82,7 +82,7 @@ public class BuffContainer extends Actor {
         info.setFontScale(2);
         info.setSize(width / 2, height / 4);
         info.setPosition(xPos + width / 5, yPos - height / 2);
-        info.setText("Info: "+buff.getLevel() );
+        info.setText("Info: " + buff.getLevel());
         group.addActor(info);
 
         countdown = new Label("", labelS);
@@ -95,10 +95,11 @@ public class BuffContainer extends Actor {
 
         upgrade = new Button("Upgrade", AssetLoader.btn, AssetLoader.btnPress, "UPGRADE", FontLoader.font) {
             public void action() {
-                if(buff.checkUpgrade(Statistic.getCoins())){
-                    Gdx.app.log("UPGR","");
+                if (buff.checkUpgrade(Statistic.getCoins())) {
+                    Gdx.app.log("UPGR", "");
                     buff.upgrade();
-                    timer = buff.getTimer().getTimeLeft();                    
+                    timer = buff.getTimer().getTimeLeft();
+                    updateInfo();
                 }
             }
         };
@@ -108,16 +109,20 @@ public class BuffContainer extends Actor {
 
         extend = new Button("Extend", AssetLoader.btn, AssetLoader.btnPress, "EXTEND", FontLoader.font) {
             public void action() {
-                if(buff.checkUpdate(Statistic.getCoins())){
-                    Gdx.app.log("UPD","");
+                if (buff.checkUpdate(Statistic.getCoins())) {
+                    Gdx.app.log("UPD", "");
                     buff.update();
-                    timer = buff.getTimer().getTimeLeft();                    
+                    timer = buff.getTimer().getTimeLeft();
                 }
             }
         };
         extend.setSize(width / 6, height / 4);
         extend.setPosition(xPos + width * 5 / 6, yPos - height + upgrade.getHeight());
         group.addActor(extend);
+    }
+
+    private void updateInfo() {
+        info.setText("Info: " + buff.getLevel());
     }
 
     public void update() {
