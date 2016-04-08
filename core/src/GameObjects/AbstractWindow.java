@@ -84,7 +84,7 @@ public abstract class AbstractWindow {
     protected abstract void initButtons(GameLibGDX game);
 
     private void initBackground() {
-        Background background = new Background(AssetLoader.textureBtnNormal);
+        Picture background = new Picture(AssetLoader.textureBtnNormal);
         background.setPosition(xPos, yPos);
         background.setSize(width, height);
         group.addActor(background);
