@@ -9,6 +9,7 @@ import GameWorld.Buffs.BuffsRenderer;
 import GameWorld.Buffs.BuffsWorld;
 import GameWorld.Main.MainRenderer;
 import GameWorld.Main.MainWorld;
+import Helper.BuffsInputHandler;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.GameLibGDX;
 
@@ -29,7 +30,7 @@ public class BuffsScreen extends AbstractScreen {
     @Override
     protected void initScene() {
         Gdx.app.log("BuffsScreen", "initScene");
-        this.world = new BuffsWorld(ui,game);
+        this.world = new BuffsWorld(ui, game);
         this.render = new BuffsRenderer(world);
     }
 
@@ -38,7 +39,12 @@ public class BuffsScreen extends AbstractScreen {
         world.update(delta);
         render.render();
     }
-    
+
+    @Override
+    public void show() {
+        Gdx.input.setInputProcessor(new BuffsInputHandler(world));
+    }
+
     @Override
     public void hide() {
         this.world.getThread().interrupt();

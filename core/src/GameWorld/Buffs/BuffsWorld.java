@@ -69,11 +69,11 @@ public class BuffsWorld extends AbstractWorld {
         float space = ui.getHeight() / 15;
 
         containerList.add(new BuffContainer(BuffsInfo.getJumpCountBuff(), ui.getWidth() / 5,
-                ui.getHeight() - space, width, height, ui.getGuiStage()));
+                ui.getHeight() - space, width, height, ui.getStage()));
         containerList.add(new BuffContainer(BuffsInfo.getGravityBuff(), ui.getWidth() / 5,
-                ui.getHeight() - height - space * 2, width, height, ui.getGuiStage()));
+                ui.getHeight() - height - space * 2, width, height, ui.getStage()));
         containerList.add(new BuffContainer(BuffsInfo.getJumpPowerBuff(), ui.getWidth() / 5,
-                ui.getHeight() - height * 2 - space * 3, width, height, ui.getGuiStage()));
+                ui.getHeight() - height * 2 - space * 3, width, height, ui.getStage()));
     }
 
     @Override
