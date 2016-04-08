@@ -5,6 +5,7 @@
  */
 package com.mygdx.game.screen;
 
+import GameWorld.BuyCoins.BuyCoinsRenderer;
 import GameWorld.BuyCoins.BuyCoinsWorld;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.GameLibGDX;
