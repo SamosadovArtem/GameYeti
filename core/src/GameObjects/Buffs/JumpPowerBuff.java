@@ -6,6 +6,7 @@
 package GameObjects.Buffs;
 
 import Enums.BuffType;
+import Helper.BuffsInfo;
 import Helper.MyTimer;
 
 /**
@@ -22,6 +23,47 @@ public class JumpPowerBuff extends Buff {
     }
 
     public int getPower(){
-        return power;
+        return power + getLevel();
+    }
+    
+    
+    public void upgrade(){
+        if(level != levelMax){
+            updateTimer(1*24*60*60);
+            increaseLevel();
+            BuffsInfo.saveGravityBuff(this);
+        }
+    }
+    
+    public void update(){
+        if(level != 0){
+            updateTimer(1*24*60*60);
+            BuffsInfo.saveGravityBuff(this);
+        }
+    }
+    
+    public int getCoast(int lvl){
+        int c = 1;
+        for(int i = 0; i < lvl;i++){
+            c+=i*2;
+        }
+        return c * cost;
+    }
+    
+    
+    public boolean checkUpdate(int allCoins){
+        if(allCoins >= getCoast(level)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public boolean checkUpgrade(int allCoins){
+        if(allCoins >= getCoast(level + 1)){
+            return true;
+        } else {
+            return false;
+        }
     }
 }

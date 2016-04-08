@@ -8,6 +8,7 @@ package GameObjects;
 import GameObjects.Buffs.Buff;
 import Helper.AssetLoader;
 import Helper.FontLoader;
+import Helper.Statistic;
 import Helper.TimeConverter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -94,7 +95,10 @@ public class BuffContainer extends Actor {
 
         upgrade = new Button("Upgrade", AssetLoader.btn, AssetLoader.btnPress, "UPGRADE", FontLoader.font) {
             public void action() {
-
+                if(buff.checkUpgrade(Statistic.getCoins())){
+                    buff.upgrade();
+                    timer = buff.getTimer().getTimeLeft();                    
+                }
             }
         };
         upgrade.setSize(width / 6, height / 4);
@@ -103,7 +107,10 @@ public class BuffContainer extends Actor {
 
         extend = new Button("Extend", AssetLoader.btn, AssetLoader.btnPress, "EXTEND", FontLoader.font) {
             public void action() {
-
+                if(buff.checkUpdate(Statistic.getCoins())){
+                    buff.update();
+                    timer = buff.getTimer().getTimeLeft();                    
+                }
             }
         };
         extend.setSize(width / 6, height / 4);

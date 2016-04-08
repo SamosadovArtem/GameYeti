@@ -14,6 +14,7 @@ import GameWorld.AbstractWorld;
 import GameWorld.Game.Objects.Antelope;
 import GameWorld.Game.Objects.Pinguin;
 import Helper.AssetLoader;
+import Helper.BuffsInfo;
 import Helper.Constants;
 import Helper.FontLoader;
 import Helper.MyTimer;
@@ -56,7 +57,7 @@ public class BuffsWorld extends AbstractWorld {
         TextureRegion pressedState = AssetLoader.btnPress;
 
         jumpCountLabel();
-        bc = new BuffContainer((Buff)(new JumpCountBuff(new MyTimer(new Date(),5000l),10,10)),
+        bc = new BuffContainer(BuffsInfo.getGravityBuff(),
                 ui.getWidth()/5,ui.getHeight()*4/5,ui.getWidth()*3/5,ui.getHeight()/4,ui.getGuiStage());
         ui.addBack(game);
     }

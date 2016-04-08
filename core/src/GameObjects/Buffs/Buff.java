@@ -7,6 +7,7 @@ package GameObjects.Buffs;
 
 import Enums.BuffType;
 import Helper.MyTimer;
+import java.util.Date;
 
 /**
  *
@@ -17,8 +18,8 @@ public abstract class Buff {
     private MyTimer timer;
     private boolean isActive;
     private BuffType type;
-    protected int level;
-    protected int levelMax;
+    protected int level = 0;
+    protected int levelMax = 0;
     protected int cost;
 
     public Buff(MyTimer time, BuffType type, int level) {
@@ -56,6 +57,17 @@ public abstract class Buff {
     }
     
     public void updateTimer(long time){
-        timer = new MyTimer(time);
+        timer = new MyTimer(new Date(),time);
     }
+    
+    public abstract void upgrade();
+    
+    public abstract void update();
+    
+    public abstract int getCoast(int level);    
+    
+    public abstract boolean checkUpdate(int allCoins);
+    
+    public abstract boolean checkUpgrade(int allCoins);
+    
 }
