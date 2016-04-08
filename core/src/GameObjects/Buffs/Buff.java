@@ -17,7 +17,9 @@ public abstract class Buff {
     private MyTimer timer;
     private boolean isActive;
     private BuffType type;
-    private int level;
+    protected int level;
+    protected int levelMax;
+    protected int cost;
 
     public Buff(MyTimer time, BuffType type, int level) {
         timer = time;
@@ -51,5 +53,9 @@ public abstract class Buff {
 
     public String getSaveData(){
         return level+","+timer.getDateFinish().getTime();
+    }
+    
+    public void updateTimer(long time){
+        timer = new MyTimer(time);
     }
 }
