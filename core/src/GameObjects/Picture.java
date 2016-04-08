@@ -13,11 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  *
  * @author Pablo
  */
-public class Background extends Actor {
+public class Picture extends Actor {
 
     private Texture sprite;
 
-    public Background(Texture sprite) {
+    public Picture(Texture sprite) {
         this.sprite = sprite;
     }
 
