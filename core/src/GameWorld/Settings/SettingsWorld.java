@@ -11,6 +11,7 @@ import GameObjects.Scroll;
 import GameWorld.AbstractWorld;
 import Helper.AssetLoader;
 import Helper.FontLoader;
+import Helper.Statistic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -68,7 +69,8 @@ public class SettingsWorld extends AbstractWorld {
     }
 
     private void initScrollSound() {
-        soundScroll = new Scroll("Sound", backTexture, backTexture);
+        float value = ((float)Statistic.getSoundLevel())/100;
+        soundScroll = new Scroll("Sound", backTexture, backTexture,value);
         soundScroll.setSize(ui.getWidth() / 5, ui.getHeight() / 10);
         soundScroll.setPosition(ui.getWidth() * 3 / 5, ui.getHeight() * 4 / 5);
         ui.getGuiStage().addActor(soundScroll);
@@ -88,7 +90,8 @@ public class SettingsWorld extends AbstractWorld {
     }
 
     private void initScrollMusic() {
-        musicScroll = new Scroll("Music", backTexture, backTexture);
+        float value = ((float)Statistic.getMusicLevel())/100;
+        musicScroll = new Scroll("Music", backTexture, backTexture,value);
         musicScroll.setSize(ui.getWidth() / 5, ui.getHeight() / 10);
         musicScroll.setPosition(ui.getWidth() * 3 / 5, ui.getHeight() * 3 / 5);
         ui.getGuiStage().addActor(musicScroll);
@@ -98,7 +101,11 @@ public class SettingsWorld extends AbstractWorld {
         disableADS = new Button("Top", normalState, pressedState, "PLEASE", FontLoader.font) {
             public void action() {
                 
-
+            soundScroll.getValue();
+            
+            
+            
+            System.out.println( (int)(soundScroll.getValue()*100));
             }
         };
         disableADS.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);

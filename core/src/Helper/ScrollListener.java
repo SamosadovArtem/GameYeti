@@ -45,6 +45,24 @@ public class ScrollListener extends InputListener {
     public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
         //Устанавливаем флаг нажатия в "отжата"
         this.getScroll().setTouched(false);
+        
+//        System.out.println("Скрол нажат и значение- " + 
+//                (int)(this.scroll.getValue()*100)+this.scroll.getName());
+        
+        if (this.scroll.getName()=="Sound"){
+            int value = (int)(this.scroll.getValue()*100);
+            Statistic.setSoundsLevel(value);
+            SoundsLoader.updateSound();
+            
+        }
+        if (this.scroll.getName()=="Music"){
+            int value = (int)(this.scroll.getValue()*100);
+            Statistic.setMusicLevel(value);
+            SoundsLoader.updateMusic();
+        }
+        
+        this.scroll.save();
+        
         //Выполняем метод action кнопки
         //this.getButton().action();
     }

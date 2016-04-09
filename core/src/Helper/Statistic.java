@@ -49,6 +49,12 @@ public class Statistic {
             prefs.putInteger("allLength", 0);
             prefs.flush();
         }
+        if (!prefs.contains("sounds")){
+            prefs.putInteger("sounds", 100);
+        }
+        if (!prefs.contains("music")){
+            prefs.putInteger("music", 100);
+        }
         
         CloseMaps();
     }
@@ -135,5 +141,20 @@ public class Statistic {
     
     public static void dispose(){
         prefs.clear();
+    }
+        public static int getSoundLevel(){
+        return prefs.getInteger("sounds");
+    }
+    public static void setSoundsLevel(int lvl){
+        prefs.putInteger("sounds", lvl);
+        prefs.flush();
+    }
+    
+    public static int getMusicLevel(){
+        return prefs.getInteger("music");
+    }
+    public static void setMusicLevel(int lvl){
+        prefs.putInteger("music", lvl);
+        prefs.flush();
     }
 }

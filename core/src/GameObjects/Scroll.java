@@ -27,14 +27,14 @@ public class Scroll extends Actor {
     private float value;
     private boolean touched;
 
-    public Scroll(String name, Texture backSprite, Texture valueSprite) {
+    public Scroll(String name, Texture backSprite, Texture valueSprite, float value) {
         super();
         this.setTouched(false);
         this.addListener(new ScrollListener(this));
         this.setName(name);
         this.setTexture(backSprite, valueSprite);
         this.setOrigin(this.getWidth() / 2.0f, this.getHeight() / 2.0f);
-        value = 1;
+        this.value = value;
     }
     //Далее идут методы установки и получения свойств класса (сеттеры и геттеры)
 
@@ -71,12 +71,21 @@ public class Scroll extends Actor {
 
     }
     //Метод отрисовки кнопки (вызывается в цикле при отрисовке сцены)
-
+public void save(){
+    //
+}
+    
+    
     public void draw(Batch batch, float parentAlpha) {
         //Если кнопка нажата, то рисуем текстуру нажатого состояния, если нет - нормального
         //   batch.draw(backSprite, getX(), getY(), getWidth(), getHeight());
         batch.draw(valueSprite, getX(), getY(), (float) (getWidth() * value), getHeight(),
                 0, 0,
                 (int) (valueSprite.getWidth() * value), valueSprite.getHeight(), false, false);
+    }
+
+    public float getValue() {
+    
+        return this.value;
     }
 }
