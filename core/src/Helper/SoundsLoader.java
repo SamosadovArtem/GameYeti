@@ -23,7 +23,7 @@ public final class SoundsLoader {
     private static ArrayList<Music> music = new ArrayList<Music>();
     
     public static void LoadGameSounds(){
-        coin = Gdx.audio.newMusic(Gdx.files.internal("gfx/sounds/coin.mp3")); 
+        coin = Gdx.audio.newMusic(Gdx.files.internal("mfx/sounds/GameWorldSounds/coin.mp3")); 
         
         sounds.add(coin);
         
@@ -34,7 +34,7 @@ public final class SoundsLoader {
     public static void LoadBasicSounds(){
         
         if (back==null){
-        back = Gdx.audio.newMusic(Gdx.files.internal("gfx/sounds/back.mp3"));
+        back = Gdx.audio.newMusic(Gdx.files.internal("mfx/music/MainWorldMusic/back.mp3"));
         
         
         music.add(back);

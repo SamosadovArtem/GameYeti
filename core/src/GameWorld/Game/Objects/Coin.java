@@ -6,6 +6,7 @@
 package GameWorld.Game.Objects;
 
 import Helper.Constants;
+import Helper.SoundsLoader;
 import Helper.Statistic;
 import Helper.WorldUtils;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -84,6 +85,7 @@ public class Coin extends GameActor {
     }
 
     public void take() {
+        SoundsLoader.PlayCoinSound();
         Statistic.addCoins(1);
         this.remove();
     }

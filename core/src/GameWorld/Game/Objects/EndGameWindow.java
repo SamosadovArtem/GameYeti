@@ -8,6 +8,7 @@ package GameWorld.Game.Objects;
 import GameObjects.Button;
 import GameObjects.AbstractWindow;
 import Helper.FontLoader;
+import Helper.SoundsLoader;
 import Helper.Statistic;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -85,6 +86,8 @@ public class EndGameWindow extends AbstractWindow {
             public void action() {
                 Gdx.app.log("check", "check");
 
+                SoundsLoader.DisposedGameSounds();
+                
                 game.setScreen(new MainScreen(game));
             }
         };

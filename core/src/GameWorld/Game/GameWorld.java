@@ -20,6 +20,7 @@ import Helper.Constants;
 import Helper.FontLoader;
 import Helper.GameContactListener;
 import Helper.JumpCountController;
+import Helper.SoundsLoader;
 import Helper.WorldUtils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -65,6 +66,7 @@ public class GameWorld extends AbstractWorld {
     }
     
     private void setUpWorld() {
+        SoundsLoader.LoadGameSounds();
         world = WorldUtils.createWorld(BuffsInfo.getGravityBuff().getGravity());
         jumpCountController = new JumpCountController(BuffsInfo.getJumpCountBuff().getCount());
         endGameWindow = new EndGameWindow(ui.getGuiStage());

@@ -10,6 +10,7 @@ import GameObjects.Interface;
 import GameWorld.AbstractWorld;
 import Helper.AssetLoader;
 import Helper.FontLoader;
+import Helper.SoundsLoader;
 import Helper.Statistic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -40,6 +41,10 @@ public class MainWorld extends AbstractWorld {
     public MainWorld(Interface ui, GameLibGDX g) {
         super(ui, g);
         Gdx.app.log("MainWorld ", "create");
+        
+        SoundsLoader.LoadBasicSounds();
+        SoundsLoader.PlayBackSound();
+        
         createUI();
     }
 
