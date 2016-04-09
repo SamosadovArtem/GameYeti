@@ -16,7 +16,9 @@ import Helper.FontLoader;
 import Helper.Statistic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.GameLibGDX;
+import com.mygdx.game.screen.GameScreen;
 import java.util.ArrayList;
 
 /**
@@ -49,6 +51,9 @@ public class MapsWorld extends AbstractWorld {
     Boolean isDialog = false;
     
     BuyMapWindow buyMapWindow;
+    
+    Button rightButton;
+    Button leftButton;
 
 
     
@@ -56,17 +61,32 @@ public class MapsWorld extends AbstractWorld {
         super(ui, g);
 
         buyMapWindow = new BuyMapWindow(ui.getGuiStage(),this);
-        mapsList = LoadMaps(); 
+        mapsList = LoadMaps();
+        LoadLeftAndRightButtons();
+        SetVisible();
 
         createUI(mapsList);
+        
+        
+        
+        
+        
 
     }
 
     @Override
     public void update(float delta) {
 
+//        System.out.println("Камера - "+ui.getStage().getCamera().position.x);
+//        System.out.println("Первая мапа - "+mapsList.get(1).getX());
+            
+         //System.out.println(GetActiveMapNumber());
+        
+        
         ui.updateFps(1 / delta);
+        
         moveCamera();
+        SetVisible();
 
 //        if (isTouchUnboughtMap) {
 //            
@@ -133,11 +153,14 @@ public class MapsWorld extends AbstractWorld {
 
     private void moveCamera() {
         if (isNotTouched) {
+            
             float speed = 0;
             if (nearestButton != getCameraX()) {
                 speed = (nearestButton - getCameraX()) / 10.0f;
+                //isDialog = true;
             } else {
                 isNotTouched = false;
+                //isDialog = false;
             }
             setCameraX(getCameraX() + speed);
         }
@@ -178,12 +201,97 @@ public class MapsWorld extends AbstractWorld {
                     mapToBuy.BuyMap();
                     Statistic.OpenMap(mapToBuy.getName());
                     isTouchCancel = true;
+                    buyMapWindow.deleteWindow();
                 } catch (IllegalArgumentException e) {
                     System.err.println(e.getMessage());
                 }
     }
     public BuyMapWindow getBuyMapWindow(){
         return this.buyMapWindow;
+    }
+    
+    private void LoadLeftAndRightButtons(){
+        leftButton = new Button("Left", firstButtonNormalState, firstButtonnPressedState, "L", FontLoader.font) {
+            public void action() {
+                
+                if (GetActiveMapNumber()!=0){
+//                setNearestLength((float) (ui.getStage().getCamera().position.x
+//                        - (mapLocations.get(GetActiveMapNumber()-1))));
+                    setNearestLength((float) (ui.getStage().getCamera().position.x-
+                            mapsList.get(0).getWidth()*2));
+                }
+                
+                
+                SetVisible();
+            }
+        };
+        leftButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
+        leftButton.setPosition((float) (leftButton.getWidth()/4),ui.getGuiStage().getHeight()/2
+        - leftButton.getHeight()/2);
+
+        ui.getGuiStage().addActor(leftButton);
+        
+        rightButton = new Button("Right", firstButtonNormalState, firstButtonnPressedState, "R", FontLoader.font) {
+            public void action() {
+                
+                if (GetActiveMapNumber()!=mapsList.size()-1){
+//                setNearestLength((float) (ui.getStage().getCamera().position.x
+//                        - (mapLocations.get(GetActiveMapNumber()+1))));
+
+                    setNearestLength((float) (ui.getStage().getCamera().position.x+
+                            mapsList.get(0).getWidth()*2));
+
+                }
+                
+                SetVisible();
+            }
+        };
+        rightButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
+        rightButton.setPosition((float) (ui.getGuiStage().getWidth()-rightButton.getWidth()*1.25),ui.getGuiStage().getHeight()/2
+        - rightButton.getHeight()/2);
+
+        ui.getGuiStage().addActor(rightButton);
+    }
+    
+    public void SetVisible(){
+        
+        if (GetActiveMapNumber()==0){
+            leftButton.setVisible(false);
+            rightButton.setVisible(true);
+        }else{
+            if (GetActiveMapNumber()==mapsList.size()-1){
+                rightButton.setVisible(false);
+                leftButton.setVisible(true);
+            } else {
+                rightButton.setVisible(true);
+                leftButton.setVisible(true);
+            }
+        }
+        
+    }
+    
+    private int GetActiveMapNumber(){
+
+        
+        for (int i = 0;i<mapsList.size();i++){
+            
+            //System.out.println((ui.getStage().getCamera().position.x-mapsList.get(i).getX()));
+            
+            if (Math.abs((ui.getStage().getCamera().position.x-mapsList.get(i).getX()))<=
+                    mapsList.get(0).getWidth()/2
+                    +
+                    mapsList.get(i).getWidth()/4){
+                
+                
+                
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    public void setNearestLength(float length){
+        this.nearestButton = length;
     }
     
 

@@ -72,6 +72,32 @@ public final class MapsLoader {
         allMaps.add(tempMap2);
         mapLocations.add(tempMap2.getX() + tempMap2.getWidth() / 2);
         //stage.addActor(tempMap2);
+        
+        
+                Map tempMap3 = new Map("3", firstButtonNormalState,
+                firstButtonnPressedState, firstButtonUnboughtState, "3", FontLoader.font) {
+            public void action() {
+                System.out.println(this.IsMapBought());
+                if (IsMapBought()) {
+                    world.getGame().setScreen(new GameScreen(world.getGame()));
+                } else {
+                    world.mapToBuy = this;
+                    world.isTouchUnboughtMap = true;
+                    
+                    world.buyMapWindow.setCheck(false);
+                    
+                    world.buyMapWindow.showWindow(world.getGame());
+                }
+            }
+        };
+        tempMap3.SetPrice(20);
+        tempMap3.setSize(world.getUI().getStage().getWidth() * 0.4f, world.getUI().getStage().getHeight() / 5);
+        tempMap3.setPosition((world.getUI().getStage().getWidth() - tempMap.getWidth()) / 2 + tempMap3.getWidth() * 4,
+                (world.getUI().getStage().getHeight() - tempMap.getHeight()) / 2);
+
+        allMaps.add(tempMap3);
+        mapLocations.add(tempMap3.getX() + tempMap3.getWidth() / 2);
+        
 
         return allMaps;
         
