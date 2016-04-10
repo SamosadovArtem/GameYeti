@@ -125,10 +125,10 @@ class AntelopeThread implements Runnable {
 
             antelope.getBody().setLinearVelocity(new Vector2(200f, 0));
             antelope.getDownBody().setLinearVelocity(new Vector2(200f, 0));
-            for (int i = 0; i < 50; i++) {
+            for (int i = 0; i < 5; i++) {
                 pinguin.getBody().setLinearVelocity(new Vector2(200f + antelope.getBody().getPosition().x - pinguin.getBody().getPosition().x,
                         antelope.getBody().getPosition().y + antelope.getHeight() / 8 - pinguin.getBody().getPosition().y));
-                sleep(100);
+                sleep(1000);
             }
             check = true;
             //     pinguin.getAntelope().setIsUsed(true);

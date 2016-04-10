@@ -66,11 +66,6 @@ public class MapsWorld extends AbstractWorld {
         SetVisible();
 
         createUI(mapsList);
-        
-        
-        
-        
-        
 
     }
 
@@ -87,28 +82,6 @@ public class MapsWorld extends AbstractWorld {
         
         moveCamera();
         SetVisible();
-
-//        if (isTouchUnboughtMap) {
-//            
-//            isDialog = true;
-//           //buyMapWindow.createWindow(game);
-//           isTouchUnboughtMap = false;
-//        }
-//
-//            if (isTouchCancel) { 
-//                //buyMapWindow.unScroll();
-//                isTouchCancel = false;
-//                isDialog = false;
-                
-                /*
-я хачу умирець
-        :(
-        ни нада(
-        я скрою вены(
-        не скрывай(
-        скрою((
-
-*/
         }
 
     private void createUI(ArrayList<Map> allMap) {

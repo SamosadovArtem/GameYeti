@@ -124,9 +124,6 @@ public class Map extends Actor {
           }
     }
     //Устанавливаем цвет фона
-    BitmapFont font = new BitmapFont();
-    font.setFixedWidthGlyphs(text);
-    this.getFont().setColor(0,0,0,1);
    }
 }
 

@@ -60,10 +60,11 @@ public class MapsInputHandler implements InputProcessor{
         return true;
     }
 
+    int temp;
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         if (!world.isDialog()){
-        int temp = _oldX;
+        temp = _oldX;
         if ((isTouched)&&(_oldX > screenX)){
 
             _oldX = screenX;
