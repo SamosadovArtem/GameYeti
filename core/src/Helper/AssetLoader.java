@@ -19,19 +19,27 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  * @author qw
  */
 public class AssetLoader {
+
     public static Texture textureBtnNormal, textureBtnPress;
+    public static Texture pinguin;
+    public static TextureRegion pinguinTexture;
     public static TextureRegion btnPress, btn;
     public static Animation birdAnimation;
     public static Sound dead, flap, coin;
-    public static BitmapFont font, shadow;    
+    public static BitmapFont font, shadow;
 
     public static void load() {
-        
+
         textureBtnNormal = new Texture(Gdx.files.internal("gfx/buttons/button.png"));
         textureBtnNormal.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
         btn = new TextureRegion(textureBtnNormal, 0, 0, 600, 200);
-        
+
+        pinguin = new Texture(Gdx.files.internal("gfx/gameScreen.Objects/pinguin.png"));
+        pinguin.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+        pinguinTexture = new TextureRegion(pinguin, 0, 0, 73, 51);
+
         textureBtnPress = new Texture(Gdx.files.internal("gfx/buttons/buttonPress.png"));
         textureBtnPress.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
@@ -93,8 +101,8 @@ public class AssetLoader {
         if (!prefs.contains("highScore")) {
             prefs.putInteger("highScore", 0);
         }
-        */
-    }    
+         */
+    }
 
     public static void dispose() {
         textureBtnNormal.dispose();

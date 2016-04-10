@@ -77,9 +77,9 @@ public class Coin extends GameActor {
     }
 
     public void draw(Batch batch, float parentAlpha) {
-        if (body.getFixtureList().get(0).getUserData().equals("DELETE")) {
-            this.remove();
-        } else if (delete() && checkDraw()) {
+//        if (body.getFixtureList().get(0).getUserData().equals("DELETE")) {
+  //          this.remove();
+    /*    } else*/ if (delete() && checkDraw()) {
             batch.draw(snakeTexture, getX() - width / 2, getY() - getHeight() / 2, getWidth(), getHeight());
         }
     }

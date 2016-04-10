@@ -35,7 +35,7 @@ public class Pinguin extends GameActor {
 
     public Pinguin(Body body, TextureRegion pinguinTexture, int powerCof) {
         super(body);
-        this.pinguinTexture = pinguinTexture;
+        this.pinguinTexture = AssetLoader.pinguinTexture;
         this.powerCof = powerCof;
         power = 0;
         directionX = 0f;
@@ -119,7 +119,7 @@ public class Pinguin extends GameActor {
     }
     
     private void drawDirection(Batch batch){
-        batch.draw(pinguinTexture, 
+        batch.draw(AssetLoader.btn, 
                         getX() + getWidth() , getY() - getHeight() / 2,
                         getHeight() / 4 , getHeight() / 4, 
                         getWidth(), getHeight() / 2,
