@@ -5,6 +5,7 @@
  */
 package GameWorld.Game;
 
+import GameObjects.Buffs.Buff;
 import GameObjects.Button;
 import GameObjects.Interface;
 import GameWorld.AbstractWorld;
@@ -35,6 +36,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.GameLibGDX;
 import com.mygdx.game.screen.DebugScreen;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -58,6 +61,10 @@ public class GameWorld extends AbstractWorld {
     private float accumulator = 0f;
     private float maxX = 0;
     private int objectsGenerateNum = 30;
+    
+    private float xBuffPosition =  (float) (ui.getGuiStage().getWidth() *0.20);
+    private float yBuffPosition = ui.getGuiStage().getHeight()-ui.getGuiStage().getHeight()/10;
+    
 
     public GameWorld(Interface ui, GameLibGDX g) {
         super(ui, g);
@@ -80,6 +87,8 @@ public class GameWorld extends AbstractWorld {
         initJumpCount();
         createObjects((int) maxX, objectsGenerateNum);
         ui.addBack(game);
+        
+        GetBuffsInfo();
     }
 
     private void createObjects(int startPos, int count) {
@@ -287,5 +296,33 @@ public class GameWorld extends AbstractWorld {
 
     public EndGameWindow getEndGameWindow() {
         return endGameWindow;
+    }
+    
+        private void GetBuffsInfo(){
+        List<Buff> allBufs = BuffsInfo.getBuffs();
+        
+
+        
+        
+        for (int i = 0;i<allBufs.size();i++){
+            
+            
+            if (allBufs.get(i).getLevel()>0){
+                Button buff = new Button("buff", AssetLoader.btn, AssetLoader.btn,"buff", FontLoader.font) {
+                public void action() {
+                    System.out.println();
+                    }
+                };
+                buff.setSize(ui.getStage().getWidth() * 0.05f, ui.getStage().getHeight() / 15);
+                buff.setPosition(xBuffPosition, yBuffPosition);
+                
+                xBuffPosition+=buff.getWidth()*1.5;
+                
+                ui.getGuiStage().addActor(buff);
+            }
+            
+            //xBuffPosition = buff
+        }
+        
     }
 }
