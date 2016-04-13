@@ -18,16 +18,40 @@ public class DailyGift {
     private MyTimer timerMin;
     private MyTimer timerMax;
     private int level;
-    private static int[] award = {1, 3, 5, 10, 25};
+    private int[] award = {1, 3, 5, 10, 25};
 
     public DailyGift(MyTimer timerMin, MyTimer timerMax, int level) {
         this.timerMin = timerMin;
         this.timerMax = timerMax;
         this.level = level;
     }
+    
+    public DailyGift(){
+        
+    }
 
     public String getSaveData() {
         return level + "," + timerMin.getDateFinish().getTime()
                 + "," + timerMax.getDateFinish().getTime();
+    }
+
+    public boolean checkIsAvailable() {
+        if (!timerMin.getTimeStatus() && timerMax.getTimeStatus()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void increaseLevel() {
+        if (level < 5) {
+            level++;
+        }
+        timerMin = new MyTimer(timerMin.getDateFinish(), 24 * 60 * 60);
+        timerMax = new MyTimer(timerMax.getDateFinish(), 24 * 60 * 60);
+    }
+
+    public int getCoins() {
+        return award[level - 1];
     }
 }

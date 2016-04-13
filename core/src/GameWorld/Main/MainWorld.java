@@ -10,6 +10,7 @@ import GameObjects.DailyGiftWindow;
 import GameObjects.Interface;
 import GameWorld.AbstractWorld;
 import Helper.AssetLoader;
+import Helper.DailyGiftHandler;
 import Helper.FontLoader;
 import Helper.SoundsLoader;
 import Helper.Statistic;
@@ -48,8 +49,16 @@ public class MainWorld extends AbstractWorld {
 
         createUI();
 
+        handleDailyGift();
+    }
+
+    private void handleDailyGift() {
+        DailyGiftHandler.setDailyGift();
+        Gdx.app.log("fewfq",": " + DailyGiftHandler.gift.getSaveData());
         DailyGiftWindow dailyGiftWindow = new DailyGiftWindow(ui.getGuiStage());
-        dailyGiftWindow.showWindow(game);
+        if (DailyGiftHandler.gift.checkIsAvailable()) {
+            dailyGiftWindow.showWindow(game);
+        }
     }
 
     private Rectangle rect = new Rectangle(0, 0, 17, 12);
@@ -77,9 +86,9 @@ public class MainWorld extends AbstractWorld {
         topButton(normalState, pressedState);
         initHighscore();
     }
-    
-    private void checkDailyGift(){
-        
+
+    private void checkDailyGift() {
+
     }
 
     private void playButton(TextureRegion normalState, TextureRegion pressedState) {

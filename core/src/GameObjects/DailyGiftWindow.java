@@ -8,6 +8,7 @@ package GameObjects;
 import Helper.AssetLoader;
 import Helper.DailyGiftHandler;
 import Helper.FontLoader;
+import Helper.Statistic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -44,7 +45,6 @@ public class DailyGiftWindow extends AbstractWindow {
         textLabel.setPosition(xPos + width / 2 - textLabel.getWidth() / 2,
                 yPos + height - textLabel.getHeight());
         group.addActor(textLabel);
-
     }
 
     @Override
@@ -53,6 +53,9 @@ public class DailyGiftWindow extends AbstractWindow {
             public void action() {
                 deleteWindow();
                 setCheck(true);
+                Statistic.addCoins(DailyGiftHandler.gift.getCoins());
+                DailyGiftHandler.refresh();
+                DailyGiftHandler.dispose();
             }
         };
         applyButton.setSize(width / 5, height / 6);

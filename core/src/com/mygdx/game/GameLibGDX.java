@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import Helper.AssetLoader;
 import Helper.BuffsInfo;
+import Helper.DailyGiftHandler;
 import Helper.FontLoader;
 import Helper.InputHandler;
 import Helper.Statistic;
@@ -29,6 +30,7 @@ public class GameLibGDX extends ApplicationAdapter {
         FontLoader.load();
         Statistic.load();
         BuffsInfo.load();
+        DailyGiftHandler.load();
     }
         
     public void setScreen (Screen screen) {
