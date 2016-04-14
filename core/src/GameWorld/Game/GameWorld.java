@@ -52,22 +52,23 @@ public class GameWorld extends AbstractWorld {
     private Pinguin pinguin;
     private JumpCountController jumpCountController;
     private Label jumpCountText;
+    private boolean pause;
 
     private EndGameWindow endGameWindow;
 
-    private Button debugButton;
+    private Button debugButton, pauseButton;
 
     private final float TIME_STEP = 1 / 400f;
     private float accumulator = 0f;
     private float maxX = 0;
     private int objectsGenerateNum = 30;
-    
-    private float xBuffPosition =  (float) (ui.getGuiStage().getWidth() *0.20);
-    private float yBuffPosition = ui.getGuiStage().getHeight()-ui.getGuiStage().getHeight()/10;
-    
+
+    private float xBuffPosition = (float) (ui.getGuiStage().getWidth() * 0.20);
+    private float yBuffPosition = ui.getGuiStage().getHeight() - ui.getGuiStage().getHeight() / 10;
 
     public GameWorld(Interface ui, GameLibGDX g) {
         super(ui, g);
+        pause = false;
         setUpWorld();
         Gdx.app.log("GameWorld", "create");
     }
@@ -83,11 +84,12 @@ public class GameWorld extends AbstractWorld {
         addTablets(ground.getX(), ground2.getX() + ground2.getWidth());
         setUpRunner(BuffsInfo.getJumpPowerBuff().getPower());
         addDebugButton(AssetLoader.btn, AssetLoader.btnPress);
+        addPauseButton(AssetLoader.btn, AssetLoader.btnPress);
         world.setContactListener(new GameContactListener(this, pinguin));
         initJumpCount();
         createObjects((int) maxX, objectsGenerateNum);
         ui.addBack(game);
-        
+
         GetBuffsInfo();
     }
 
@@ -176,33 +178,33 @@ public class GameWorld extends AbstractWorld {
 
     @Override
     public void update(float delta) {
+        if (!pause) {
+            ui.updateFps(1 / delta);
 
-        ui.updateFps(1 / delta);
+            accumulator += delta;
 
-        accumulator += delta;
+            while (accumulator >= delta) {
+                world.step(TIME_STEP, 6, 1);
+                accumulator -= TIME_STEP;
+            }
+            initHit();
+            setAngularPinguin();
+            checkHeight();
+            unlimitedGame();
+            drawJumpCount();
+            map.focusCameraX(pinguin);
+            addGround();
 
-        while (accumulator >= delta) {
-            world.step(TIME_STEP, 6, 1);
-            accumulator -= TIME_STEP;
-        }
-        initHit();
-        setAngularPinguin();
-        checkHeight();
-        unlimitedGame();
-        drawJumpCount();
-        map.focusCameraX(pinguin);
-        addGround();
+            Array<Body> bodies = new Array<Body>();
+            world.getBodies(bodies);
 
-        Array<Body> bodies = new Array<Body>();
-        world.getBodies(bodies);
-
-        for (Body bod : bodies) {
-            if (pinguin.getBody().getPosition().x - bod.getPosition().x >= Constants.APP_WIDTH * 5
-                    && bod.getFixtureList().get(0).getUserData() != "GROUND") {
-                world.destroyBody(bod);
+            for (Body bod : bodies) {
+                if (pinguin.getBody().getPosition().x - bod.getPosition().x >= Constants.APP_WIDTH * 5
+                        && bod.getFixtureList().get(0).getUserData() != "GROUND") {
+                    world.destroyBody(bod);
+                }
             }
         }
-        
     }
 
     private void unlimitedGame() {
@@ -277,10 +279,25 @@ public class GameWorld extends AbstractWorld {
             }
         };
         debugButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
-        debugButton.setPosition(ui.getStage().getCamera().position.x + ui.getStage().getWidth() / 3,
+        debugButton.setPosition(ui.getStage().getCamera().position.x,
                 ui.getStage().getCamera().position.y + ui.getStage().getHeight() / 3);
 
         ui.getGuiStage().addActor(debugButton);
+    }
+
+    private void addPauseButton(TextureRegion normalState, TextureRegion pressedState) {
+        pauseButton = new Button("Top", normalState, pressedState, "TOP", FontLoader.font) {
+            public void action() {
+
+                pause = !pause;
+
+            }
+        };
+        pauseButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
+        pauseButton.setPosition(ui.getStage().getCamera().position.x + ui.getStage().getWidth() / 3,
+                ui.getStage().getCamera().position.y + ui.getStage().getHeight() / 3);
+
+        ui.getGuiStage().addActor(pauseButton);
     }
 
     public void addTablet(float x) {
@@ -297,32 +314,28 @@ public class GameWorld extends AbstractWorld {
     public EndGameWindow getEndGameWindow() {
         return endGameWindow;
     }
-    
-        private void GetBuffsInfo(){
-        List<Buff> allBufs = BuffsInfo.getBuffs();
-        
 
-        
-        
-        for (int i = 0;i<allBufs.size();i++){
-            
-            
-            if (allBufs.get(i).getLevel()>0){
-                Button buff = new Button("buff", AssetLoader.btn, AssetLoader.btn,"buff", FontLoader.font) {
-                public void action() {
-                    System.out.println();
+    private void GetBuffsInfo() {
+        List<Buff> allBufs = BuffsInfo.getBuffs();
+
+        for (int i = 0; i < allBufs.size(); i++) {
+
+            if (allBufs.get(i).getLevel() > 0) {
+                Button buff = new Button("buff", AssetLoader.btn, AssetLoader.btn, "buff", FontLoader.font) {
+                    public void action() {
+                        System.out.println();
                     }
                 };
                 buff.setSize(ui.getStage().getWidth() * 0.05f, ui.getStage().getHeight() / 15);
                 buff.setPosition(xBuffPosition, yBuffPosition);
-                
-                xBuffPosition+=buff.getWidth()*1.5;
-                
+
+                xBuffPosition += buff.getWidth() * 1.5;
+
                 ui.getGuiStage().addActor(buff);
             }
-            
+
             //xBuffPosition = buff
         }
-        
+
     }
 }
