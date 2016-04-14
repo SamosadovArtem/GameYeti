@@ -45,7 +45,7 @@ public class Antelope extends GameActor {
         body.getFixtureList().get(0).setUserData(this);
         downBody.getFixtureList().get(0).setUserData("ANTELOPE");
     }
-    
+
     public Antelope(Body body, TextureRegion antelopeTexture, float x, float y, float width, float height) {
         this.body = body;
         this.width = width;
@@ -61,7 +61,7 @@ public class Antelope extends GameActor {
 
     @Override
     public float getY() {
-        if(mapActor){
+        if (mapActor) {
             return body.getPosition().y - Constants.GROUND_Y - Constants.GROUND_HEIGHT / 2;
         } else {
             return body.getPosition().y;
@@ -87,7 +87,7 @@ public class Antelope extends GameActor {
     }
 
     public void draw(Batch batch, float parentAlpha) {
-        if(delete() && checkDraw()){
+        if (delete() && checkDraw()) {
             batch.draw(antelopeTexture, getX() - width / 2, getY(), getWidth(), getHeight() / 4);
             batch.draw(antelopeTexture, getX() - width / 2, getY() - getHeight(), getWidth(), getHeight());
         }
@@ -96,6 +96,7 @@ public class Antelope extends GameActor {
 
     public void ride(Pinguin pinguin) {
         if (!pinguin.getIsRide()) {
+            pinguin.setIsRide(true);
             antelopeThread = new AntelopeThread(pinguin, this);
             aThread = new Thread(antelopeThread);
             aThread.start();
@@ -118,7 +119,7 @@ class AntelopeThread implements Runnable {
     @Override
     public void run() {
         try {
-            pinguin.setIsRide(true);
+        //    pinguin.setIsRide(true);
             pinguin.hide();
             pinguin.getBody().setGravityScale(0f);
             antelope.getDownBody().getFixtureList().get(0).setRestitution(0f);
@@ -149,7 +150,7 @@ class AntelopeThread implements Runnable {
             antelope.getDownBody().setLinearVelocity(new Vector2(0f, 0f));
 
             antelope.getDownBody().getFixtureList().get(0).setRestitution(1f);
-            
+
         } catch (InterruptedException ex) {
             Logger.getLogger(AntelopeThread.class.getName()).log(Level.SEVERE, null, ex);
         }
