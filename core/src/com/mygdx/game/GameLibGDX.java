@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import GameWorld.Skins.Elements.SkinsStatistic;
 import Helper.AssetLoader;
 import Helper.BuffsInfo;
 import Helper.DailyGiftHandler;
@@ -30,6 +31,7 @@ public class GameLibGDX extends ApplicationAdapter {
         FontLoader.load();
         Statistic.load();
         BuffsInfo.load();
+        SkinsStatistic.load();
         DailyGiftHandler.load();
     }
         

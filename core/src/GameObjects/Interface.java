@@ -83,7 +83,7 @@ public class Interface {
 
     public void addBack(final GameLibGDX game) {
         Button backButton;
-        backButton = new Button("Top", AssetLoader.btn, AssetLoader.btnPress, "TOP", FontLoader.font) {
+        backButton = new Button("BACK", AssetLoader.btn, AssetLoader.btnPress, "BACK", FontLoader.font) {
             public void action() {
                 Gdx.app.log("check", "check");
                 game.setScreen(new MainScreen(game));

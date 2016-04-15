@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.mygdx.game.GameLibGDX;
 import com.mygdx.game.screen.BuffsScreen;
+import com.mygdx.game.screen.BuySkinsScreen;
 import com.mygdx.game.screen.DonateScreen;
 import com.mygdx.game.screen.GameScreen;
 import com.mygdx.game.screen.MapsScreen;
@@ -84,6 +85,7 @@ public class MainWorld extends AbstractWorld {
         statisticButton(normalState, pressedState);
         buffsButton(normalState, pressedState);
         topButton(normalState, pressedState);
+        skinsButton(normalState, pressedState);
         initHighscore();
     }
 
@@ -131,7 +133,7 @@ public class MainWorld extends AbstractWorld {
     }
 
     private void statisticButton(TextureRegion normalState, TextureRegion pressedState) {
-        statisticsButton = new Button("Buffs", normalState, pressedState, "BUFF", FontLoader.font) {
+        statisticsButton = new Button("Buffs", normalState, pressedState, "STATS", FontLoader.font) {
             public void action() {
                 game.setScreen(new StatisticScreen(game));
             }
@@ -144,13 +146,26 @@ public class MainWorld extends AbstractWorld {
     }
 
     private void topButton(TextureRegion normalState, TextureRegion pressedState) {
-        topButton = new Button("Top", normalState, pressedState, "TOP", FontLoader.font) {
+        topButton = new Button("Top", normalState, pressedState, "COIN", FontLoader.font) {
             public void action() {
                 game.setScreen(new DonateScreen(game));
             }
         };
         topButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
         topButton.setPosition(ui.getStage().getWidth() * 4 / 5 - buffsButton.getWidth() / 2,
+                mapsScreenButton.getY() - mapsScreenButton.getHeight());
+
+        ui.getGuiStage().addActor(topButton);
+    }
+
+    private void skinsButton(TextureRegion normalState, TextureRegion pressedState) {
+        topButton = new Button("Top", normalState, pressedState, "SKINS", FontLoader.font) {
+            public void action() {
+                game.setScreen(new BuySkinsScreen(game));
+            }
+        };
+        topButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
+        topButton.setPosition(ui.getStage().getWidth() * 5 / 5 - buffsButton.getWidth() / 2,
                 mapsScreenButton.getY() - mapsScreenButton.getHeight());
 
         ui.getGuiStage().addActor(topButton);
