@@ -17,6 +17,9 @@ import java.util.ArrayList;
 public class BuffsInputHandler implements InputProcessor {
 
     BuffsWorld world;
+    private int _oldY;
+    boolean isTouched;
+    int temp;
 
     public BuffsInputHandler(BuffsWorld world) {
         this.world = world;
@@ -26,6 +29,9 @@ public class BuffsInputHandler implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         world.getUI().getStage().touchDown(screenX, screenY, pointer, button);
         world.getUI().getGuiStage().touchDown(screenX, screenY, pointer, button);
+        isTouched = true;
+        _oldY = screenY;
+        temp = _oldY;
 //        if(!world.getBuyMapWindow().getCheck()){
 //        world.getBuyMapWindow().checkClick(screenX, screenY);
 //        }
@@ -36,12 +42,31 @@ public class BuffsInputHandler implements InputProcessor {
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         world.getUI().getStage().touchUp(screenX, screenY, pointer, button);
         world.getUI().getGuiStage().touchUp(screenX, screenY, pointer, button);
+        isTouched = false; 
         return true;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return true;
+                temp = _oldY;
+        if ((isTouched)&&(_oldY > screenY)){
+
+            _oldY = screenY;
+            if(world.getUI().getStage().getCamera().position.y > world.getMinY()){
+                world.getUI().getStage().getCamera().position.y-=temp-screenY;
+                System.out.println("down");
+            }
+        }
+
+        if ((isTouched)&&(_oldY<screenY)){
+            _oldY = screenY;
+            if(world.getUI().getStage().getCamera().position.y < world.getMaxY()){
+            world.getUI().getStage().getCamera().position.y-=temp-screenY;
+            
+            }
+        }
+        System.out.println("Камера" + world.getUI().getStage().getCamera().position.y);
+        return true; 
     }
 
     @Override

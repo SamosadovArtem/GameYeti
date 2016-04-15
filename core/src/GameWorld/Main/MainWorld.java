@@ -6,9 +6,11 @@
 package GameWorld.Main;
 
 import GameObjects.Button;
+import GameObjects.DailyGiftWindow;
 import GameObjects.Interface;
 import GameWorld.AbstractWorld;
 import Helper.AssetLoader;
+import Helper.DailyGiftHandler;
 import Helper.FontLoader;
 import Helper.SoundsLoader;
 import Helper.Statistic;
@@ -41,11 +43,22 @@ public class MainWorld extends AbstractWorld {
     public MainWorld(Interface ui, GameLibGDX g) {
         super(ui, g);
         Gdx.app.log("MainWorld ", "create");
-        
+
         SoundsLoader.LoadBasicSounds();
         SoundsLoader.PlayBackSound();
-        
+
         createUI();
+
+        handleDailyGift();
+    }
+
+    private void handleDailyGift() {
+        DailyGiftHandler.setDailyGift();
+        Gdx.app.log("fewfq",": " + DailyGiftHandler.gift.getSaveData());
+        DailyGiftWindow dailyGiftWindow = new DailyGiftWindow(ui.getGuiStage());
+        if (DailyGiftHandler.gift.checkIsAvailable()) {
+            dailyGiftWindow.showWindow(game);
+        }
     }
 
     private Rectangle rect = new Rectangle(0, 0, 17, 12);
@@ -74,6 +87,10 @@ public class MainWorld extends AbstractWorld {
         initHighscore();
     }
 
+    private void checkDailyGift() {
+
+    }
+
     private void playButton(TextureRegion normalState, TextureRegion pressedState) {
         mapsScreenButton = new Button("Play", normalState, pressedState, "PLAY", FontLoader.font) {
             public void action() {
@@ -94,7 +111,7 @@ public class MainWorld extends AbstractWorld {
             }
         };
         settingsButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
-        settingsButton.setPosition(ui.getStage().getWidth()/5-settingsButton.getWidth()/2,
+        settingsButton.setPosition(ui.getStage().getWidth() / 5 - settingsButton.getWidth() / 2,
                 mapsScreenButton.getY() - mapsScreenButton.getHeight());
 
         ui.getGuiStage().addActor(settingsButton);
@@ -103,24 +120,24 @@ public class MainWorld extends AbstractWorld {
     private void buffsButton(TextureRegion normalState, TextureRegion pressedState) {
         buffsButton = new Button("Buffs", normalState, pressedState, "BUFF", FontLoader.font) {
             public void action() {
-                game.setScreen(new BuffsScreen(game));                
+                game.setScreen(new BuffsScreen(game));
             }
         };
         buffsButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
-        buffsButton.setPosition(ui.getStage().getWidth()*3/5 - buffsButton.getWidth()/2,
+        buffsButton.setPosition(ui.getStage().getWidth() * 3 / 5 - buffsButton.getWidth() / 2,
                 mapsScreenButton.getY() - mapsScreenButton.getHeight());
 
         ui.getGuiStage().addActor(buffsButton);
     }
-    
-    private void statisticButton(TextureRegion normalState, TextureRegion pressedState){
-         statisticsButton = new Button("Buffs", normalState, pressedState, "BUFF", FontLoader.font) {
+
+    private void statisticButton(TextureRegion normalState, TextureRegion pressedState) {
+        statisticsButton = new Button("Buffs", normalState, pressedState, "BUFF", FontLoader.font) {
             public void action() {
-                game.setScreen(new StatisticScreen(game));                
+                game.setScreen(new StatisticScreen(game));
             }
         };
         statisticsButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
-        statisticsButton.setPosition(ui.getStage().getWidth()*2/5-statisticsButton.getWidth()/2,
+        statisticsButton.setPosition(ui.getStage().getWidth() * 2 / 5 - statisticsButton.getWidth() / 2,
                 mapsScreenButton.getY() - mapsScreenButton.getHeight());
 
         ui.getGuiStage().addActor(statisticsButton);
@@ -129,11 +146,11 @@ public class MainWorld extends AbstractWorld {
     private void topButton(TextureRegion normalState, TextureRegion pressedState) {
         topButton = new Button("Top", normalState, pressedState, "TOP", FontLoader.font) {
             public void action() {
-                game.setScreen(new DonateScreen(game));                
+                game.setScreen(new DonateScreen(game));
             }
         };
         topButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
-        topButton.setPosition(ui.getStage().getWidth()*4/5 - buffsButton.getWidth()/2,
+        topButton.setPosition(ui.getStage().getWidth() * 4 / 5 - buffsButton.getWidth() / 2,
                 mapsScreenButton.getY() - mapsScreenButton.getHeight());
 
         ui.getGuiStage().addActor(topButton);

@@ -129,4 +129,10 @@ public class BuffContainer extends Actor {
         countdown.setText(timer.getTime());
         timer.removeTime(1);
     }
+    public float getY(){
+        return yPos;
+    }
+    public float getHeight(){
+        return this.height;
+    }
 }
