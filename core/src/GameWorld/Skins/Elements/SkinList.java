@@ -16,7 +16,7 @@ public class SkinList {
     public SkinList(){
         list.add(new Skin(0, 100, "name1", AssetLoader.pinguinTexture));
         list.add(new Skin(1, 200, "name2", AssetLoader.pinguinTexture));
-
+        list.add(new Skin(2, 300, "name3", AssetLoader.pinguinTexture));
     }
 
     public List<Skin> getSkins(){

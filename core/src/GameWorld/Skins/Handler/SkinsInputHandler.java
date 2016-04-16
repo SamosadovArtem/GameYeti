@@ -13,6 +13,10 @@ import GameWorld.Skins.SkinsWorld;
 public class SkinsInputHandler implements InputProcessor {
 
     SkinsWorld world;
+    private int _oldX;
+    private int temp;
+    private boolean isTouched;
+    private float min=100000, max=0;
 
     public SkinsInputHandler(SkinsWorld world){
         this.world = world;
@@ -20,7 +24,8 @@ public class SkinsInputHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-
+        isTouched = true;
+        _oldX = screenX;
         world.getUI().getStage().touchDown(screenX, screenY, pointer, button);
         world.getUI().getGuiStage().touchDown(screenX, screenY, pointer, button);
         return true;
@@ -28,16 +33,24 @@ public class SkinsInputHandler implements InputProcessor {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        isTouched = false;
         world.getUI().getStage().touchUp(screenX, screenY, pointer, button);
         world.getUI().getGuiStage().touchUp(screenX, screenY, pointer, button);
         return true;
     }
 
-    int temp;
+
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        world.getUI().getStage().getCamera().position.x+=temp-screenX;
-        return false;
+        //world.getUI().getStage().getCamera().position.x+=temp-screenX;
+
+        temp = _oldX;
+        if ((isTouched)){
+
+            _oldX = screenX;
+            world.getSkins().moveX(-1* (temp-screenX));
+        }
+        return true;
     }
 
     @Override

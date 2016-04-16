@@ -32,4 +32,8 @@ public class Skin{
     public String getName(){
         return name;
     }
+
+    public TextureRegion getTexture(){
+        return texture;
+    }
 }

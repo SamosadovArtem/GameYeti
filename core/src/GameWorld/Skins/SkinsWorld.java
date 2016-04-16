@@ -11,6 +11,8 @@ import GameObjects.Button;
 import GameObjects.Interface;
 import GameObjects.Scroll;
 import GameWorld.AbstractWorld;
+import GameWorld.Skins.Elements.SkinList;
+import GameWorld.Skins.Elements.SkinsContainer;
 import Helper.AssetLoader;
 
 /**
@@ -18,6 +20,7 @@ import Helper.AssetLoader;
  */
 public class SkinsWorld extends AbstractWorld {
 
+    private SkinsContainer box;
 
     public SkinsWorld(Interface ui, GameLibGDX g) {
         super(ui, g);
@@ -32,7 +35,12 @@ public class SkinsWorld extends AbstractWorld {
     }
 
     private void initAllSkins(){
-        
+        SkinList skinList = new SkinList();
+        box = new SkinsContainer(skinList.getSkins(), ui.getStage().getCamera().position.x, ui.getStage());
+    }
+
+    public SkinsContainer getSkins(){
+        return box;
     }
 
     private void initBuyButton(){
