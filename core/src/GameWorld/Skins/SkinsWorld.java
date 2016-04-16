@@ -1,5 +1,6 @@
 package GameWorld.Skins;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -13,6 +14,7 @@ import GameObjects.Scroll;
 import GameWorld.AbstractWorld;
 import GameWorld.Skins.Elements.SkinList;
 import GameWorld.Skins.Elements.SkinsContainer;
+import GameWorld.Skins.Elements.SkinsStatistic;
 import Helper.AssetLoader;
 
 /**
@@ -21,22 +23,43 @@ import Helper.AssetLoader;
 public class SkinsWorld extends AbstractWorld {
 
     private SkinsContainer box;
+    private int activeSkin;
+    private Button buyButton;
+    private Label label;
+    public boolean scrollArea = false;
+    private float inertion = 0;
 
     public SkinsWorld(Interface ui, GameLibGDX g) {
         super(ui, g);
         ui.addBack(game);
         initAllSkins();
         initBuyButton();
+        activeSkin = SkinsStatistic.getActiveSkin();
     }
 
     @Override
     public void update(float delta) {
+        updateButton();
 
+
+        if(inertion < -5 || inertion > 5){
+            box.moveX(inertion);
+            if(inertion < 0 ) {
+                inertion+=0.5f;
+            } else {
+                inertion-=0.5f;
+            }
+            if(inertion > -5 && inertion < 5){
+                inertion = 0;
+            }
+        } else {
+            moveCamera();
+        }
     }
 
     private void initAllSkins(){
         SkinList skinList = new SkinList();
-        box = new SkinsContainer(skinList.getSkins(), ui.getStage().getCamera().position.x, ui.getStage());
+        box = new SkinsContainer(skinList.getSkins(), ui.getStage().getCamera().position.x, ui.getStage(), this);
     }
 
     public SkinsContainer getSkins(){
@@ -44,17 +67,52 @@ public class SkinsWorld extends AbstractWorld {
     }
 
     private void initBuyButton(){
-        Button buyButton = new Button("BuyButton", AssetLoader.btn, AssetLoader.btnPress, "", new BitmapFont())
+        buyButton = new Button("BuyButton", AssetLoader.btn, AssetLoader.btnPress, "", new BitmapFont())
         {
             public void action() {
 
             }
         };
         buyButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
-        buyButton.setPosition(ui.getStage().getWidth() /2 - buyButton.getWidth() / 2,
-                ui.getStage().getHeight() / 4 - buyButton.getHeight()/2);
+        buyButton.setPosition(ui.getStage().getWidth() / 2 - buyButton.getWidth() / 2,
+                ui.getStage().getHeight() / 4 - buyButton.getHeight() / 2);
 
+
+        Label.LabelStyle labelS = new Label.LabelStyle();
+        labelS.font = new BitmapFont();
+        labelS.fontColor = Color.WHITE;
+        label = new Label(box.getSkinName(), labelS);
+        label.setPosition(ui.getStage().getWidth() / 2 - buyButton.getWidth() / 2,
+                buyButton.getY() - buyButton.getHeight());
+
+        buyButton.setText(""+box.getSkinCoast());
+        label.setText(box.getSkinName());
+
+        ui.getGuiStage().addActor(label);
         ui.getGuiStage().addActor(buyButton);
+    }
+
+    private void updateButton(){
+        if(activeSkin != box.getActiveButton()){
+            buyButton.setText(""+box.getSkinCoast());
+            label.setText(box.getSkinName());
+            activeSkin = box.getActiveButton();
+        }
+    }
+
+    private void moveCamera() {
+        if(!scrollArea) {
+            float speed = (getCameraX() - box.getSkins().get(activeSkin).getXCenter()) / 30.0f;
+            box.moveX(speed);
+        }
+    }
+
+    protected float getCameraX() {
+        return ui.getStage().getCamera().position.x;
+    }
+
+    public void setInertion(float in){
+        inertion = in;
     }
 
 }

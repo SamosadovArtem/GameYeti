@@ -52,6 +52,10 @@ public class BuySkin extends Actor {
         return posX;
     }
 
+    public float getXCenter(){
+        return posX + getWidth() / 2;
+    }
+
     public float getY(){
         return posY;
     }
