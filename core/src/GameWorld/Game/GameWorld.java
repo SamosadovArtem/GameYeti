@@ -61,7 +61,7 @@ public class GameWorld extends AbstractWorld {
     private final float TIME_STEP = 1 / 400f;
     private float accumulator = 0f;
     private float maxX = 0;
-    private int objectsGenerateNum = 30;
+    private int objectsGenerateNum = 5;
 
     private float xBuffPosition = (float) (ui.getGuiStage().getWidth() * 0.20);
     private float yBuffPosition = ui.getGuiStage().getHeight() - ui.getGuiStage().getHeight() / 10;
@@ -74,6 +74,9 @@ public class GameWorld extends AbstractWorld {
     }
 
     private void setUpWorld() {
+        
+         
+        
         SoundsLoader.LoadGameSounds();
         world = WorldUtils.createWorld(BuffsInfo.getGravityBuff().getGravity());
         //jumpCountController = new JumpCountController(BuffsInfo.getJumpCountBuff().getCount());
@@ -91,6 +94,9 @@ public class GameWorld extends AbstractWorld {
         ui.addBack(game);
 
         GetBuffsInfo();
+
+
+
     }
 
     private void createObjects(int startPos, int count) {
@@ -199,10 +205,18 @@ public class GameWorld extends AbstractWorld {
             world.getBodies(bodies);
 
             for (Body bod : bodies) {
-                if (pinguin.getBody().getPosition().x - bod.getPosition().x >= Constants.APP_WIDTH * 5
-                        && bod.getFixtureList().get(0).getUserData() != "GROUND") {
+                if (bod.getFixtureList().get(0).getUserData().equals("DELETE")){
                     world.destroyBody(bod);
                 }
+                if (pinguin.getBody().getPosition().x - bod.getPosition().x >= Constants.APP_WIDTH * 5
+                        && bod.getFixtureList().get(0).getUserData() != "GROUND") {
+                    bod.getFixtureList().get(0).setUserData(null);
+                    
+                    world.destroyBody(bod);
+                    //bod.getFixtureList().get(0).setUserData(null);
+                }
+                
+                
             }
         }
     }

@@ -53,8 +53,10 @@ public abstract class AbstractScreen implements Screen {
     }
 
     protected void setCameraX(float x) {
+        this.getStage().getCamera().position.x = x;
         ui.getStage().getCamera().position.x = x;
         ui.getStage().getCamera().update();
+        getStage().getCamera().update();
     }
 
     protected float getCameraX() {

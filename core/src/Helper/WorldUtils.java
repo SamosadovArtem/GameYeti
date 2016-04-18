@@ -171,7 +171,7 @@ public class WorldUtils {
         fixtureDef.restitution = 0.0f;
         body.createFixture(fixtureDef);
         body.resetMassData();
-        //body.getFixtureList().get(0).setUserData("GIRAFFENECK");
+        body.getFixtureList().get(0).setUserData("GIRAFFENECK");
         box.dispose();
         return body;
     }
@@ -191,7 +191,7 @@ public class WorldUtils {
         fixtureDef.restitution = 0.0f;
         body.createFixture(fixtureDef);
         body.resetMassData();
-        //body.getFixtureList().get(0).setUserData("GIRAFFEHEAD");
+        body.getFixtureList().get(0).setUserData("GIRAFFEHEAD");
         box.dispose();
         GiraffeHead = body;
         return body;

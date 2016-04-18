@@ -37,10 +37,13 @@ public class GameActor extends Actor {
     }
 
     public boolean delete() {
-        if (body == null) {
+        if (body.getFixtureList().size==0) {
+            Gdx.app.log("pidor","ti");
             this.remove();
+            System.out.println("pidor");
             return false;
         }
+        
         return true;
     }
 

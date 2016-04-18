@@ -22,6 +22,8 @@ public class AssetLoader {
 
     public static Texture textureBtnNormal, textureBtnPress;
     public static Texture pinguin;
+    public static Texture gameBackground;
+    public static TextureRegion gbc;
     public static TextureRegion pinguinTexture;
     public static TextureRegion btnPress, btn;
     public static Animation birdAnimation;
@@ -29,6 +31,12 @@ public class AssetLoader {
     public static BitmapFont font, shadow;
 
     public static void load() {
+        
+        
+        gameBackground = new Texture(Gdx.files.internal("gfx/gameScreen.Objects/background.png"));
+        gameBackground.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+        
+        gbc = new TextureRegion(gameBackground, 0, 0, 8000,4500);
 
         textureBtnNormal = new Texture(Gdx.files.internal("gfx/buttons/button.png"));
         textureBtnNormal.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);

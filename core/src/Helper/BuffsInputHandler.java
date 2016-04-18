@@ -27,6 +27,7 @@ public class BuffsInputHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+
         world.getUI().getStage().touchDown(screenX, screenY, pointer, button);
         world.getUI().getGuiStage().touchDown(screenX, screenY, pointer, button);
         isTouched = true;
