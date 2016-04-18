@@ -61,10 +61,11 @@ public class GameRenderer extends Renderer {
     public void render() {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        renderer.render(world.world, cam.combined);
+        //renderer.render(world.world, cam.combined);
         batch.begin();
-        batch.draw(background,0,(int)(Constants.GROUND_HEIGHT / 2 + Constants.GROUND_Y),Constants.APP_WIDTH,Constants.APP_HEIGHT - (int)(Constants.GROUND_HEIGHT / 2 + Constants.GROUND_Y)
-                ,sourceX, 0, 8000, 4500, true, false);
+        batch.draw(background,0,(int)(Constants.GROUND_HEIGHT / 2 + Constants.GROUND_Y),
+                Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - (int)(Constants.GROUND_HEIGHT / 2 + Constants.GROUND_Y)
+                ,sourceX, 0, 1200, 676, true, false);
         
         batch.end();
         sourceX =-(int) world.getPlayerX();
