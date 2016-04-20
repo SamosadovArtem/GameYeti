@@ -7,6 +7,8 @@ package com.mygdx.game.screen;
 
 import GameWorld.Ticket.TicketRenderer;
 import GameWorld.Ticket.TicketWorld;
+import Helper.InputHandler;
+import Helper.TicketInputHandler;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.GameLibGDX;
 
@@ -27,12 +29,19 @@ public class TicketScreen extends AbstractScreen {
     protected void initScene() {
         this.world = new TicketWorld(ui, game);
         this.renderer = new TicketRenderer(world);
+        Gdx.input.setInputProcessor(new TicketInputHandler(world));
     }
 
     @Override
     public void render(float delta) {
         world.update(delta);
         renderer.render();
+    }
+
+    @Override
+    public void show() {
+        //устанавливаем сцену экрана как обработчик событий ввода. это нужно для того, чтобы можно было отлавливать нажатия на актёров
+        Gdx.input.setInputProcessor(new TicketInputHandler(world));
     }
 
 }

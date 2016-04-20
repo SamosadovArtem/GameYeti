@@ -30,6 +30,7 @@ import com.mygdx.game.screen.GameScreen;
 import com.mygdx.game.screen.MapsScreen;
 import com.mygdx.game.screen.SettingsScreen;
 import com.mygdx.game.screen.StatisticScreen;
+import com.mygdx.game.screen.TicketScreen;
 
 /**
  *
@@ -55,7 +56,7 @@ public class MainWorld extends AbstractWorld {
 
     private void handleDailyGift() {
         DailyGiftHandler.setDailyGift();
-        Gdx.app.log("fewfq",": " + DailyGiftHandler.gift.getSaveData());
+        Gdx.app.log("fewfq", ": " + DailyGiftHandler.gift.getSaveData());
         DailyGiftWindow dailyGiftWindow = new DailyGiftWindow(ui.getGuiStage());
         if (DailyGiftHandler.gift.checkIsAvailable()) {
             dailyGiftWindow.showWindow(game);
@@ -86,6 +87,7 @@ public class MainWorld extends AbstractWorld {
         buffsButton(normalState, pressedState);
         topButton(normalState, pressedState);
         skinsButton(normalState, pressedState);
+        ticketButton(normalState, pressedState);
         initHighscore();
     }
 
@@ -169,6 +171,19 @@ public class MainWorld extends AbstractWorld {
                 mapsScreenButton.getY() - mapsScreenButton.getHeight());
 
         ui.getGuiStage().addActor(topButton);
+    }
+
+    private void ticketButton(TextureRegion normalState, TextureRegion pressedState) {
+        statisticsButton = new Button("Buffs", normalState, pressedState, "BUFF", FontLoader.font) {
+            public void action() {
+                game.setScreen(new TicketScreen(game));
+            }
+        };
+        statisticsButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
+        statisticsButton.setPosition(0,
+                mapsScreenButton.getY() - mapsScreenButton.getHeight());
+
+        ui.getGuiStage().addActor(statisticsButton);
     }
 
     private void initHighscore() {

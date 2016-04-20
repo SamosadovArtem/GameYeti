@@ -29,6 +29,7 @@ public class AssetLoader {
     public static Animation birdAnimation;
     public static Sound dead, flap, coin;
     public static BitmapFont font, shadow;
+    public static Texture protectiveLayerTexture;
 
     public static void load() {
         
@@ -52,6 +53,9 @@ public class AssetLoader {
         textureBtnPress.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
         btnPress = new TextureRegion(textureBtnPress, 0, 0, 600, 200);
+        
+        protectiveLayerTexture = new Texture(Gdx.files.internal("gfx/buttons/protectField.png"));
+        protectiveLayerTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
         /*
         logoTexture = new Texture(Gdx.files.internal("data/logo.png"));
         logoTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
