@@ -23,7 +23,17 @@ public class SkinsContainer {
         float w = Constants.RUNNER_WIDTH * 4;
         float h = Constants.RUNNER_HEIGHT * 4;
         for(Skin skin : list){
-            skins.add(new BuySkin(skin.getID(), skin.getTexture(), 0, 0, w, h, skin.getCost(), true, skin.getName()));
+            boolean active = false;
+            for(int i : SkinsStatistic.getSkins()){
+                if(i == skin.getID()){
+                    active = true;
+                }
+            }
+            if(active){
+                skins.add(new BuySkin(skin.getID(), skin.getTexture(), 0, 0, w, h, skin.getCost(), true, skin.getName()));
+            }else{
+                skins.add(new BuySkin(skin.getID(), skin.getTexture(), 0, 0, w, h, skin.getCost(), false, skin.getName()));
+            }
         }
         this.xCamera = cameraCenter;
         int i = -activeButton;

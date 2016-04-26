@@ -38,11 +38,11 @@ public class Generator {
         for(Barrier b : barr){
             switch(b.GetType()){
                 case STOP:
-                    StopObj s = new StopObj(world, b.GetX(), y, 30, 60,
-                        AssetLoader.btn);
+                    StopObj s = new StopObj(world, b.GetX(), y, 60, 120,
+                        AssetLoader.elephantTexture);
                     StopObj ms = new StopObj(s.getBody(), b.GetX(),  - Constants.GROUND_HEIGHT / 2,
-                        30, 60,
-                        AssetLoader.btn);
+                        60, 120,
+                        AssetLoader.elephantTexture);
                     objects.add(s);
                     mapObjects.add(ms);
                     break;
@@ -77,7 +77,7 @@ public class Generator {
                     mapObjects.add(mg);
                     break;
                 case COIN:
-                    Coin c = new Coin(AssetLoader.btn, b.GetX() , b.GetY() + 40f, 40f, 40f, world);
+                    Coin c = new Coin(AssetLoader.ctr, b.GetX() , b.GetY() + 40f, 40f, 40f, world);
                     Coin mc = new Coin(c.getBody(), AssetLoader.btn, b.GetX() , b.GetY() + 40f, 40f, 40f);
                     objects.add(c);
                     mapObjects.add(mc);

@@ -42,6 +42,8 @@ public class MapsScreen extends AbstractScreen {
     public void render(float delta) {
         world.update(delta);
         render.render();
+        ui.getStage().getCamera().update();
+        getStage().getCamera().update();
     }
 
     @Override

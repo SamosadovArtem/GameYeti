@@ -18,7 +18,7 @@ import com.badlogic.gdx.physics.box2d.World;
  */
 public class StopObj extends GameActor {
 
-    private TextureRegion groundTexture;
+    private TextureRegion texture;
     private float width;
     private float height;
 
@@ -26,14 +26,14 @@ public class StopObj extends GameActor {
         this.body = WorldUtils.createStopObj(world, x, y, width, height);
         this.width = width;
         this.height = height;
-        this.groundTexture = groundTexture;
+        this.texture = groundTexture;
     }
 
     public StopObj(Body body, float x, float y, float width, float height, TextureRegion groundTexture) {
         this.body = body;
         this.width = width;
         this.height = height;
-        this.groundTexture = groundTexture;
+        this.texture = groundTexture;
         this.mapActor = true;
     }
 
@@ -63,7 +63,7 @@ public class StopObj extends GameActor {
 
     public void draw(Batch batch, float parentAlpha) {
         if (delete() && checkDraw()) {
-            batch.draw(groundTexture, getX() - getWidth() / 2, getY() - getHeight() / 2, getWidth(), getHeight());
+            batch.draw(texture, getX() - getWidth() / 2, getY() - getHeight()/4, getWidth(), getHeight());
         }
     }
 }

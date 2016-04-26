@@ -1,5 +1,6 @@
 package GameWorld.Skins.Elements;
 
+import Helper.Statistic;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -16,7 +17,7 @@ public class BuySkin extends Actor {
     private float width;
     private float height;
     private int cost;
-    private boolean buyStatus = false;
+    private boolean buyStatus;
     private String name = "";
     private TextureRegion skin;
 
@@ -103,5 +104,17 @@ public class BuySkin extends Actor {
 
     public void draw (Batch batch, float parentAlpha) {
         batch.draw(skin, getX(), getY(), getWidth(), getHeight());
+    }
+    
+    public void click(){
+        if(buyStatus){
+            SkinsStatistic.setActiveSkin(getIndex());
+        } else {
+            if(Statistic.getCoins() >= this.cost){
+                Statistic.payCoins(cost);
+                SkinsStatistic.addSkin(index);
+                buyStatus = true;
+            }
+        }
     }
 }

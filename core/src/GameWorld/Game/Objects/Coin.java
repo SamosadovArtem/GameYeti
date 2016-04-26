@@ -26,23 +26,23 @@ import java.util.List;
  */
 public class Coin extends GameActor {
 
-    private TextureRegion snakeTexture;
+    private TextureRegion texture;
     private float width;
     private float height;
 
-    public Coin(TextureRegion snakeTexture, float x, float y, float width, float height, World world) {
+    public Coin(TextureRegion texture, float x, float y, float width, float height, World world) {
         body = WorldUtils.createCoin(world, x, y, width, height);
         this.width = width;
         this.height = height;
-        this.snakeTexture = snakeTexture;
+        this.texture = texture;
         this.body.getFixtureList().get(0).setUserData(this);
     }
 
-    public Coin(Body body, TextureRegion snakeTexture, float x, float y, float width, float height) {
+    public Coin(Body body, TextureRegion texture, float x, float y, float width, float height) {
         this.body = body;
         this.width = width;
         this.height = height;
-        this.snakeTexture = snakeTexture;
+        this.texture = texture;
         this.mapActor = true;
     }
 
@@ -80,7 +80,7 @@ public class Coin extends GameActor {
 //        if (body.getFixtureList().get(0).getUserData().equals("DELETE")) {
   //          this.remove();
     /*    } else*/ if (delete() && checkDraw()) {
-            batch.draw(snakeTexture, getX() - width / 2, getY() - getHeight() / 2, getWidth(), getHeight());
+            batch.draw(texture, getX() - width / 2, getY() - getHeight() / 2, getWidth(), getHeight());
         }
     }
 

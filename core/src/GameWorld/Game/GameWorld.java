@@ -15,6 +15,7 @@ import GameWorld.Game.Objects.GameActor;
 import GameWorld.Game.Objects.Ground;
 import GameWorld.Game.Objects.Pinguin;
 import GameWorld.Game.Objects.Tablet;
+import GameWorld.Skins.Elements.SkinList;
 import Helper.AssetLoader;
 import Helper.BuffsInfo;
 import Helper.Constants;
@@ -62,6 +63,7 @@ public class GameWorld extends AbstractWorld {
     private float accumulator = 0f;
     private float maxX = 0;
     private int objectsGenerateNum = 5;
+    private float heightCoff = BuffsInfo.getHeightSkyCoffBuff().getCount();
 
     private float xBuffPosition = (float) (ui.getGuiStage().getWidth() * 0.20);
     private float yBuffPosition = ui.getGuiStage().getHeight() - ui.getGuiStage().getHeight() / 10;
@@ -74,9 +76,7 @@ public class GameWorld extends AbstractWorld {
     }
 
     private void setUpWorld() {
-        
-         
-        
+
         SoundsLoader.LoadGameSounds();
         world = WorldUtils.createWorld(BuffsInfo.getGravityBuff().getGravity());
         //jumpCountController = new JumpCountController(BuffsInfo.getJumpCountBuff().getCount());
@@ -87,15 +87,14 @@ public class GameWorld extends AbstractWorld {
         addTablets(ground.getX(), ground2.getX() + ground2.getWidth());
         setUpRunner(BuffsInfo.getJumpPowerBuff().getPower());
         addDebugButton(AssetLoader.btn, AssetLoader.btnPress);
-        addPauseButton(AssetLoader.btn, AssetLoader.btnPress);
+        addPauseButton(AssetLoader.pauseTexture, AssetLoader.pauseTexture);
         world.setContactListener(new GameContactListener(this, pinguin));
         initJumpCount();
         createObjects((int) maxX, objectsGenerateNum);
+
         ui.addBack(game);
 
         GetBuffsInfo();
-
-
 
     }
 
@@ -123,8 +122,8 @@ public class GameWorld extends AbstractWorld {
     }
 
     private void setUpGround() {
-        ground = new Ground(WorldUtils.createGround(world, 0f), AssetLoader.btn);
-        ground2 = new Ground(WorldUtils.createGround(world, Constants.GROUND_WIDTH), AssetLoader.btn);
+        ground = new Ground(WorldUtils.createGround(world, 0f));
+        ground2 = new Ground(WorldUtils.createGround(world, Constants.GROUND_WIDTH));
         ui.getStage().addActor(ground);
         ui.getStage().addActor(ground2);
     }
@@ -139,27 +138,27 @@ public class GameWorld extends AbstractWorld {
             if (pinguinX >= gr1 + dlt) {
                 world.destroyBody(ground2.getBody());
                 ground2 = new Ground(WorldUtils.createGround(world, Constants.GROUND_WIDTH
-                        + ground.getBody().getPosition().x), AssetLoader.btn);
+                        + ground.getBody().getPosition().x));
                 ui.getStage().addActor(ground2);
                 addTablets(ground.getX() + ground.getWidth(), ground2.getX() + ground2.getWidth());
 
             } else if (gr2 - dlt >= pinguinX) {
                 world.destroyBody(ground.getBody());
                 ground = new Ground(WorldUtils.createGround(world, ground2.getBody().getPosition().x
-                        - Constants.GROUND_WIDTH), AssetLoader.btn);
+                        - Constants.GROUND_WIDTH));
                 ui.getStage().addActor(ground);
                 addTablets(ground2.getX() + ground2.getWidth(), ground.getX() + ground.getWidth());
             }
         } else if (pinguinX >= gr2 + dlt) {
             world.destroyBody(ground.getBody());
             ground = new Ground(WorldUtils.createGround(world, Constants.GROUND_WIDTH
-                    + ground2.getBody().getPosition().x), AssetLoader.btn);
+                    + ground2.getBody().getPosition().x));
             ui.getStage().addActor(ground);
             addTablets(ground2.getX() + ground2.getWidth(), ground.getX() + ground.getWidth());
         } else if (gr1 >= pinguinX - dlt) {
             world.destroyBody(ground2.getBody());
             ground2 = new Ground(WorldUtils.createGround(world, ground.getBody().getPosition().x
-                    - Constants.GROUND_WIDTH), AssetLoader.btn);
+                    - Constants.GROUND_WIDTH));
             ui.getStage().addActor(ground2);
             addTablets(ground.getX() + ground.getWidth(), ground2.getX() + ground2.getWidth());
         }
@@ -178,7 +177,7 @@ public class GameWorld extends AbstractWorld {
     }
 
     private void setUpRunner(int coff) {
-        pinguin = new Pinguin(WorldUtils.createPinguin(world), AssetLoader.btn, coff);
+        pinguin = new Pinguin(WorldUtils.createPinguin(world), new SkinList().getActiveSkin().getTexture(), coff);
         ui.getStage().addActor(pinguin);
     }
 
@@ -205,18 +204,17 @@ public class GameWorld extends AbstractWorld {
             world.getBodies(bodies);
 
             for (Body bod : bodies) {
-                if (bod.getFixtureList().get(0).getUserData().equals("DELETE")){
+                if (bod.getFixtureList().get(0).getUserData().equals("DELETE")) {
                     world.destroyBody(bod);
                 }
                 if (pinguin.getBody().getPosition().x - bod.getPosition().x >= Constants.APP_WIDTH * 5
                         && bod.getFixtureList().get(0).getUserData() != "GROUND") {
                     bod.getFixtureList().get(0).setUserData(null);
-                    
+
                     world.destroyBody(bod);
                     //bod.getFixtureList().get(0).setUserData(null);
                 }
-                
-                
+
             }
         }
     }
@@ -228,8 +226,8 @@ public class GameWorld extends AbstractWorld {
     }
 
     private void checkHeight() {
-        if (this.getPlayerY() >= Constants.APP_HEIGHT * 1.1) {
-            pinguin.getBody().setLinearVelocity(new Vector2(10, 0));
+        if (this.getPlayerY() >= Gdx.app.getGraphics().getHeight() * heightCoff) {
+            pinguin.getBody().setLinearVelocity(new Vector2(10, -1));
         }
     }
 
@@ -300,7 +298,7 @@ public class GameWorld extends AbstractWorld {
     }
 
     private void addPauseButton(TextureRegion normalState, TextureRegion pressedState) {
-        pauseButton = new Button("Top", normalState, pressedState, "TOP", FontLoader.font) {
+        pauseButton = new Button("Top", normalState, pressedState, "", FontLoader.font) {
             public void action() {
 
                 pause = !pause;
@@ -318,6 +316,7 @@ public class GameWorld extends AbstractWorld {
         Tablet tablet = new Tablet("1", AssetLoader.textureBtnNormal, x);
         tablet.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
         tablet.setPosition(x, Constants.GROUND_HEIGHT + Constants.GROUND_Y - tablet.getHeight() / 2);
+        tablet.toBack();
         ui.getStage().addActor(tablet);
     }
 
@@ -347,9 +346,7 @@ public class GameWorld extends AbstractWorld {
 
                 ui.getGuiStage().addActor(buff);
             }
-
             //xBuffPosition = buff
         }
-
     }
 }

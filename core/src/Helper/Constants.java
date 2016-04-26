@@ -5,6 +5,7 @@
  */
 package Helper;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -15,8 +16,8 @@ public class Constants {
     public static final int MIN_STEP = 300;
     public static final int MAX_STEP = 500;
 
-    public static final int APP_WIDTH = 800;
-    public static final int APP_HEIGHT = 480;
+    public static final int APP_WIDTH = Gdx.graphics.getWidth();//800;
+    public static final int APP_HEIGHT = Gdx.graphics.getHeight();//480;
 
     public static Vector2 WORLD_GRAVITY = new Vector2(0, -10);
 

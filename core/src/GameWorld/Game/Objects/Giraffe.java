@@ -5,6 +5,7 @@
  */
 package GameWorld.Game.Objects;
 
+import Helper.AssetLoader;
 import Helper.Constants;
 import Helper.WorldUtils;
 import com.badlogic.gdx.Gdx;
@@ -86,11 +87,14 @@ public class Giraffe extends GameActor {
 
     public void draw(Batch batch, float parentAlpha) {
         if (delete() && checkDraw()) {
-            batch.draw(groundTexture, getX() - widthBody / 2, getY() - heightBody / 2 - 40, 10, 40);
+            batch.draw(AssetLoader.giraffeTexture, getX() - widthBody / 2, getY() - heightBody / 2 - 40, 100, 200);
+            /*batch.draw(groundTexture, getX() - widthBody / 2, getY() - heightBody / 2 - 40, 10, 40);
             batch.draw(groundTexture, getX() + widthBody / 2 - 10, getY() - heightBody / 2 - 40, 10, 40);
             batch.draw(groundTexture, getX() - widthBody / 2, getY() - heightBody / 2, widthBody, heightBody);
             batch.draw(groundTexture, getX() - widthBody / 2, getY() + heightBody / 2, widthNeck, heightNeck);
             batch.draw(groundTexture, getX() - widthBody / 2 + widthNeck - widthHead, getY() + heightBody / 2 + heightNeck, widthHead, heightHead);
+             */
+
         }
     }
 

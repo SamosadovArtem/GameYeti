@@ -53,12 +53,12 @@ public class GameMap {
     }
     
     public void addUnits(List<Barrier> barr, float y, World world){
-        for(Barrier b : barr){
+    for(Barrier b : barr){
             switch(b.GetType()){
                 case STOP:
                     mapStage.addActor(new StopObj(world, b.GetX(),  - Constants.GROUND_HEIGHT / 2,
-                        30, 60,
-                        AssetLoader.btn));
+                        60, 120,
+                        AssetLoader.elephantTexture));
                     break;
                 case SNAKE:
                     mapStage.addActor(new Snake(AssetLoader.btn, b.GetX() ,20f  - Constants.GROUND_HEIGHT / 2,100f,20f,world));
@@ -76,12 +76,12 @@ public class GameMap {
                     , 40f, 20f, AssetLoader.btn));
                     break;
                 case COIN:
-                    mapStage.addActor(new Coin(AssetLoader.btn, b.GetX() , b.GetY() - Constants.GROUND_HEIGHT / 2 - Constants.GROUND_Y + 40f, 40f, 40f, world));
+                    mapStage.addActor(new Coin(AssetLoader.ctr, b.GetX() , b.GetY() - Constants.GROUND_HEIGHT / 2 - Constants.GROUND_Y + 40f, 40f, 40f, world));
                     break;
                 default:
                     mapStage.addActor(new StopObj(world, b.GetX(), 0,
-                        30, 60,
-                        AssetLoader.btn));
+                        60, 120,
+                        AssetLoader.elephantTexture));
                     break;
             }
         }

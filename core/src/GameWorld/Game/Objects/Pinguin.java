@@ -7,6 +7,7 @@ package GameWorld.Game.Objects;
 
 import GameWorld.Game.Objects.GameActor;
 import Helper.AssetLoader;
+import Helper.BuffsInfo;
 import Helper.Constants;
 import Helper.Statistic;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -21,7 +22,7 @@ import com.badlogic.gdx.physics.box2d.Body;
  */
 public class Pinguin extends GameActor {
 
-    private int power;
+    private float power;
     private int powerCof = 5;
     private float directionX;
     private float directionY;
@@ -33,6 +34,9 @@ public class Pinguin extends GameActor {
     private boolean isRide;
     private TextureRegion pinguinTexture;
 
+    private float powerCoff = BuffsInfo.getPowerCoffBuff().getValue();
+    private float directionCoff = BuffsInfo.getDirectionCoffBuff().getValue();
+    
     public Pinguin(Body body, TextureRegion pinguinTexture, int powerCof) {
         super(body);
         this.pinguinTexture = AssetLoader.pinguinTexture;
@@ -144,7 +148,7 @@ public class Pinguin extends GameActor {
     }
     
     public int getPower() {
-        return power;
+        return (int)power;
     }
 
     public float getDirectionX() {
@@ -158,12 +162,12 @@ public class Pinguin extends GameActor {
     public void changePower() {
         if (!isPower) {
             if (isIncrease) {
-                power++;
+                power+=powerCoff;
                 if (power >= 100) {
                     isIncrease = false;
                 }
             } else {
-                power--;
+                power-=powerCoff;
                 if (power <= 1) {
                     isIncrease = true;
                 }
@@ -174,14 +178,14 @@ public class Pinguin extends GameActor {
     public void changeDirection() {
         if (!isDir) {
             if (isIncrease) {
-                directionX = directionX + 0.01f;
-                directionY = directionY - 0.01f;
+                directionX = directionX + directionCoff;
+                directionY = directionY - directionCoff;
                 if (directionX >= 1.00f) {
                     isIncrease = false;
                 }
             } else {
-                directionX = directionX - 0.01f;
-                directionY = directionY + 0.01f;
+                directionX = directionX - directionCoff;
+                directionY = directionY + directionCoff;
                 if (directionX <= 0.00f) {
                     isIncrease = true;
                 }

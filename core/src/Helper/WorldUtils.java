@@ -6,6 +6,7 @@
 package Helper;
 
 import Enums.UserDataType;
+import GameObjects.Buffs.BuffFactory;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -52,7 +53,7 @@ public class WorldUtils {
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = box;
         fixtureDef.density = 0.0f;
-        fixtureDef.friction = 0.8f;
+        fixtureDef.friction = BuffsInfo.getFrictionBuff().getPower();
         fixtureDef.restitution = 0.35f;
         body.createFixture(fixtureDef);
         //body.resetMassData();
@@ -64,7 +65,7 @@ public class WorldUtils {
     public static Body createStopObj(World world, float x, float y, float width, float height) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.position.set(new Vector2(x, y + height));
+        bodyDef.position.set(new Vector2(x, y + height/2));
         Body body = world.createBody(bodyDef);
         PolygonShape box = new PolygonShape();
         box.setAsBox(width / 2, height / 2);

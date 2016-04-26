@@ -21,9 +21,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class AssetLoader {
 
     public static Texture textureBtnNormal, textureBtnPress;
-    public static Texture pinguin;
+    public static Texture pinguin, elephant, giraffe;
     public static Texture gameBackground;
-    public static TextureRegion gbc;
+    public static Texture coinTexture, pause;
+    public static Texture ground;
+    public static TextureRegion gbc, ctr, pauseTexture, elephantTexture, giraffeTexture;
     public static TextureRegion pinguinTexture;
     public static TextureRegion btnPress, btn;
     public static Animation birdAnimation;
@@ -32,17 +34,41 @@ public class AssetLoader {
     public static Texture protectiveLayerTexture;
 
     public static void load() {
-        
-        
+
+        elephant = new Texture(Gdx.files.internal("gfx/gameScreen.Objects/elephant.png"));
+        elephant.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+        elephantTexture = new TextureRegion(elephant, 0, 0, 2000, 1990);
+
+        giraffe = new Texture(Gdx.files.internal("gfx/gameScreen.Objects/giraffe.png"));
+        giraffe.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+        giraffeTexture = new TextureRegion(giraffe, 0, 0, 256, 256);
+
+        ground = new Texture(Gdx.files.internal("gfx/gameScreen.Objects/ground.png"));
+        ground.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+        ground.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+
+        coinTexture = new Texture(Gdx.files.internal("gfx/gameScreen.Objects/coin.png"));
+        coinTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+        ctr = new TextureRegion(coinTexture, 0, 0, 48, 48);
+
+        pause = new Texture(Gdx.files.internal("gfx/gameScreen.Objects/pause.png"));
+        pause.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+        pauseTexture = new TextureRegion(pause, 0, 0, 64, 64);
+
         gameBackground = new Texture(Gdx.files.internal("gfx/gameScreen.Objects/background.png"));
         gameBackground.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-        
-        gbc = new TextureRegion(gameBackground, 0, 0, 8000,4500);
+
+        gbc = new TextureRegion(gameBackground, 0, 0, 1200, 676);
 
         textureBtnNormal = new Texture(Gdx.files.internal("gfx/buttons/button.png"));
         textureBtnNormal.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
         btn = new TextureRegion(textureBtnNormal, 0, 0, 600, 200);
+        //btn = new TextureRegion(textureBtnNormal, 0, 0, 128, 89);
 
         pinguin = new Texture(Gdx.files.internal("gfx/gameScreen.Objects/pinguin.png"));
         pinguin.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
@@ -53,7 +79,7 @@ public class AssetLoader {
         textureBtnPress.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
         btnPress = new TextureRegion(textureBtnPress, 0, 0, 600, 200);
-        
+
         protectiveLayerTexture = new Texture(Gdx.files.internal("gfx/buttons/protectField.png"));
         protectiveLayerTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
         /*

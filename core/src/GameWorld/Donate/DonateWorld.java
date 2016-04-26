@@ -15,6 +15,7 @@ import GameWorld.AbstractWorld;
 import GameWorld.Renderer;
 import Helper.AssetLoader;
 import Helper.FontLoader;
+import Helper.Statistic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -22,6 +23,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.game.GameLibGDX;
+import com.mygdx.game.screen.MainScreen;
 
 public class DonateWorld extends AbstractWorld {
     
@@ -40,7 +42,7 @@ public class DonateWorld extends AbstractWorld {
 
     @Override
     public void update(float delta) {
-        
+        ui.updateFps(1 / delta);
     }
     private void setButtons(){
         TextureRegion normalState = AssetLoader.btn;
@@ -63,45 +65,45 @@ public class DonateWorld extends AbstractWorld {
     private void donate100(TextureRegion normalState, TextureRegion pressedState){
         Donate100 = new Button("100", normalState, pressedState, "100", FontLoader.font){
             public void action(){
-                //here          
+                Statistic.addCoins(100);
             }
         };    
         Donate100.setSize(2*ui.getStage().getWidth()/8,2*ui.getStage().getHeight()/8);
         Donate100.setPosition(ui.getStage().getWidth()/8+ui.getStage().getWidth()/8,5*ui.getStage().getHeight()/8);      
         
-        ui.getStage().addActor(Donate100);
+        ui.getGuiStage().addActor(Donate100);
     }
     private void donate1000(TextureRegion normalState, TextureRegion pressedState){
         Donate1000 = new Button("1000", normalState, pressedState, "1000", FontLoader.font){
             public void action(){
-                //here          
+                Statistic.addCoins(1000);         
             }
         };    
         Donate1000.setSize(2*ui.getStage().getWidth()/8,2*ui.getStage().getHeight()/8);
         Donate1000.setPosition(ui.getStage().getWidth()-3*ui.getStage().getWidth()/8,5*ui.getStage().getHeight()/8);         
         
-        ui.getStage().addActor(Donate1000);
+        ui.getGuiStage().addActor(Donate1000);
     }        
     private void donate500(TextureRegion normalState, TextureRegion pressedState){
         Donate500 = new Button("500", normalState, pressedState, "500", FontLoader.font){
             public void action(){
-                //here          
+                Statistic.addCoins(500);          
             }
         };    
         Donate500.setSize(2*ui.getStage().getWidth()/8,2*ui.getStage().getHeight()/8);
         Donate500.setPosition(ui.getStage().getWidth()/8+ui.getStage().getWidth()/8,ui.getStage().getHeight()/8);      
         
-        ui.getStage().addActor(Donate500);
+        ui.getGuiStage().addActor(Donate500);
     }
     private void donate5000(TextureRegion normalState, TextureRegion pressedState){
         Donate5000 = new Button("5000", normalState, pressedState, "5000", FontLoader.font){
             public void action(){
-                //here          
+                Statistic.addCoins(5000);          
             }
         };    
         Donate5000.setSize(2*ui.getStage().getWidth()/8,2*ui.getStage().getHeight()/8);
         Donate5000.setPosition(ui.getStage().getWidth()-3*ui.getStage().getWidth()/8,ui.getStage().getHeight()/8);          
         
-        ui.getStage().addActor(Donate5000);
+        ui.getGuiStage().addActor(Donate5000);
     }
 }

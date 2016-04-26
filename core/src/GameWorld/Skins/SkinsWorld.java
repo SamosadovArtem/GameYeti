@@ -41,7 +41,6 @@ public class SkinsWorld extends AbstractWorld {
     public void update(float delta) {
         updateButton();
 
-
         if(inertion < -5 || inertion > 5){
             box.moveX(inertion);
             if(inertion < 0 ) {
@@ -70,7 +69,8 @@ public class SkinsWorld extends AbstractWorld {
         buyButton = new Button("BuyButton", AssetLoader.btn, AssetLoader.btnPress, "", new BitmapFont())
         {
             public void action() {
-
+                box.getSkins().get(activeSkin).click();
+                updateBtnText();
             }
         };
         buyButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
@@ -85,7 +85,7 @@ public class SkinsWorld extends AbstractWorld {
         label.setPosition(ui.getStage().getWidth() / 2 - buyButton.getWidth() / 2,
                 buyButton.getY() - buyButton.getHeight());
 
-        buyButton.setText(""+box.getSkinCoast());
+        updateBtnText();
         label.setText(box.getSkinName());
 
         ui.getGuiStage().addActor(label);
@@ -93,10 +93,22 @@ public class SkinsWorld extends AbstractWorld {
     }
 
     private void updateButton(){
-        if(activeSkin != box.getActiveButton()){
+        if(activeSkin != box.getActiveButton()){           
+            updateBtnText();
+        }
+    }
+    
+    private void updateBtnText(){
+        label.setText(box.getSkinName());
+        activeSkin = box.getActiveButton();
+        if(box.getSkins().get(activeSkin).getBuyStatus()){
+            if(SkinsStatistic.getActiveSkin() == box.getSkins().get(activeSkin).getIndex()){
+               buyButton.setText("Active"); 
+            } else {
+                buyButton.setText("Activate"); 
+            }
+        } else {
             buyButton.setText(""+box.getSkinCoast());
-            label.setText(box.getSkinName());
-            activeSkin = box.getActiveButton();
         }
     }
 

@@ -12,5 +12,11 @@ package Enums;
 public enum BuffType {
     JUMPCOUNT,
     JUMPPOWER,
-    GRAVITY;
+    GRAVITY,
+    FRICTION,
+    HEIGHT_SKY_COFF,
+    COINS,
+    POWER_COFF,
+    DIRECTION_COFF;
+    
 }

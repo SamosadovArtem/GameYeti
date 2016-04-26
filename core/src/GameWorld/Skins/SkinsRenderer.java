@@ -12,8 +12,7 @@ import GameWorld.Settings.SettingsWorld;
  * Created by broff on 15.04.2016.
  */
 public class SkinsRenderer extends Renderer {
-
-    private ShapeRenderer shapeRenderer;
+    
     private SkinsWorld world;
     private Interface ui;
 
@@ -21,8 +20,6 @@ public class SkinsRenderer extends Renderer {
         super();
         this.world = world;
         this.ui = ui;
-        shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setProjectionMatrix(cam.combined);
     }
 
     @Override

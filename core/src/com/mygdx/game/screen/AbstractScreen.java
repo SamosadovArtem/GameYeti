@@ -12,7 +12,11 @@ import Helper.Constants;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.GameLibGDX;
 
 /**
@@ -30,10 +34,14 @@ public abstract class AbstractScreen implements Screen {
 
     public AbstractScreen(GameLibGDX game) {
         this.game = game;
-        float a = Gdx.app.getGraphics().getWidth();
-        float b = Gdx.app.getGraphics().getHeight();
-        ui = new Interface(new Stage(new FitViewport(a,b)),
-                new Stage(new FitViewport(a,b)));
+        float a = Gdx.graphics.getWidth();
+        float b = Gdx.graphics.getHeight();
+        ui = new Interface(new Stage(new FillViewport(a,b)),
+                new Stage(new FillViewport(a,b)));
+        //ui = new Interface(new Stage(new ExtendViewport(Constants.APP_WIDTH,Constants.APP_HEIGHT)),
+                //new Stage(new ExtendViewport(Constants.APP_WIDTH,Constants.APP_HEIGHT)));
+        //ui = new Interface(new Stage(new StretchViewport(Constants.APP_WIDTH,Constants.APP_HEIGHT)),
+                //new Stage(new StretchViewport(Constants.APP_WIDTH,Constants.APP_HEIGHT)));
         initScene();
     }
 
@@ -66,15 +74,19 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         //вызываем метод setViewport для сцены с новыми размерами экрана. Этот метод изменяет размер сцены так, чтобы она занимала весь экран
-        getStage().getViewport().update(width, height);
+        ui.getStage().getViewport().update(width, height);
         ui.getGuiStage().getViewport().update(width, height);
-        getStage().getCamera().update();
-    }
+        ui.getStage().getCamera().update();
+        ui.getGuiStage().getCamera().update();
+}
 
     @Override
     public void show() {
         //устанавливаем сцену экрана как обработчик событий ввода. это нужно для того, чтобы можно было отлавливать нажатия на актёров
         Gdx.input.setInputProcessor(ui.getGuiStage());
+        //getStage().getViewport().update(Gdx.app.getGraphics().getWidth(), Gdx.app.getGraphics().getHeight());
+        //ui.getGuiStage().getViewport().update(Gdx.app.getGraphics().getWidth(), Gdx.app.getGraphics().getHeight());
+        //getStage().getCamera().update();
     }
 
     //метод, который требует реализовать интерфейс Screen. Он вызывается при закрытии экрана. Экран закрыт - можно очистить ресурсы
