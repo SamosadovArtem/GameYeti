@@ -59,4 +59,19 @@ public class GameScreen extends AbstractScreen {
     public void show() {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void hide() {
+        world.hide();
+    }
+
+    @Override
+    public void pause() {
+        world.pause();
+    }
+
+    @Override
+    public void resume() {
+        world.resume();
+    }
 }

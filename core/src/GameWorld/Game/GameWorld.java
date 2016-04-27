@@ -68,6 +68,8 @@ public class GameWorld extends AbstractWorld {
     private float xBuffPosition = (float) (ui.getGuiStage().getWidth() * 0.20);
     private float yBuffPosition = ui.getGuiStage().getHeight() - ui.getGuiStage().getHeight() / 10;
 
+    private Thread worldGenerate;
+
     public GameWorld(Interface ui, GameLibGDX g) {
         super(ui, g);
         pause = false;
@@ -95,7 +97,7 @@ public class GameWorld extends AbstractWorld {
         ui.addBack(game);
 
         GetBuffsInfo();
-
+        newWorldGenerate();
     }
 
     private void createObjects(int startPos, int count) {
@@ -195,16 +197,17 @@ public class GameWorld extends AbstractWorld {
             initHit();
             setAngularPinguin();
             checkHeight();
-            unlimitedGame();
             drawJumpCount();
             map.focusCameraX(pinguin);
-            addGround();
+
+            //unlimitedGame();
+            //addGround();
 
             Array<Body> bodies = new Array<Body>();
             world.getBodies(bodies);
 
             for (Body bod : bodies) {
-                if (bod.getFixtureList().get(0).getUserData().equals("DELETE")) {
+                if (bod.getFixtureList().size!=0 && bod.getFixtureList().get(0).getUserData().equals("DELETE")) {
                     world.destroyBody(bod);
                 }
                 if (pinguin.getBody().getPosition().x - bod.getPosition().x >= Constants.APP_WIDTH * 5
@@ -348,5 +351,45 @@ public class GameWorld extends AbstractWorld {
             }
             //xBuffPosition = buff
         }
+    }
+
+    private void newWorldGenerate(){
+        worldGenerate = new Thread(new Runnable()
+        {
+            public void run()
+            {
+                while(true){
+                    try {
+                        Thread.sleep(200);
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    unlimitedGame();
+                    addGround();
+                    try {
+                        Thread.sleep(800);
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        });
+        worldGenerate.start();
+    }
+
+    public void hide() {
+        worldGenerate.interrupt();
+    }
+
+
+    public void pause() {
+        worldGenerate.interrupt();
+    }
+
+    public void resume() {
+        newWorldGenerate();
     }
 }

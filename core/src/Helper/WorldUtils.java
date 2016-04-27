@@ -235,6 +235,7 @@ public class WorldUtils {
         fixtureDef.restitution = 0.35f;
         body.createFixture(fixtureDef);
         body.resetMassData();
+        body.getFixtureList().get(0).setUserData("COIN");
         box.dispose();
         return body;
     }
@@ -262,6 +263,7 @@ public class WorldUtils {
         fixtureDef.friction = 1.8f;
         fixtureDef.restitution = 0f;
         body.createFixture(fixtureDef);
+        body.getFixtureList().get(0).setUserData("AntelopeBack");
         body.resetMassData();
         box.dispose();
         return body;
@@ -283,6 +285,7 @@ public class WorldUtils {
         fixtureDef.restitution = 0f;
         body.createFixture(fixtureDef);
         body.resetMassData();
+        body.getFixtureList().get(0).setUserData("AntelopeBody");
         box.dispose();
         return body;
     }
