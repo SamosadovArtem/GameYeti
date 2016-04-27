@@ -29,7 +29,6 @@ public class TicketScreen extends AbstractScreen {
     protected void initScene() {
         this.world = new TicketWorld(ui, game);
         this.renderer = new TicketRenderer(world);
-        Gdx.input.setInputProcessor(new TicketInputHandler(world));
     }
 
     @Override
@@ -40,8 +39,11 @@ public class TicketScreen extends AbstractScreen {
 
     @Override
     public void show() {
-        //устанавливаем сцену экрана как обработчик событий ввода. это нужно для того, чтобы можно было отлавливать нажатия на актёров
-        Gdx.input.setInputProcessor(new TicketInputHandler(world));
+        Gdx.input.setInputProcessor(new TicketInputHandler(world, game));
     }
 
+    @Override
+    public void backPress(){
+        game.setScreen(new MainScreen(game));
+    }
 }

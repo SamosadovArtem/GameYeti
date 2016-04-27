@@ -37,4 +37,9 @@ public class MainScreen extends AbstractScreen {
         render.render();
     }
 
+    @Override
+    public void backPress(){
+        Gdx.app.exit();
+    }
+
 }

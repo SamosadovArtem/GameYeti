@@ -42,11 +42,16 @@ public class BuffsScreen extends AbstractScreen {
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(new BuffsInputHandler(world));
+        Gdx.input.setInputProcessor(new BuffsInputHandler(world, game));
     }
 
     @Override
     public void hide() {
         this.world.getThread().interrupt();
+    }
+
+    @Override
+    public void backPress(){
+        game.setScreen(new MainScreen(game));
     }
 }

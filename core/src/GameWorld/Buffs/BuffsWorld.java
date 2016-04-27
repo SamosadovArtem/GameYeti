@@ -20,6 +20,7 @@ import Helper.FontLoader;
 import Helper.MyTimer;
 import Helper.TimeConverter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -28,6 +29,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.mygdx.game.GameLibGDX;
+import com.mygdx.game.screen.MainScreen;
+
 import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import java.util.Date;

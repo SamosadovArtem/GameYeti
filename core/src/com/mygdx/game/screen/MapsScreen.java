@@ -26,7 +26,7 @@ public class MapsScreen extends AbstractScreen {
         super(game);
         Gdx.app.log("MapScreen", "main screen created");
 
-        MapsInputHandler mph = new MapsInputHandler(world.GetButtonPositions(), world);
+        MapsInputHandler mph = new MapsInputHandler(world.GetButtonPositions(), world, game);
 
         Gdx.input.setInputProcessor(mph);
     }
@@ -48,5 +48,10 @@ public class MapsScreen extends AbstractScreen {
 
     @Override
     public void show() {
+    }
+
+    @Override
+    public void backPress(){
+        game.setScreen(new MainScreen(game));
     }
 }

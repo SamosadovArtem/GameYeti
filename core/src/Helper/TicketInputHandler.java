@@ -9,7 +9,10 @@ import GameObjects.PrizeField.PrizeField;
 import GameObjects.PrizeField.ProtectiveLayerParticle;
 import GameWorld.Ticket.TicketWorld;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.mygdx.game.GameLibGDX;
+
 import java.util.ArrayList;
 
 /**
@@ -19,14 +22,19 @@ import java.util.ArrayList;
 public class TicketInputHandler implements InputProcessor {
 
     private TicketWorld world;
+    private GameLibGDX game;
 
-    public TicketInputHandler(TicketWorld world) {
+    public TicketInputHandler(TicketWorld world, GameLibGDX game) {
         this.world = world;
+        this.game = game;
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        return true;
+        if (keycode == Input.Keys.BACK) {
+            game.getScreen().backPress();
+        }
+        return false;
     }
 
     @Override

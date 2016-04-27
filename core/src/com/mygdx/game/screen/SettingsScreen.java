@@ -40,4 +40,8 @@ public class SettingsScreen extends AbstractScreen {
         // game.dispose();
     }
 
+    @Override
+    public void backPress(){
+        game.setScreen(new MainScreen(game));
+    }
 }

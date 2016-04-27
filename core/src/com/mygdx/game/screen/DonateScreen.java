@@ -32,4 +32,9 @@ public class DonateScreen extends AbstractScreen{
         this.world = new DonateWorld(ui, game);
         renderer = new DonateRenderer(this.world, ui);
     }
+
+    @Override
+    public void backPress(){
+        game.setScreen(new MainScreen(game));
+    }
 }

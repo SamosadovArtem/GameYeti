@@ -34,7 +34,7 @@ public class GameScreen extends AbstractScreen {
         Gdx.app.log("GameScreen", "initScene");
         this.world = new GameWorld(ui, game);
         this.renderer = new GameRenderer(world, ui, world.getMap());
-        Gdx.input.setInputProcessor(new InputHandler(world));
+        Gdx.input.setInputProcessor(new InputHandler(world, game));
         Statistic.playGame();
     }
 
@@ -73,5 +73,10 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void resume() {
         world.resume();
+    }
+
+    @Override
+    public void backPress(){
+        game.setScreen(new MainScreen(game));
     }
 }

@@ -7,10 +7,14 @@ package Helper;
 
 import GameObjects.Map;
 import GameWorld.Maps.MapsWorld;
+
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.mygdx.game.GameLibGDX;
+
 import java.util.ArrayList;
 
 /**
@@ -19,13 +23,15 @@ import java.util.ArrayList;
  */
 public class MapsInputHandler implements InputProcessor{
 
+    private GameLibGDX game;
     MapsWorld world;
     boolean isTouched;
     private int _oldX;
     
     private float min=100000, max=0;
     
-    public MapsInputHandler(ArrayList<Float> list, MapsWorld world){
+    public MapsInputHandler(ArrayList<Float> list, MapsWorld world, GameLibGDX game){
+        this.game = game;
         this.world = world;
         for(float f : list){
             if(min > f){
@@ -83,10 +89,13 @@ public class MapsInputHandler implements InputProcessor{
         }
         return false;
     }
-    
+
     @Override
     public boolean keyDown(int keycode) {
-        return true;
+        if (keycode == Input.Keys.BACK) {
+            game.getScreen().backPress();
+        }
+        return false;
     }
 
     @Override

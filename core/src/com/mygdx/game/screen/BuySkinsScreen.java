@@ -18,7 +18,7 @@ public class BuySkinsScreen extends AbstractScreen {
 
     public BuySkinsScreen(GameLibGDX game) {
         super(game);
-        SkinsInputHandler sih = new SkinsInputHandler(world);
+        SkinsInputHandler sih = new SkinsInputHandler(world, game);
 
         Gdx.input.setInputProcessor(sih);
         Gdx.app.log("BuySkinsScreen", "Skins screen created");
@@ -39,5 +39,10 @@ public class BuySkinsScreen extends AbstractScreen {
 
     @Override
     public void show() {
+    }
+
+    @Override
+    public void backPress(){
+        game.setScreen(new MainScreen(game));
     }
 }

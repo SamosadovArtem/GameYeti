@@ -36,4 +36,9 @@ public class BuyCoinsScreen extends AbstractScreen {
         world.update(delta);
         render.render();
     }
+
+    @Override
+    public void backPress(){
+        game.setScreen(new MainScreen(game));
+    }
 }

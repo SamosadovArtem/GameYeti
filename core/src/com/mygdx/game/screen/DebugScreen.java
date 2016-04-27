@@ -40,4 +40,9 @@ public class DebugScreen extends AbstractScreen {
         world.getUI().dispose();
         // game.dispose();
     }
+
+    @Override
+    public void backPress(){
+        game.setScreen(new MainScreen(game));
+    }
 }

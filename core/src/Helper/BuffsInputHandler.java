@@ -7,7 +7,11 @@ package Helper;
 
 import GameWorld.Buffs.BuffsWorld;
 import GameWorld.Maps.MapsWorld;
+
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.mygdx.game.GameLibGDX;
+
 import java.util.ArrayList;
 
 /**
@@ -16,13 +20,15 @@ import java.util.ArrayList;
  */
 public class BuffsInputHandler implements InputProcessor {
 
+    private GameLibGDX game;
     BuffsWorld world;
     private int _oldY;
     boolean isTouched;
     int temp;
 
-    public BuffsInputHandler(BuffsWorld world) {
+    public BuffsInputHandler(BuffsWorld world, GameLibGDX game) {
         this.world = world;
+        this.game = game;
     }
 
     @Override
@@ -71,7 +77,10 @@ public class BuffsInputHandler implements InputProcessor {
     }
 
     @Override
-    public boolean keyDown(int keycode) {
+    public boolean keyDown(int keyCode) {
+        if (keyCode == Input.Keys.BACK) {
+            game.getScreen().backPress();
+        }
         return true;
     }
 

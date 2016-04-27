@@ -39,4 +39,9 @@ public class StatisticScreen extends AbstractScreen{
     public void dispose() {
         world.getUI().dispose();
     }
+
+    @Override
+    public void backPress(){
+        game.setScreen(new MainScreen(game));
+    }
 }

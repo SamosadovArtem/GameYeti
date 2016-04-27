@@ -8,7 +8,9 @@ package Helper;
 import GameWorld.Game.GameWorld;
 import GameWorld.Game.Objects.Pinguin;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.mygdx.game.GameLibGDX;
 
 /**
  *
@@ -16,16 +18,21 @@ import com.badlogic.gdx.InputProcessor;
  */
 public class InputHandler implements InputProcessor {
 
+    private GameLibGDX game;
     private Pinguin pinguin;
     private GameWorld world;
 
-    public InputHandler(GameWorld world) {
-        this.pinguin = world.getPinguin();
+    public InputHandler(GameWorld world, GameLibGDX game) {
         this.world = world;
+        this.game = game;
+        this.pinguin = world.getPinguin();
     }
 
     @Override
     public boolean keyDown(int keycode) {
+        if (keycode == Input.Keys.BACK) {
+            game.getScreen().backPress();
+        }
         return false;
     }
 

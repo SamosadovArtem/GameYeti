@@ -25,6 +25,7 @@ import Helper.JumpCountController;
 import Helper.SoundsLoader;
 import Helper.WorldUtils;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -37,6 +38,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.GameLibGDX;
 import com.mygdx.game.screen.DebugScreen;
+import com.mygdx.game.screen.MainScreen;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -392,4 +395,5 @@ public class GameWorld extends AbstractWorld {
     public void resume() {
         newWorldGenerate();
     }
+
 }

@@ -10,6 +10,7 @@ import Helper.Statistic;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.mygdx.game.screen.AbstractScreen;
 import com.mygdx.game.screen.GameScreen;
@@ -17,12 +18,13 @@ import com.mygdx.game.screen.MainScreen;
 
 public class GameLibGDX extends ApplicationAdapter {
     
-    private Screen screen;
+    private AbstractScreen screen;
 	
     @Override
     public void create () {
         Gdx.app.log("YetiGame", "app created");
         loadResources();
+        Gdx.input.setCatchBackKey(true);
         setScreen(new MainScreen(this));
     }
     
@@ -35,7 +37,7 @@ public class GameLibGDX extends ApplicationAdapter {
         DailyGiftHandler.load();
     }
         
-    public void setScreen (Screen screen) {
+    public void setScreen (AbstractScreen screen) {
         if (this.screen != null) {
             this.screen.hide();
             //this.screen.dispose();
@@ -57,8 +59,8 @@ public class GameLibGDX extends ApplicationAdapter {
         AssetLoader.dispose();
         FontLoader.dispose();
     }
-    
-    public Screen getScreen () {
+
+    public AbstractScreen getScreen () {
         return screen;
     }
 }

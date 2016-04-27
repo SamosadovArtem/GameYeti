@@ -10,6 +10,7 @@ package com.mygdx.game.screen;
 import GameObjects.Interface;
 import Helper.Constants;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -26,7 +27,7 @@ import com.mygdx.game.GameLibGDX;
 
 public abstract class AbstractScreen implements Screen {
 
-    protected GameLibGDX game;
+    protected  GameLibGDX game;
     protected Interface ui;
 
     protected void initScene() {
@@ -36,14 +37,26 @@ public abstract class AbstractScreen implements Screen {
         this.game = game;
         float a = Gdx.graphics.getWidth();
         float b = Gdx.graphics.getHeight();
+        final GameLibGDX g = game;
+
         ui = new Interface(new Stage(new FillViewport(a,b)),
-                new Stage(new FillViewport(a,b)));
+                new Stage(new FillViewport(a,b)){
+                    @Override
+                    public boolean keyDown(int keyCode) {
+                        if (keyCode == Input.Keys.BACK) {
+                            g.getScreen().backPress();
+                        }
+                        return super.keyDown(keyCode);
+                    }
+                });
         //ui = new Interface(new Stage(new ExtendViewport(Constants.APP_WIDTH,Constants.APP_HEIGHT)),
                 //new Stage(new ExtendViewport(Constants.APP_WIDTH,Constants.APP_HEIGHT)));
         //ui = new Interface(new Stage(new StretchViewport(Constants.APP_WIDTH,Constants.APP_HEIGHT)),
                 //new Stage(new StretchViewport(Constants.APP_WIDTH,Constants.APP_HEIGHT)));
         initScene();
     }
+
+    public void backPress(){};
 
     //геттер для сцены. метод для получения сцены экрана. Если сцена не задана, то создаётся пустая сцена для данного экрана
     public Stage getStage() {

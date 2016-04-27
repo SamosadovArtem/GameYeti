@@ -1,7 +1,9 @@
 package GameWorld.Skins.Handler;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.mygdx.game.GameLibGDX;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,6 +16,7 @@ import GameWorld.Skins.SkinsWorld;
  */
 public class SkinsInputHandler implements InputProcessor {
 
+    private GameLibGDX game;
     SkinsWorld world;
     private int _oldX;
     private int temp;
@@ -22,7 +25,8 @@ public class SkinsInputHandler implements InputProcessor {
     private Date touchT;
     private float touchX, upX;
 
-    public SkinsInputHandler(SkinsWorld world){
+    public SkinsInputHandler(SkinsWorld world, GameLibGDX game){
+        this.game = game;
         this.world = world;
     }
 
@@ -66,7 +70,10 @@ public class SkinsInputHandler implements InputProcessor {
     }
 
     @Override
-    public boolean keyDown(int keycode) {
+    public boolean keyDown(int keyCode) {
+        if (keyCode == Input.Keys.BACK) {
+            game.getScreen().backPress();
+        }
         return true;
     }
 
