@@ -82,6 +82,8 @@ public class AssetLoader {
 
         protectiveLayerTexture = new Texture(Gdx.files.internal("gfx/buttons/protectField.png"));
         protectiveLayerTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        
+        font = new BitmapFont();
         /*
         logoTexture = new Texture(Gdx.files.internal("data/logo.png"));
         logoTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);

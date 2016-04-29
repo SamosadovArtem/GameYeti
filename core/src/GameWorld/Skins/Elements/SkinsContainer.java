@@ -6,6 +6,7 @@ import java.util.*;
 
 import GameWorld.Skins.SkinsWorld;
 import Helper.Constants;
+import com.badlogic.gdx.Gdx;
 
 /**
  * Created by broff on 16.04.2016.
@@ -35,11 +36,12 @@ public class SkinsContainer {
                 skins.add(new BuySkin(skin.getID(), skin.getTexture(), 0, 0, w, h, skin.getCost(), false, skin.getName()));
             }
         }
+        activeButton = SkinsStatistic.getActiveSkin();
         this.xCamera = cameraCenter;
         int i = -activeButton;
         for(BuySkin s: skins){
-            s.setX(xCamera + i * Constants.APP_WIDTH / 2 - w / 2);
-            s.setY(Constants.APP_HEIGHT / 4*3);
+            s.setX(xCamera + i * Constants.APP_WIDTH / 3);
+            s.setY(world.getUI().getStage().getHeight()/ 4*2);
             mainStage.addActor(s);
             i++;
             updateScale(s);
@@ -49,6 +51,7 @@ public class SkinsContainer {
     }
 
     public void moveX(float dX){
+        Gdx.app.log("dlt",""+dX);
         int i = 0;
         int activeBtn=0;
         float dlt = Constants.APP_WIDTH*200;
@@ -59,7 +62,7 @@ public class SkinsContainer {
             world.setInertion(0);
         } else {
             for(BuySkin s: skins){
-                s.setX(s.getX() + dX);
+                s.setXCenter(s.getXCenter() + dX);
                 delta = Math.abs(s.getX() - xCamera);
                 updateScale(s);
                 if(delta < dlt){
@@ -74,7 +77,7 @@ public class SkinsContainer {
     }
 
     private void updateScale(BuySkin s){
-        float delta = Math.abs(s.getX() - xCamera);
+        float delta = Math.abs(s.getXCenter() - xCamera);
         if (delta >= Constants.APP_WIDTH / 2) {
             s.setScale(0.5f);
         } else {

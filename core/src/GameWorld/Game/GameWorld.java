@@ -100,7 +100,7 @@ public class GameWorld extends AbstractWorld {
         ui.addBack(game);
 
         GetBuffsInfo();
-        newWorldGenerate();
+        //newWorldGenerate();
     }
 
     private void createObjects(int startPos, int count) {
@@ -140,32 +140,53 @@ public class GameWorld extends AbstractWorld {
         float dlt = Constants.GROUND_WIDTH / 2 - Constants.APP_WIDTH * 1.5f;
 
         if (gr1 >= gr2) {
-            if (pinguinX >= gr1 + dlt) {
-                world.destroyBody(ground2.getBody());
-                ground2 = new Ground(WorldUtils.createGround(world, Constants.GROUND_WIDTH
-                        + ground.getBody().getPosition().x));
-                ui.getStage().addActor(ground2);
-                addTablets(ground.getX() + ground.getWidth(), ground2.getX() + ground2.getWidth());
+            worldGenerate = new Thread(new Runnable()
+            {
+                public void run()
+                {
+                        if (pinguinX >= gr1 + dlt) {
+                    world.destroyBody(ground2.getBody());
+                    ground2 = new Ground(WorldUtils.createGround(world, Constants.GROUND_WIDTH
+                            + ground.getBody().getPosition().x));
+                    ui.getStage().addActor(ground2);
+                    addTablets(ground.getX() + ground.getWidth(), ground2.getX() + ground2.getWidth());
 
-            } else if (gr2 - dlt >= pinguinX) {
-                world.destroyBody(ground.getBody());
-                ground = new Ground(WorldUtils.createGround(world, ground2.getBody().getPosition().x
-                        - Constants.GROUND_WIDTH));
-                ui.getStage().addActor(ground);
-                addTablets(ground2.getX() + ground2.getWidth(), ground.getX() + ground.getWidth());
-            }
+                } else if (gr2 - dlt >= pinguinX) {
+                    world.destroyBody(ground.getBody());
+                    ground = new Ground(WorldUtils.createGround(world, ground2.getBody().getPosition().x
+                            - Constants.GROUND_WIDTH));
+                    ui.getStage().addActor(ground);
+                    addTablets(ground2.getX() + ground2.getWidth(), ground.getX() + ground.getWidth());
+                }                 
+                }
+            });
+            worldGenerate.start();            
         } else if (pinguinX >= gr2 + dlt) {
-            world.destroyBody(ground.getBody());
-            ground = new Ground(WorldUtils.createGround(world, Constants.GROUND_WIDTH
-                    + ground2.getBody().getPosition().x));
-            ui.getStage().addActor(ground);
-            addTablets(ground2.getX() + ground2.getWidth(), ground.getX() + ground.getWidth());
+            worldGenerate = new Thread(new Runnable()
+            {
+                public void run()
+                {
+                    world.destroyBody(ground.getBody());
+                    ground = new Ground(WorldUtils.createGround(world, Constants.GROUND_WIDTH
+                            + ground2.getBody().getPosition().x));
+                    ui.getStage().addActor(ground);
+                    addTablets(ground2.getX() + ground2.getWidth(), ground.getX() + ground.getWidth());
+                }
+            });
+            worldGenerate.start();
         } else if (gr1 >= pinguinX - dlt) {
-            world.destroyBody(ground2.getBody());
-            ground2 = new Ground(WorldUtils.createGround(world, ground.getBody().getPosition().x
-                    - Constants.GROUND_WIDTH));
-            ui.getStage().addActor(ground2);
-            addTablets(ground.getX() + ground.getWidth(), ground2.getX() + ground2.getWidth());
+            worldGenerate = new Thread(new Runnable()
+            {
+                public void run()
+                {
+                    worldGenerate.start();
+                    world.destroyBody(ground2.getBody());
+                    ground2 = new Ground(WorldUtils.createGround(world, ground.getBody().getPosition().x
+                            - Constants.GROUND_WIDTH));
+                    ui.getStage().addActor(ground2);
+                    addTablets(ground.getX() + ground.getWidth(), ground2.getX() + ground2.getWidth());                 
+                }
+            });
         }
     }
 
@@ -203,8 +224,8 @@ public class GameWorld extends AbstractWorld {
             drawJumpCount();
             map.focusCameraX(pinguin);
 
-            //unlimitedGame();
-            //addGround();
+            unlimitedGame();
+            addGround();
 
             Array<Body> bodies = new Array<Body>();
             world.getBodies(bodies);
@@ -227,7 +248,14 @@ public class GameWorld extends AbstractWorld {
 
     private void unlimitedGame() {
         if (Math.abs(maxX - pinguin.getBody().getPosition().x) <= Constants.APP_WIDTH * 4) {
-            createObjects((int) maxX, 5);
+            worldGenerate = new Thread(new Runnable()
+            {
+                public void run()
+                {
+                    createObjects((int) maxX, 5);                 
+                }
+            });
+            worldGenerate.start();            
         }
     }
 
@@ -319,7 +347,7 @@ public class GameWorld extends AbstractWorld {
     }
 
     public void addTablet(float x) {
-        Tablet tablet = new Tablet("1", AssetLoader.textureBtnNormal, x);
+        Tablet tablet = new Tablet("1", AssetLoader.textureBtnNormal, x, AssetLoader.font);
         tablet.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
         tablet.setPosition(x, Constants.GROUND_HEIGHT + Constants.GROUND_Y - tablet.getHeight() / 2);
         tablet.toBack();
@@ -354,46 +382,6 @@ public class GameWorld extends AbstractWorld {
             }
             //xBuffPosition = buff
         }
-    }
-
-    private void newWorldGenerate(){
-        worldGenerate = new Thread(new Runnable()
-        {
-            public void run()
-            {
-                while(true){
-                    try {
-                        Thread.sleep(200);
-
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    unlimitedGame();
-                    addGround();
-                    try {
-                        Thread.sleep(800);
-
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-        });
-        worldGenerate.start();
-    }
-
-    public void hide() {
-        worldGenerate.interrupt();
-    }
-
-
-    public void pause() {
-        worldGenerate.interrupt();
-    }
-
-    public void resume() {
-        newWorldGenerate();
     }
 
 }

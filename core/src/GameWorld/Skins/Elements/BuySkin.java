@@ -43,6 +43,11 @@ public class BuySkin extends Actor {
         posX = x;
         updatePos();
     }
+    
+    public void setXCenter(float x){
+        posX = x - getWidth()/2;
+        updatePos();
+    }
 
     public void setY(float y){
         posY = y;
@@ -98,7 +103,9 @@ public class BuySkin extends Actor {
     }
 
     public void setScale(float s){
+        float xC = this.getXCenter();
         this.setSize(width * s, height * s);
+        setXCenter(xC);
         updatePos();
     }
 

@@ -22,13 +22,13 @@ public class Tablet extends Actor {
 
     private CharSequence text;
 
-    public Tablet(String name, Texture sprite, float value) {
+    public Tablet(String name, Texture sprite, float value, BitmapFont font) {
         super();
         this.setName(name);
         this.sprite = sprite;
         this.setOrigin(this.getWidth() / 2.0f, this.getHeight() / 2.0f);
         this.text = (int)value + " m.";
-        this.font = new BitmapFont();
+        this.font = font;
     }
 
     private BitmapFont getFont() {

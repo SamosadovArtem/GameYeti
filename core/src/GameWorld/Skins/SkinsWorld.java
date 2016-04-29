@@ -75,15 +75,15 @@ public class SkinsWorld extends AbstractWorld {
         };
         buyButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
         buyButton.setPosition(ui.getStage().getWidth() / 2 - buyButton.getWidth() / 2,
-                ui.getStage().getHeight() / 4 - buyButton.getHeight() / 2);
+                ui.getStage().getHeight() / 5 - buyButton.getHeight() / 2);
 
 
         Label.LabelStyle labelS = new Label.LabelStyle();
         labelS.font = new BitmapFont();
         labelS.fontColor = Color.WHITE;
         label = new Label(box.getSkinName(), labelS);
-        label.setPosition(ui.getStage().getWidth() / 2 - buyButton.getWidth() / 2,
-                buyButton.getY() - buyButton.getHeight());
+        label.setPosition(ui.getStage().getWidth() / 2 - label.getWidth() / 2,
+                buyButton.getY() + buyButton.getHeight());
 
         updateBtnText();
         label.setText(box.getSkinName());

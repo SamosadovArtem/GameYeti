@@ -107,7 +107,7 @@ public class BuffContainer extends Actor {
         upgrade.setPosition(xPos + width * 5 / 6, yPos - height);
         group.addActor(upgrade);
 
-        extend = new Button("Extend", AssetLoader.btn, AssetLoader.btnPress, "EXTEND", FontLoader.font) {
+        extend = new Button("Update", AssetLoader.btn, AssetLoader.btnPress, "UPDATE", FontLoader.font) {
             public void action() {
                 if (buff.checkUpdate(Statistic.getCoins())) {
                     Gdx.app.log("UPD", "");

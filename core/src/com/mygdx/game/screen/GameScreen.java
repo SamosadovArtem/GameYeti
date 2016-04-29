@@ -61,21 +61,6 @@ public class GameScreen extends AbstractScreen {
     }
 
     @Override
-    public void hide() {
-        world.hide();
-    }
-
-    @Override
-    public void pause() {
-        world.pause();
-    }
-
-    @Override
-    public void resume() {
-        world.resume();
-    }
-
-    @Override
     public void backPress(){
         game.setScreen(new MainScreen(game));
     }
