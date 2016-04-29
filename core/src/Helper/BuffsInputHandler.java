@@ -13,6 +13,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.mygdx.game.GameLibGDX;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -25,6 +26,8 @@ public class BuffsInputHandler implements InputProcessor {
     private int _oldY;
     boolean isTouched;
     int temp;
+    private float touchX, upX;
+    private Date touchT;
 
     public BuffsInputHandler(BuffsWorld world, GameLibGDX game) {
         this.world = world;
@@ -39,17 +42,33 @@ public class BuffsInputHandler implements InputProcessor {
         isTouched = true;
         _oldY = screenY;
         temp = _oldY;
+        touchT = new Date();
+        touchX = screenY;
 //        if(!world.getBuyMapWindow().getCheck()){
 //        world.getBuyMapWindow().checkClick(screenX, screenY);
 //        }
+
+        world.scrollArea = true;
+
         return true;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        float in = (screenY - touchX) / ((new Date().getTime() - touchT.getTime()) / 8l);
+
+        System.out.println("Инерция"+in);
+
+
+
         world.getUI().getStage().touchUp(screenX, screenY, pointer, button);
         world.getUI().getGuiStage().touchUp(screenX, screenY, pointer, button);
-        isTouched = false; 
+        isTouched = false;
+
+        world.scrollArea = false;
+
+        world.inertion = in;
+
         return true;
     }
 

@@ -65,10 +65,10 @@ public class GameRenderer extends Renderer {
         batch.begin();
         batch.draw(background, 0, (int) (Constants.GROUND_HEIGHT / 2 + Constants.GROUND_Y),
                 Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - (int) (Constants.GROUND_HEIGHT / 2 + Constants.GROUND_Y),
-                sourceX, 0, 1200, 676, true, false);
+                sourceX, 0, 1024, 512, true, false);
 batch.draw(background, 0, 0,
                 Gdx.graphics.getWidth(),(int)  ((Constants.GROUND_Y)),
-                sourceX, 0, 1200*4, 676, true, false);
+                sourceX, 0, 1024*4, 512, true, false);
         batch.end();
         sourceX = -(int) world.getPlayerX();
         map.draw();

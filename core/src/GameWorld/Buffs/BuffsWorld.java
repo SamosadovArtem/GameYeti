@@ -54,6 +54,9 @@ public class BuffsWorld extends AbstractWorld {
     private List<BuffContainer> containerList = new ArrayList();
     private List<Buff> buffList;
 
+    public float inertion = 0;
+    public boolean scrollArea = false;
+
     public BuffsWorld(Interface ui, GameLibGDX g) {
         super(ui, g);
         setUpWorld();
@@ -116,6 +119,44 @@ public class BuffsWorld extends AbstractWorld {
 
     @Override
     public void update(float delta) {
+        if(inertion < -5 || inertion > 5){
+            moveCamera(inertion);
+            if(inertion < 0 ) {
+                inertion+=0.5f;
+            } else {
+                inertion-=0.5f;
+            }
+            if(inertion > -5 && inertion < 5){
+                inertion = 0;
+            }
+        } else {
+            moveToBuff();
+        }
+    }
+
+    private void moveToBuff(){
+        float s = 0;
+        if ((this.getUI().getStage().getCamera().position.y)<=containerList.get(containerList.size()-1).getY()+
+                containerList.get(containerList.size()-1).getHeight()) {
+            s = ((containerList.get(containerList.size()-1).getY()+ containerList.get(containerList.size()-1).getHeight())
+            -(this.getUI().getStage().getCamera().position.y))/10.0f;
+        }
+        if ((this.getUI().getStage().getCamera().position.y)>=containerList.get(0).getY()-
+                containerList.get(0).getHeight()*2) {
+            s = ((containerList.get(0).getY()- containerList.get(0).getHeight()*2)
+                    -(this.getUI().getStage().getCamera().position.y))/10.0f;
+        }
+        this.getUI().getStage().getCamera().position.y += s;
+    }
+    private void moveCamera(float y) {
+        if(!scrollArea) {
+            if ((this.getUI().getStage().getCamera().position.y+y)<=containerList.get(containerList.size()-1).getY()+
+                    containerList.get(containerList.size()-1).getHeight()) {inertion=0;}
+            if ((this.getUI().getStage().getCamera().position.y+y)>=containerList.get(0).getY()-
+                    containerList.get(0).getHeight()*2) {inertion=0;}
+
+            this.getUI().getStage().getCamera().position.y += y;
+        }
     }
 
     public Thread getThread() {
