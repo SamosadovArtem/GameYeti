@@ -26,7 +26,7 @@ public class DailyGiftHandler {
     public static DailyGift gift;
 
     public static void load() {
-        prefs = Gdx.app.getPreferences("YetiGameGift");
+        prefs = Gdx.app.getPreferences("YetiGame");
 
         if (!prefs.contains(tag)) {
             prefs.putString(tag, "0,0,0");
@@ -47,8 +47,9 @@ public class DailyGiftHandler {
         int level = getLevel();
         long minTime = getMinTime();
         long maxTime = getMaxTime();
-        if (level <= 0 || (minTime <= 0 && maxTime <= 0)) {
-            return new DailyGift(new MyTimer(new Date(),0), new MyTimer(new Date(),24 * 60 * 60), 1);
+        Date now = new Date();
+        if (level <= 0 || (minTime - now.getTime() <= 0 && maxTime - now.getTime() <= 0)) {
+            return new DailyGift(new MyTimer(new Date(), 0), new MyTimer(new Date(), 24 * 60 * 60), 1);
         }
         return new DailyGift(new MyTimer(minTime), new MyTimer(maxTime), level);
     }
@@ -60,11 +61,13 @@ public class DailyGiftHandler {
 
     public static List<Picture> getArrayOfPictures() {
         List<Picture> array = new ArrayList<Picture>();
-        array.add(new Picture(AssetLoader.textureBtnNormal));
-        array.add(new Picture(AssetLoader.textureBtnNormal));
-        array.add(new Picture(AssetLoader.textureBtnNormal));
-        array.add(new Picture(AssetLoader.textureBtnNormal));
-        array.add(new Picture(AssetLoader.textureBtnNormal));
+        for (int i = 0; i < 5; i++) {
+            if (i < gift.getLevel()) {
+                array.add(new Picture(AssetLoader.dailyGiftFull));
+            } else {
+                array.add(new Picture(AssetLoader.dailyGiftEmpty));
+            }
+        }
         return array;
     }
 
@@ -85,8 +88,8 @@ public class DailyGiftHandler {
         String[] strArr = str.split(",");
         return Long.valueOf(strArr[2]);
     }
-    
-    public static void dispose(){
+
+    public static void dispose() {
         gift = new DailyGift();
     }
 }

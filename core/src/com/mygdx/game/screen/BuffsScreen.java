@@ -10,11 +10,11 @@ import GameWorld.Buffs.BuffsWorld;
 import GameWorld.Main.MainRenderer;
 import GameWorld.Main.MainWorld;
 import Helper.BuffsInputHandler;
+
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.GameLibGDX;
 
 /**
- *
  * @author qw
  */
 public class BuffsScreen extends AbstractScreen {
@@ -24,12 +24,10 @@ public class BuffsScreen extends AbstractScreen {
 
     public BuffsScreen(GameLibGDX game) {
         super(game);
-        Gdx.app.log("BuffsScreen", "main screen created");
     }
 
     @Override
     protected void initScene() {
-        Gdx.app.log("BuffsScreen", "initScene");
         this.world = new BuffsWorld(ui, game);
         this.renderer = new BuffsRenderer(world);
     }
@@ -51,7 +49,7 @@ public class BuffsScreen extends AbstractScreen {
     }
 
     @Override
-    public void backPress(){
+    public void backPress() {
         game.setScreen(new MainScreen(game));
     }
 }

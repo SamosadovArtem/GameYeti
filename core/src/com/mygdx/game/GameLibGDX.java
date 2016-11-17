@@ -10,14 +10,13 @@ import Helper.Statistic;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.mygdx.game.screen.AbstractScreen;
 import com.mygdx.game.screen.GameScreen;
 import com.mygdx.game.screen.MainScreen;
 
 public class GameLibGDX extends ApplicationAdapter {
-    
+
     private AbstractScreen screen;
 	
     @Override
@@ -36,7 +35,7 @@ public class GameLibGDX extends ApplicationAdapter {
         SkinsStatistic.load();
         DailyGiftHandler.load();
     }
-        
+
     public void setScreen (AbstractScreen screen) {
         if (this.screen != null) {
             this.screen.hide();

@@ -6,6 +6,8 @@
 package GameObjects.Buffs;
 
 import Enums.BuffType;
+import GameObjects.Picture;
+import Helper.AssetLoader;
 import Helper.BuffsInfo;
 import Helper.MyTimer;
 
@@ -22,6 +24,7 @@ public class JumpPowerBuff extends Buff {
         power = value;
         this.levelMax = lvlMax;
         this.cost = cost;
+        super.icon = new Picture(AssetLoader.jumpPowerBuff);
     }
 
     public int getPower() {
@@ -50,20 +53,25 @@ public class JumpPowerBuff extends Buff {
         }
         return c * cost;
     }
-    
-    public boolean checkUpdate(int allCoins){
-        if(allCoins >= getCoast(level) && level != 0){
+
+    public boolean checkUpdate(int allCoins) {
+        if (allCoins >= getCoast(level) && level != 0) {
             return true;
         } else {
             return false;
         }
     }
-    
-    public boolean checkUpgrade(int allCoins){
-        if(allCoins >= getCoast(level + 1) && level < levelMax){
+
+    public boolean checkUpgrade(int allCoins) {
+        if (allCoins >= getCoast(level + 1) && level < levelMax) {
             return true;
         } else {
             return false;
         }
+    }
+
+    @Override
+    public String getInfo() {
+        return "Increase your \njump power.";
     }
 }

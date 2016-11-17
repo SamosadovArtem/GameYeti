@@ -6,6 +6,8 @@
 package GameObjects.Buffs;
 
 import Enums.BuffType;
+import GameObjects.Picture;
+import Helper.AssetLoader;
 import Helper.MyTimer;
 import java.util.Date;
 
@@ -21,12 +23,15 @@ public abstract class Buff {
     protected int level = 0;
     protected int levelMax = 0;
     protected int cost;
+    protected Picture icon;
 
     public Buff(MyTimer time, BuffType type, int level) {
         timer = time;
 
         this.type = type;
-
+        
+        icon = new Picture(AssetLoader.textureBtnNormal);
+        
         if (timer.getTimeStatus()) {
             this.level = level;
             isActive = true;
@@ -35,7 +40,7 @@ public abstract class Buff {
             isActive = false;
         }
     }
-
+    
     public boolean getIsActive() {
         if (!timer.getTimeStatus()) {
             isActive = false;
@@ -66,6 +71,10 @@ public abstract class Buff {
     public void updateTimer(long time) {
         timer = new MyTimer(new Date(), time);
     }
+    
+    public Picture getIcon(){
+        return icon;
+    }
 
     public abstract void upgrade();
 
@@ -76,5 +85,6 @@ public abstract class Buff {
     public abstract boolean checkUpdate(int allCoins);
 
     public abstract boolean checkUpgrade(int allCoins);
-
+    
+    public abstract String getInfo();
 }

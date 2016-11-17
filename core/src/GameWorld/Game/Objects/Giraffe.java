@@ -37,6 +37,8 @@ public class Giraffe extends GameActor {
     public float heightHead;
     private boolean isActive = true;
 
+    private GiraffThrow gt;
+    private Thread t = new Thread();
     public Body head;
 
     public Giraffe(World world, float x, float y, float widthBody, float heightBody, float widthNeck, float heightNeck, float widthHead, float heightHead, TextureRegion groundTexture) {
@@ -87,13 +89,13 @@ public class Giraffe extends GameActor {
 
     public void draw(Batch batch, float parentAlpha) {
         if (delete() && checkDraw()) {
-            batch.draw(AssetLoader.giraffeTexture, getX() - widthBody / 2, getY() - heightBody / 2 - 40, 100, 200);
-            /*batch.draw(groundTexture, getX() - widthBody / 2, getY() - heightBody / 2 - 40, 10, 40);
+           // batch.draw(AssetLoader.giraffeTexture, getX() - widthBody / 2, getY() - heightBody / 2 - 40, 100, 200);
+            batch.draw(groundTexture, getX() - widthBody / 2, getY() - heightBody / 2 - 40, 10, 40);
             batch.draw(groundTexture, getX() + widthBody / 2 - 10, getY() - heightBody / 2 - 40, 10, 40);
             batch.draw(groundTexture, getX() - widthBody / 2, getY() - heightBody / 2, widthBody, heightBody);
             batch.draw(groundTexture, getX() - widthBody / 2, getY() + heightBody / 2, widthNeck, heightNeck);
             batch.draw(groundTexture, getX() - widthBody / 2 + widthNeck - widthHead, getY() + heightBody / 2 + heightNeck, widthHead, heightHead);
-             */
+
 
         }
     }
@@ -101,8 +103,8 @@ public class Giraffe extends GameActor {
     public void throwPinguin(Pinguin p) {
         if (isActive()) {
             setActive(false);
-            GiraffThrow gt = new GiraffThrow(p, this);
-            Thread t = new Thread(gt);
+            gt = new GiraffThrow(p, this);
+            t = new Thread(gt);
             t.start();
         }
     }

@@ -7,13 +7,13 @@ package Helper;
 
 import GameWorld.Game.GameWorld;
 import GameWorld.Game.Objects.Pinguin;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.mygdx.game.GameLibGDX;
 
 /**
- *
  * @author Pablo
  */
 public class InputHandler implements InputProcessor {
@@ -33,7 +33,7 @@ public class InputHandler implements InputProcessor {
         if (keycode == Input.Keys.BACK) {
             game.getScreen().backPress();
         }
-        return false;
+        return true;
     }
 
     @Override

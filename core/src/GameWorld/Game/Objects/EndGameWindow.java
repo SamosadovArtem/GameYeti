@@ -47,11 +47,11 @@ public class EndGameWindow extends AbstractWindow {
     protected void initText() {
         Label textLabel;
         Label.LabelStyle labelS = new Label.LabelStyle();
-        labelS.font = new BitmapFont();
+        labelS.font = FontLoader.font;
         labelS.fontColor = Color.WHITE;
         textLabel = new Label("", labelS);
         textLabel.setAlignment(Align.center);
-        textLabel.setFontScale(1);
+        textLabel.setFontScale(0.5f);
         textLabel.setSize(width / 3, height / 6);
         textLabel.setText("GAME OVER");
         textLabel.setPosition(xPos + width / 2 - textLabel.getWidth() / 2,
@@ -87,7 +87,7 @@ public class EndGameWindow extends AbstractWindow {
                 Gdx.app.log("check", "check");
 
                 SoundsLoader.DisposedGameSounds();
-                
+
                 game.setScreen(new MainScreen(game));
             }
         };

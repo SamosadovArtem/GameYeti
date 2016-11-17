@@ -5,6 +5,7 @@
  */
 package GameWorld.Game.Objects;
 
+import GameWorld.Game.GameWorld;
 import Helper.Constants;
 import Helper.WorldUtils;
 import com.badlogic.gdx.Gdx;
@@ -33,7 +34,10 @@ public class Antelope extends GameActor {
     private AntelopeThread antelopeThread;
     private Thread aThread;
 
-    public Antelope(TextureRegion antelopeTexture, float x, float y, float width, float height, World world) {
+    private GameWorld gameWorld;
+
+    public Antelope(TextureRegion antelopeTexture, float x, float y, float width, float height, World world,
+            GameWorld gameWorld) {
         downBody = WorldUtils.createAntelopeBody(world, x, y + height * 3 / 4, width, height * 3 / 4);
         body = WorldUtils.createAntelopeBack(world, x, y + height + height * 3 / 4, width, height / 4);
 
@@ -44,6 +48,7 @@ public class Antelope extends GameActor {
         //    this.isUsed = false;
         body.getFixtureList().get(0).setUserData(this);
         downBody.getFixtureList().get(0).setUserData("ANTELOPE");
+        this.gameWorld = gameWorld;
     }
 
     public Antelope(Body body, TextureRegion antelopeTexture, float x, float y, float width, float height) {
@@ -91,7 +96,6 @@ public class Antelope extends GameActor {
             batch.draw(antelopeTexture, getX() - width / 2, getY(), getWidth(), getHeight() / 4);
             batch.draw(antelopeTexture, getX() - width / 2, getY() - getHeight(), getWidth(), getHeight());
         }
-
     }
 
     public void ride(Pinguin pinguin) {
@@ -119,7 +123,7 @@ class AntelopeThread implements Runnable {
     @Override
     public void run() {
         try {
-        //    pinguin.setIsRide(true);
+            //pinguin.setIsRide(true);
             pinguin.hide();
             pinguin.getBody().setGravityScale(0f);
             antelope.getDownBody().getFixtureList().get(0).setRestitution(0f);

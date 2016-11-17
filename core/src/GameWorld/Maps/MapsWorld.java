@@ -170,7 +170,7 @@ public class MapsWorld extends AbstractWorld {
     
     public void touchConfirm(){
                         try {
-                    Statistic.payCoins(mapToBuy.GetPrice());
+                    Statistic.removeCoins(mapToBuy.GetPrice());
                     mapToBuy.BuyMap();
                     Statistic.OpenMap(mapToBuy.getName());
                     isTouchCancel = true;
@@ -184,7 +184,7 @@ public class MapsWorld extends AbstractWorld {
     }
     
     private void LoadLeftAndRightButtons(){
-        leftButton = new Button("Left", firstButtonNormalState, firstButtonnPressedState, "L", FontLoader.font) {
+        leftButton = new Button("Left", AssetLoader.leftSlideTexture, AssetLoader.leftSlidePressedTexture, "", FontLoader.font) {
             public void action() {
                 
                 if (GetActiveMapNumber()!=0){
@@ -204,7 +204,7 @@ public class MapsWorld extends AbstractWorld {
 
         ui.getGuiStage().addActor(leftButton);
         
-        rightButton = new Button("Right", firstButtonNormalState, firstButtonnPressedState, "R", FontLoader.font) {
+        rightButton = new Button("Right", AssetLoader.rightSlideTexture, AssetLoader.rightSlidePressedTexture, "", FontLoader.font) {
             public void action() {
                 
                 if (GetActiveMapNumber()!=mapsList.size()-1){

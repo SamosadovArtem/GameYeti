@@ -35,11 +35,11 @@ public class DailyGiftWindow extends AbstractWindow {
     protected void initText() {
         Label textLabel;
         Label.LabelStyle labelS = new Label.LabelStyle();
-        labelS.font = new BitmapFont();
+        labelS.font = FontLoader.font;
         labelS.fontColor = Color.WHITE;
         textLabel = new Label("", labelS);
         textLabel.setAlignment(Align.center);
-        textLabel.setFontScale(1);
+        textLabel.setFontScale(0.5f);
         textLabel.setSize(width / 3, height / 6);
         textLabel.setText("Gift: ");
         textLabel.setPosition(xPos + width / 2 - textLabel.getWidth() / 2,
@@ -49,7 +49,7 @@ public class DailyGiftWindow extends AbstractWindow {
 
     @Override
     protected void initButtons(GameLibGDX game) {
-        Button applyButton = new Button("Restart", normalState, pressedState, "RESTART", FontLoader.font) {
+        Button applyButton = new Button("Accept", normalState, pressedState, "Accept", FontLoader.font) {
             public void action() {
                 deleteWindow();
                 setCheck(true);
@@ -89,5 +89,4 @@ public class DailyGiftWindow extends AbstractWindow {
         group.addActor(fourthDay);
         group.addActor(fifthDay);
     }
-
 }

@@ -1,10 +1,11 @@
-    /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package GameWorld.Game.Generator;
 
+import GameWorld.Game.GameWorld;
 import GameWorld.Game.Objects.Antelope;
 import GameWorld.Game.Objects.Coin;
 import GameWorld.Game.Objects.GameActor;
@@ -28,57 +29,54 @@ import java.util.Random;
  * @author qw
  */
 public class Generator {
+
     private List<GameActor> objects = new ArrayList<GameActor>();
     private List<GameActor> mapObjects = new ArrayList<GameActor>();
     private List<Barrier> barr;
-    
-    public Generator(World world, int y, int startPosition, int barriersCount){
+
+    public Generator(World world, int y, int startPosition, int barriersCount, GameWorld gameWorld) {
         barr = Location.GetBarrierList(startPosition, barriersCount, true);
-        
-        for(Barrier b : barr){
-            switch(b.GetType()){
+
+        for (Barrier b : barr) {
+            switch (b.GetType()) {
                 case STOP:
                     StopObj s = new StopObj(world, b.GetX(), y, 60, 120,
-                        AssetLoader.elephantTexture);
-                    StopObj ms = new StopObj(s.getBody(), b.GetX(),  - Constants.GROUND_HEIGHT / 2,
-                        60, 120,
-                        AssetLoader.elephantTexture);
+                            AssetLoader.elephantTexture);
+                    StopObj ms = new StopObj(s.getBody(), b.GetX(), -Constants.GROUND_HEIGHT / 2,
+                            60, 120,
+                            AssetLoader.elephantTexture);
                     objects.add(s);
                     mapObjects.add(ms);
                     break;
                 case SNAKE:
-                    Snake snake = new Snake(AssetLoader.btn, b.GetX() ,Constants.GROUND_Y+20f, 100f, 20f, world);
-                    Snake mapSnake = new Snake(snake.getBody(),AssetLoader.btn, b.GetX() ,Constants.GROUND_Y+20f, 100f, 20f);
+                    Snake snake = new Snake(AssetLoader.btn, b.GetX(), Constants.GROUND_Y + 20f, 100f, 20f, world);
+                    Snake mapSnake = new Snake(snake.getBody(), AssetLoader.btn, b.GetX(), Constants.GROUND_Y + 20f, 100f, 20f);
                     objects.add(snake);
                     mapObjects.add(mapSnake);
                     break;
                 case ANTELOPHE:
-                    Antelope a = new Antelope(AssetLoader.btn,b.GetX(),Constants.GROUND_Y,100f,30f,world);
-                    Antelope ma = new Antelope(a.getBody(), AssetLoader.btn,b.GetX(),Constants.GROUND_Y,100f,30f);
+                    Antelope a = new Antelope(AssetLoader.btn, b.GetX(), Constants.GROUND_Y, 100f, 30f, world, gameWorld);
+                    Antelope ma = new Antelope(a.getBody(), AssetLoader.btn, b.GetX(), Constants.GROUND_Y, 100f, 30f);
                     objects.add(a);
                     mapObjects.add(ma);
                     break;
                 case TREE:
-                    Tree t = new Tree(world, b.GetX(),Constants.GROUND_Y + Constants.GROUND_HEIGHT/2,
-                    10,70,70,10, AssetLoader.btn);
-                    Tree mt = new Tree(t.getBody(), b.GetX(),Constants.GROUND_Y + Constants.GROUND_HEIGHT/2,
-                    10,70,70,10, AssetLoader.btn);
+                    Tree t = new Tree(world, b.GetX(), Constants.GROUND_Y + Constants.GROUND_HEIGHT / 2,
+                            10, 70, 70, 10, AssetLoader.btn);
+                    Tree mt = new Tree(t.getBody(), b.GetX(), Constants.GROUND_Y + Constants.GROUND_HEIGHT / 2,
+                            10, 70, 70, 10, AssetLoader.btn);
                     objects.add(t);
                     mapObjects.add(mt);
                     break;
                 case GIRAFFE:
-                    Giraffe g = new Giraffe(world, b.GetX(), Constants.GROUND_Y + Constants.GROUND_HEIGHT/2 + 40 , 100f
-                    , 40f, 10f, 60f
-                    , 40f, 20f, AssetLoader.btn);
-                    Giraffe mg = new Giraffe(g.getBody(), b.GetX(), Constants.GROUND_Y + Constants.GROUND_HEIGHT/2 + 40 , 100f
-                    , 40f, 10f, 60f
-                    , 40f, 20f, AssetLoader.btn);
+                    Giraffe g = new Giraffe(world, b.GetX(), Constants.GROUND_Y + Constants.GROUND_HEIGHT / 2 + 40, 100f, 40f, 10f, 60f, 40f, 20f, AssetLoader.btn);
+                    Giraffe mg = new Giraffe(g.getBody(), b.GetX(), Constants.GROUND_Y + Constants.GROUND_HEIGHT / 2 + 40, 100f, 40f, 10f, 60f, 40f, 20f, AssetLoader.btn);
                     objects.add(g);
                     mapObjects.add(mg);
                     break;
                 case COIN:
-                    Coin c = new Coin(AssetLoader.ctr, b.GetX() , b.GetY() + 40f, 40f, 40f, world);
-                    Coin mc = new Coin(c.getBody(), AssetLoader.btn, b.GetX() , b.GetY() + 40f, 40f, 40f);
+                    Coin c = new Coin(AssetLoader.ctr, b.GetX(), b.GetY() + 40f, 40f, 40f, world);
+                    Coin mc = new Coin(c.getBody(), AssetLoader.btn, b.GetX(), b.GetY() + 40f, 40f, 40f);
                     objects.add(c);
                     mapObjects.add(mc);
                     break;
@@ -86,18 +84,18 @@ public class Generator {
                     break;
             }
         }
-        
+
     }
-    
-    public List<GameActor> getObj(){
+
+    public List<GameActor> getObj() {
         return objects;
     }
-    
-    public List<GameActor> getMapObj(){
+
+    public List<GameActor> getMapObj() {
         return mapObjects;
     }
-    
-    public List<Barrier> getList(){
+
+    public List<Barrier> getList() {
         return barr;
     }
 }

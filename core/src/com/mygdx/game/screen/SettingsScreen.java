@@ -41,7 +41,7 @@ public class SettingsScreen extends AbstractScreen {
     }
 
     @Override
-    public void backPress(){
+    public void backPress() {
         game.setScreen(new MainScreen(game));
     }
 }

@@ -9,25 +9,22 @@ package com.mygdx.game.screen;
 
 import GameObjects.Interface;
 import Helper.Constants;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.GameLibGDX;
 
 /**
- *
  * @author Broff
  */
 
 public abstract class AbstractScreen implements Screen {
 
-    protected  GameLibGDX game;
+    protected GameLibGDX game;
     protected Interface ui;
 
     protected void initScene() {
@@ -39,8 +36,8 @@ public abstract class AbstractScreen implements Screen {
         float b = Gdx.graphics.getHeight();
         final GameLibGDX g = game;
 
-        ui = new Interface(new Stage(new FillViewport(a,b)),
-                new Stage(new FillViewport(a,b)){
+        ui = new Interface(new Stage(new FillViewport(a, b)),
+                new Stage(new FillViewport(a, b)) {
                     @Override
                     public boolean keyDown(int keyCode) {
                         if (keyCode == Input.Keys.BACK) {
@@ -49,14 +46,8 @@ public abstract class AbstractScreen implements Screen {
                         return super.keyDown(keyCode);
                     }
                 });
-        //ui = new Interface(new Stage(new ExtendViewport(Constants.APP_WIDTH,Constants.APP_HEIGHT)),
-                //new Stage(new ExtendViewport(Constants.APP_WIDTH,Constants.APP_HEIGHT)));
-        //ui = new Interface(new Stage(new StretchViewport(Constants.APP_WIDTH,Constants.APP_HEIGHT)),
-                //new Stage(new StretchViewport(Constants.APP_WIDTH,Constants.APP_HEIGHT)));
         initScene();
     }
-
-    public void backPress(){};
 
     //геттер для сцены. метод для получения сцены экрана. Если сцена не задана, то создаётся пустая сцена для данного экрана
     public Stage getStage() {
@@ -87,19 +78,16 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         //вызываем метод setViewport для сцены с новыми размерами экрана. Этот метод изменяет размер сцены так, чтобы она занимала весь экран
-        ui.getStage().getViewport().update(width, height);
+        getStage().getViewport().update(width, height);
         ui.getGuiStage().getViewport().update(width, height);
         ui.getStage().getCamera().update();
         ui.getGuiStage().getCamera().update();
-}
+    }
 
     @Override
     public void show() {
         //устанавливаем сцену экрана как обработчик событий ввода. это нужно для того, чтобы можно было отлавливать нажатия на актёров
         Gdx.input.setInputProcessor(ui.getGuiStage());
-        //getStage().getViewport().update(Gdx.app.getGraphics().getWidth(), Gdx.app.getGraphics().getHeight());
-        //ui.getGuiStage().getViewport().update(Gdx.app.getGraphics().getWidth(), Gdx.app.getGraphics().getHeight());
-        //getStage().getCamera().update();
     }
 
     //метод, который требует реализовать интерфейс Screen. Он вызывается при закрытии экрана. Экран закрыт - можно очистить ресурсы
@@ -122,4 +110,5 @@ public abstract class AbstractScreen implements Screen {
     public void resume() {
     }
 
+    public void backPress(){};
 }

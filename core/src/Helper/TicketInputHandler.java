@@ -8,6 +8,7 @@ package Helper;
 import GameObjects.PrizeField.PrizeField;
 import GameObjects.PrizeField.ProtectiveLayerParticle;
 import GameWorld.Ticket.TicketWorld;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -16,13 +17,12 @@ import com.mygdx.game.GameLibGDX;
 import java.util.ArrayList;
 
 /**
- *
  * @author Pablo
  */
 public class TicketInputHandler implements InputProcessor {
 
-    private TicketWorld world;
     private GameLibGDX game;
+    private TicketWorld world;
 
     public TicketInputHandler(TicketWorld world, GameLibGDX game) {
         this.world = world;
@@ -34,7 +34,7 @@ public class TicketInputHandler implements InputProcessor {
         if (keycode == Input.Keys.BACK) {
             game.getScreen().backPress();
         }
-        return false;
+        return true;
     }
 
     @Override
@@ -77,9 +77,11 @@ public class TicketInputHandler implements InputProcessor {
         for (PrizeField p : array) {
             ArrayList<ProtectiveLayerParticle> array2 = p.getProtectiveLayer();
             for (ProtectiveLayerParticle a : array2) {
-                if (xPos + 3 >= a.getX() && xPos - 3 <= (a.getX() + a.getWidth())
-                        && yPos + 3 >= a.getY() && yPos - 3 <= (a.getY() + a.getHeight())) {
+                if (xPos + 5 >= a.getX() && xPos - 5 <= (a.getX() + a.getWidth())
+                        && yPos + 5 >= a.getY() && yPos - 5 <= (a.getY() + a.getHeight())) {
                     a.action();
+                    p.increaseCountOfActiveParticles();
+                    // world.checkWin();
                 }
             }
         }

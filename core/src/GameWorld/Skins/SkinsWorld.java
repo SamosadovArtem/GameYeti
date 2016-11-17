@@ -16,6 +16,7 @@ import GameWorld.Skins.Elements.SkinList;
 import GameWorld.Skins.Elements.SkinsContainer;
 import GameWorld.Skins.Elements.SkinsStatistic;
 import Helper.AssetLoader;
+import Helper.FontLoader;
 
 /**
  * Created by broff on 15.04.2016.
@@ -41,14 +42,15 @@ public class SkinsWorld extends AbstractWorld {
     public void update(float delta) {
         updateButton();
 
-        if(inertion < -5 || inertion > 5){
+
+        if (inertion < -5 || inertion > 5) {
             box.moveX(inertion);
-            if(inertion < 0 ) {
-                inertion+=0.5f;
+            if (inertion < 0) {
+                inertion += 0.5f;
             } else {
-                inertion-=0.5f;
+                inertion -= 0.5f;
             }
-            if(inertion > -5 && inertion < 5){
+            if (inertion > -5 && inertion < 5) {
                 inertion = 0;
             }
         } else {
@@ -56,18 +58,17 @@ public class SkinsWorld extends AbstractWorld {
         }
     }
 
-    private void initAllSkins(){
+    private void initAllSkins() {
         SkinList skinList = new SkinList();
         box = new SkinsContainer(skinList.getSkins(), ui.getStage().getCamera().position.x, ui.getStage(), this);
     }
 
-    public SkinsContainer getSkins(){
+    public SkinsContainer getSkins() {
         return box;
     }
 
-    private void initBuyButton(){
-        buyButton = new Button("BuyButton", AssetLoader.btn, AssetLoader.btnPress, "", new BitmapFont())
-        {
+    private void initBuyButton() {
+        buyButton = new Button("BuyButton", AssetLoader.btn, AssetLoader.btnPress, "", FontLoader.font) {
             public void action() {
                 box.getSkins().get(activeSkin).click();
                 updateBtnText();
@@ -79,7 +80,7 @@ public class SkinsWorld extends AbstractWorld {
 
 
         Label.LabelStyle labelS = new Label.LabelStyle();
-        labelS.font = new BitmapFont();
+        labelS.font = FontLoader.font;
         labelS.fontColor = Color.WHITE;
         label = new Label(box.getSkinName(), labelS);
         label.setPosition(ui.getStage().getWidth() / 2 - label.getWidth() / 2,
@@ -92,28 +93,28 @@ public class SkinsWorld extends AbstractWorld {
         ui.getGuiStage().addActor(buyButton);
     }
 
-    private void updateButton(){
-        if(activeSkin != box.getActiveButton()){           
+    private void updateButton() {
+        if (activeSkin != box.getActiveButton()) {
             updateBtnText();
         }
     }
-    
-    private void updateBtnText(){
+
+    private void updateBtnText() {
         label.setText(box.getSkinName());
         activeSkin = box.getActiveButton();
-        if(box.getSkins().get(activeSkin).getBuyStatus()){
-            if(SkinsStatistic.getActiveSkin() == box.getSkins().get(activeSkin).getIndex()){
-               buyButton.setText("Active"); 
+        if (box.getSkins().get(activeSkin).getBuyStatus()) {
+            if (SkinsStatistic.getActiveSkin() == box.getSkins().get(activeSkin).getIndex()) {
+                buyButton.setText("Active");
             } else {
-                buyButton.setText("Activate"); 
+                buyButton.setText("Activate");
             }
         } else {
-            buyButton.setText(""+box.getSkinCoast());
+            buyButton.setText("" + box.getSkinCoast());
         }
     }
 
     private void moveCamera() {
-        if(!scrollArea) {
+        if (!scrollArea) {
             float speed = (getCameraX() - box.getSkins().get(activeSkin).getXCenter()) / 30.0f;
             box.moveX(speed);
         }
@@ -123,7 +124,7 @@ public class SkinsWorld extends AbstractWorld {
         return ui.getStage().getCamera().position.x;
     }
 
-    public void setInertion(float in){
+    public void setInertion(float in) {
         inertion = in;
     }
 

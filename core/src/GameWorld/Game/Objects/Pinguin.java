@@ -10,6 +10,7 @@ import Helper.AssetLoader;
 import Helper.BuffsInfo;
 import Helper.Constants;
 import Helper.Statistic;
+
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -17,13 +18,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 /**
- *
  * @author Pablo
  */
 public class Pinguin extends GameActor {
 
     private float power;
-    private int powerCof = 5;
+    private float powerCof = 5;
     private float directionX;
     private float directionY;
     private float angular = 0;
@@ -36,11 +36,10 @@ public class Pinguin extends GameActor {
 
     private float powerCoff = BuffsInfo.getPowerCoffBuff().getValue();
     private float directionCoff = BuffsInfo.getDirectionCoffBuff().getValue();
-    
-    public Pinguin(Body body, TextureRegion pinguinTexture, int powerCof) {
+
+    public Pinguin(Body body) {
         super(body);
         this.pinguinTexture = AssetLoader.pinguinTexture;
-        this.powerCof = powerCof;
         power = 0;
         directionX = 0f;
         directionY = 1f;
@@ -48,107 +47,108 @@ public class Pinguin extends GameActor {
         isPower = false;
         isDir = true;
     }
-    
-    public void setAngle(float f){
-        
+
+    public void setAngle(float f) {
+
         this.setRotation(f);
-            //this.getBody().setTransform(this.getBody().getPosition(), 
-            //(float)Math.toRadians(angular));
+        //this.getBody().setTransform(this.getBody().getPosition(),
+        //(float)Math.toRadians(angular));
     }
-    
-    public void show(){
+
+    public void show() {
         visible = true;
     }
 
-    public void hide(){
+    public void hide() {
         visible = false;
     }
-    public boolean isVisible(){
+
+    public boolean isVisible() {
         return visible;
     }
-    
-	public boolean getIsRide(){
+
+    public boolean getIsRide() {
         return isRide;
     }
-    
-    public void setIsRide(boolean isRide){
+
+    public void setIsRide(boolean isRide) {
         this.isRide = isRide;
     }
-    
+
     @Override
-    public float getX(){
-        return body.getPosition().x - getWidth()/2;
+    public float getX() {
+        return body.getPosition().x - getWidth() / 2;
     }
-    
+
     @Override
-    public float getY(){
+    public float getY() {
         return body.getPosition().y;
     }
-    
+
     @Override
-    public float getWidth(){
+    public float getWidth() {
         return Constants.RUNNER_WIDTH;
     }
-    
+
     @Override
-    public float getHeight(){
+    public float getHeight() {
         return Constants.RUNNER_HEIGHT;
     }
-    
-    public void draw (Batch batch, float parentAlpha) {
-        if(delete()){
-            if(visible){
-                batch.draw(pinguinTexture, 
-                        getX() , getY() - getHeight() / 2,
-                        getWidth() / 2 , getHeight() / 2, 
+
+    public void draw(Batch batch, float parentAlpha) {
+        if (delete()) {
+            if (visible) {
+                batch.draw(pinguinTexture,
+                        getX(), getY() - getHeight() / 2,
+                        getWidth() / 2, getHeight() / 2,
                         getWidth(), getHeight(),
-                        1,1,
-                        getRotation());   
-                if (!moved()) {                    
+                        1, 1,
+                        getRotation());
+                if (!moved()) {
                     drawPower(batch);
                     if (!getIsDir()) {
                         drawDirection(batch);
                     }
                 }
-            }        
+            }
         }
     }
-    
-    private void drawPower(Batch batch){
-        batch.draw(AssetLoader.textureBtnNormal, getX() - getHeight() , getY() - getHeight() / 2, 
-                getHeight(), getWidth() * (getPower() / 100.0f), 
-            0 , (int)(AssetLoader.textureBtnNormal.getHeight() * ( 1.0f - getPower() / 100.0f)),
-            (int)AssetLoader.textureBtnNormal.getWidth(), 
-            (int)(AssetLoader.textureBtnNormal.getHeight() * (getPower() / 100.0f)), false, false);
+
+    private void drawPower(Batch batch) {
+        batch.draw(AssetLoader.textureBtnNormal, getX() - getHeight(), getY() - getHeight() / 2,
+                getHeight(), getWidth() * (getPower() / 100.0f),
+                0, (int) (AssetLoader.textureBtnNormal.getHeight() * (1.0f - getPower() / 100.0f)),
+                (int) AssetLoader.textureBtnNormal.getWidth(),
+                (int) (AssetLoader.textureBtnNormal.getHeight() * (getPower() / 100.0f)), false, false);
     }
-    
-    private void drawDirection(Batch batch){
-        batch.draw(AssetLoader.btn, 
-                        getX() + getWidth() , getY() - getHeight() / 2,
-                        getHeight() / 4 , getHeight() / 4, 
-                        getWidth(), getHeight() / 2,
-                        1,1,
-                        new Vector2(directionX, directionY).angle());
+
+    private void drawDirection(Batch batch) {
+        batch.draw(AssetLoader.btn,
+                getX() + getWidth(), getY() - getHeight() / 2,
+                getHeight() / 4, getHeight() / 4,
+                getWidth(), getHeight() / 2,
+                1, 1,
+                new Vector2(directionX, directionY).angle());
     }
-    
-    public void setPower(int p){
+
+    public void setPower(int p) {
         power = p;
     }
-    
-    public void defaultPos(){
+
+    public void defaultPos() {
         directionX = 0f;
         directionY = 1f;
     }
-    
-    public void jump(){
+
+    public void jump() {
         body.applyLinearImpulse(new Vector2(directionX * power * powerCof, directionY * power * powerCof),
                 body.getWorldCenter(), true);
         Statistic.jump();
         //body.setTransform(body.getPosition(), (float)Math.toRadians(body.getLinearVelocity().angle()));
     }
-    
+
     public int getPower() {
-        return (int)power;
+        return (int) power;
     }
 
     public float getDirectionX() {
@@ -193,14 +193,14 @@ public class Pinguin extends GameActor {
         }
     }
 
-    public boolean moved() {        
-        if(body.getLinearVelocity().x == 0.0f && body.getLinearVelocity().y == 0.0f){            
+    public boolean moved() {
+        if (body.getLinearVelocity().x == 0.0f && body.getLinearVelocity().y == 0.0f) {
             return false;
         } else {
             return true;
         }
     }
-    
+
     public boolean getIsPower() {
         return isPower;
     }

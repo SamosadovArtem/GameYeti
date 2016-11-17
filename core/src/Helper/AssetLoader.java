@@ -5,6 +5,8 @@
  */
 package Helper;
 
+import Enums.BuffType;
+import Enums.GiftType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Sound;
@@ -24,7 +26,7 @@ public class AssetLoader {
     public static Texture pinguin, elephant, giraffe;
     public static Texture gameBackground;
     public static Texture coinTexture, pause;
-    public static Texture ground;
+    public static Texture ground, prizeFieldFull, prizeFieldEmpty;
     public static TextureRegion gbc, ctr, pauseTexture, elephantTexture, giraffeTexture;
     public static TextureRegion pinguinTexture;
     public static TextureRegion btnPress, btn;
@@ -33,7 +35,51 @@ public class AssetLoader {
     public static BitmapFont font, shadow;
     public static Texture protectiveLayerTexture;
 
+    public static Texture back, backPressed;
+    public static TextureRegion backTexture, backPressedTexture;
+
+    //Main screen
+    public static Texture ticket, ticketPressed, settings, settingsPressed,
+            statistic, statisticPressed, buff, buffPressed,
+            coins, coinsPressed, skins, skinsPressed, play, playPressed,
+            dailyGiftFull, dailyGiftEmpty;
+    public static TextureRegion ticketTexture, ticketPressedTexture,
+            settingsTexture, settingsPressedTexture,
+            statisticTexture, statisticPressedTexture,
+            buffTexture, buffPressedTexture,
+            coinsTexture, coinsPressedTexture,
+            skinsTexture, skinsPressedTexture,
+            playTexture, playPressedTexture;
+
+    //Maps screen
+    public static Texture leftSlide, leftSlidePressed, rightSlide, rightSlidePressed;
+    public static TextureRegion leftSlideTexture, leftSlidePressedTexture,
+            rightSlideTexture, rightSlidePressedTexture;
+
+    //Buff screen
+    public static Texture textureBuffsArrow, textureBuffsClock, textureBuffsTime,
+            jumpCountBuff, coinsBuff, directionCoffBuff, frictionBuff, gravityBuff,
+            heightSkyCoffBuff, jumpPowerBuff, powerCoffBuff;
+    public static TextureRegion buffsArrow, buffsClock;
+
     public static void load() {
+
+        back = new Texture(Gdx.files.internal("gfx/buttons/back.png"));
+        back.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        backTexture = new TextureRegion(back, 0, 0, 512, 512);
+        backPressed = new Texture(Gdx.files.internal("gfx/buttons/backPressed.png"));
+        backPressed.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        backPressedTexture = new TextureRegion(backPressed, 0, 0, 512, 512);
+
+        loadMainScreenElements();
+        loadMapsScreenElements();
+        loadBuffScreenElements();
+
+        prizeFieldFull = new Texture(Gdx.files.internal("gfx/gameScreen.Objects/ticketFull.png"));
+        prizeFieldFull.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+        prizeFieldEmpty = new Texture(Gdx.files.internal("gfx/gameScreen.Objects/ticketEmpty.png"));
+        prizeFieldEmpty.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
         elephant = new Texture(Gdx.files.internal("gfx/gameScreen.Objects/elephant.png"));
         elephant.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -62,13 +108,13 @@ public class AssetLoader {
         gameBackground = new Texture(Gdx.files.internal("gfx/gameScreen.Objects/background.png"));
         gameBackground.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
-        gbc = new TextureRegion(gameBackground, 0, 0, 1200, 676);
+        gbc = new TextureRegion(gameBackground, 0, 0, 8000, 4500);
 
         textureBtnNormal = new Texture(Gdx.files.internal("gfx/buttons/button.png"));
         textureBtnNormal.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
-        btn = new TextureRegion(textureBtnNormal, 0, 0, 600, 200);
-        //btn = new TextureRegion(textureBtnNormal, 0, 0, 128, 89);
+        //     btn = new TextureRegion(textureBtnNormal, 0, 0, 600, 200);
+        btn = new TextureRegion(textureBtnNormal, 0, 0, 128, 89);
 
         pinguin = new Texture(Gdx.files.internal("gfx/gameScreen.Objects/pinguin.png"));
         pinguin.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
@@ -82,8 +128,6 @@ public class AssetLoader {
 
         protectiveLayerTexture = new Texture(Gdx.files.internal("gfx/buttons/protectField.png"));
         protectiveLayerTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-        
-        font = new BitmapFont();
         /*
         logoTexture = new Texture(Gdx.files.internal("data/logo.png"));
         logoTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -142,6 +186,174 @@ public class AssetLoader {
             prefs.putInteger("highScore", 0);
         }
          */
+    }
+
+    private static void loadMapsScreenElements() {
+        leftSlide = new Texture(Gdx.files.internal("gfx/buttons/leftSlide.png"));
+        leftSlide.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        leftSlideTexture = new TextureRegion(leftSlide, 0, 0, 512, 512);
+        leftSlidePressed = new Texture(Gdx.files.internal("gfx/buttons/leftSlidePressed.png"));
+        leftSlidePressed.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        leftSlidePressedTexture = new TextureRegion(leftSlidePressed, 0, 0, 512, 512);
+
+        rightSlide = new Texture(Gdx.files.internal("gfx/buttons/rightSlide.png"));
+        rightSlide.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        rightSlideTexture = new TextureRegion(rightSlide, 0, 0, 512, 512);
+        rightSlidePressed = new Texture(Gdx.files.internal("gfx/buttons/rightSlidePressed.png"));
+        rightSlidePressed.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        rightSlidePressedTexture = new TextureRegion(rightSlidePressed, 0, 0, 512, 512);
+    }
+
+    private static void loadMainScreenElements() {
+        ticket = new Texture(Gdx.files.internal("gfx/buttons/ticket.png"));
+        ticket.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        ticketTexture = new TextureRegion(ticket, 0, 0, 512, 512);
+        ticketPressed = new Texture(Gdx.files.internal("gfx/buttons/ticketPressed.png"));
+        ticketPressed.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        ticketPressedTexture = new TextureRegion(ticketPressed, 0, 0, 512, 512);
+
+        settings = new Texture(Gdx.files.internal("gfx/buttons/settings.png"));
+        settings.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        settingsTexture = new TextureRegion(settings, 0, 0, 512, 512);
+        settingsPressed = new Texture(Gdx.files.internal("gfx/buttons/settingsPressed.png"));
+        settingsPressed.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        settingsPressedTexture = new TextureRegion(settingsPressed, 0, 0, 512, 512);
+
+        statistic = new Texture(Gdx.files.internal("gfx/buttons/statistic.png"));
+        statistic.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        statisticTexture = new TextureRegion(statistic, 0, 0, 512, 512);
+        statisticPressed = new Texture(Gdx.files.internal("gfx/buttons/statisticPressed.png"));
+        statisticPressed.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        statisticPressedTexture = new TextureRegion(statisticPressed, 0, 0, 512, 512);
+
+        buff = new Texture(Gdx.files.internal("gfx/buttons/buff.png"));
+        buff.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        buffTexture = new TextureRegion(buff, 0, 0, 512, 512);
+        buffPressed = new Texture(Gdx.files.internal("gfx/buttons/buffPressed.png"));
+        buffPressed.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        buffPressedTexture = new TextureRegion(buffPressed, 0, 0, 512, 512);
+
+        coins = new Texture(Gdx.files.internal("gfx/buttons/coins.png"));
+        coins.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        coinsTexture = new TextureRegion(coins, 0, 0, 512, 512);
+        coinsPressed = new Texture(Gdx.files.internal("gfx/buttons/coinsPressed.png"));
+        coinsPressed.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        coinsPressedTexture = new TextureRegion(coinsPressed, 0, 0, 512, 512);
+
+        skins = new Texture(Gdx.files.internal("gfx/buttons/skins.png"));
+        skins.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        skinsTexture = new TextureRegion(skins, 0, 0, 512, 512);
+        skinsPressed = new Texture(Gdx.files.internal("gfx/buttons/skinsPressed.png"));
+        skinsPressed.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        skinsPressedTexture = new TextureRegion(skinsPressed, 0, 0, 512, 512);
+
+        play = new Texture(Gdx.files.internal("gfx/buttons/play.png"));
+        play.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        playTexture = new TextureRegion(play, 0, 0, 512, 512);
+        playPressed = new Texture(Gdx.files.internal("gfx/buttons/playPressed.png"));
+        playPressed.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        playPressedTexture = new TextureRegion(playPressed, 0, 0, 512, 512);
+
+        dailyGiftFull = new Texture(Gdx.files.internal("gfx/interface/dailyGiftFull.png"));
+        dailyGiftFull.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+        dailyGiftEmpty = new Texture(Gdx.files.internal("gfx/interface/dailyGiftEmpty.png"));
+        dailyGiftEmpty.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+    }
+
+    private static void loadBuffScreenElements() {
+        textureBuffsArrow = new Texture(Gdx.files.internal("gfx/interface/buffsArrow.png"));
+        textureBuffsArrow.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        buffsArrow = new TextureRegion(textureBuffsArrow, 0, 0, 512, 512);
+
+        textureBuffsClock = new Texture(Gdx.files.internal("gfx/interface/buffsClock.png"));
+        textureBuffsClock.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        buffsClock = new TextureRegion(textureBuffsClock, 0, 0, 512, 512);
+
+        textureBuffsTime = new Texture(Gdx.files.internal("gfx/interface/buffsTime.png"));
+        textureBuffsTime.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+        jumpCountBuff = new Texture(Gdx.files.internal("gfx/interface/buffs/jumpCountBuff.png"));
+        jumpCountBuff.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+        coinsBuff = new Texture(Gdx.files.internal("gfx/interface/buffs/coinsBuff.png"));
+        coinsBuff.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+        directionCoffBuff = new Texture(Gdx.files.internal("gfx/interface/buffs/directionCoffBuff.png"));
+        directionCoffBuff.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+        frictionBuff = new Texture(Gdx.files.internal("gfx/interface/buffs/frictionBuff.png"));
+        frictionBuff.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+        gravityBuff = new Texture(Gdx.files.internal("gfx/interface/buffs/gravityBuff.png"));
+        gravityBuff.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+        heightSkyCoffBuff = new Texture(Gdx.files.internal("gfx/interface/buffs/heightSkyCoffBuff.png"));
+        heightSkyCoffBuff.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+        jumpPowerBuff = new Texture(Gdx.files.internal("gfx/interface/buffs/jumpPowerBuff.png"));
+        jumpPowerBuff.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+        powerCoffBuff = new Texture(Gdx.files.internal("gfx/interface/buffs/powerCoffBuff.png"));
+        powerCoffBuff.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+    }
+
+    public static Texture loadTicketGift(GiftType type) {
+        Texture gift;
+        switch (type) {
+            case COIN:
+                gift = new Texture(Gdx.files.internal("gfx/interface/ticketGifts/coins.png"));
+                gift.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+                return gift;
+            case TICKET:
+                gift = new Texture(Gdx.files.internal("gfx/interface/ticketGifts/ticket.png"));
+                gift.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+                return gift;
+            case BUFF:
+                return null;
+            default:
+                return textureBtnNormal;
+        }
+    }
+
+    public static Texture loadTicketGift(BuffType type) {
+        Texture res;
+        switch (type) {
+            case JUMPCOUNT:
+                res = new Texture(Gdx.files.internal("gfx/interface/Buffs/jumpCountBuff.png"));
+                res.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+                return res;
+            case JUMPPOWER:
+                res = new Texture(Gdx.files.internal("gfx/interface/Buffs/jumpPowerBuff.png"));
+                res.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+                return res;
+            case DIRECTION_COFF:
+                res = new Texture(Gdx.files.internal("gfx/interface/Buffs/directionCoffBuff.png"));
+                res.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+                return res;
+            case FRICTION:
+                res = new Texture(Gdx.files.internal("gfx/interface/Buffs/frictionBuff.png"));
+                res.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+                return res;
+            case HEIGHT_SKY_COFF:
+                res = new Texture(Gdx.files.internal("gfx/interface/Buffs/heightSkyCoffBuff.png"));
+                res.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+                return res;
+            case POWER_COFF:
+                res = new Texture(Gdx.files.internal("gfx/interface/Buffs/powerCoffBuff.png"));
+                res.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+                return res;
+            case COINS:
+                res = new Texture(Gdx.files.internal("gfx/interface/Buffs/coinsBuff.png"));
+                res.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+                return res;
+            case GRAVITY:
+                res = new Texture(Gdx.files.internal("gfx/interface/Buffs/gravityBuff.png"));
+                res.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+                return res;
+            default:
+                return null;
+        }
     }
 
     public static void dispose() {

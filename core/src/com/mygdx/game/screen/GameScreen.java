@@ -9,6 +9,7 @@ import GameWorld.Game.GameRenderer;
 import GameWorld.Game.GameWorld;
 import Helper.InputHandler;
 import Helper.Statistic;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
@@ -16,7 +17,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.GameLibGDX;
 
 /**
- *
  * @author qw
  */
 public class GameScreen extends AbstractScreen {
@@ -31,7 +31,6 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     protected void initScene() {
-        Gdx.app.log("GameScreen", "initScene");
         this.world = new GameWorld(ui, game);
         this.renderer = new GameRenderer(world, ui, world.getMap());
         Gdx.input.setInputProcessor(new InputHandler(world, game));
@@ -61,7 +60,7 @@ public class GameScreen extends AbstractScreen {
     }
 
     @Override
-    public void backPress(){
+    public void backPress() {
         game.setScreen(new MainScreen(game));
     }
 }

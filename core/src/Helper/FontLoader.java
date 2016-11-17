@@ -22,7 +22,6 @@ public class FontLoader {
     public static void load(){
         Texture texture = new Texture(Gdx.files.internal("fonts/font.png"), true);
         //Устанавливаем фильтр для сглаживания при уменьшении
-        texture.setFilter(TextureFilter.MipMapLinearNearest, TextureFilter.Linear);
         //Устанавливаем шрифт используя текстуру и файл fnt
         font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), new TextureRegion(texture), false);
     }

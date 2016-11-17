@@ -6,6 +6,8 @@
 package GameObjects.Buffs;
 
 import Enums.BuffType;
+import GameObjects.Picture;
+import Helper.AssetLoader;
 import Helper.BuffsInfo;
 import Helper.MyTimer;
 
@@ -23,6 +25,7 @@ public class CoinsBuff extends Buff{
         count = value;
         this.levelMax = lvlMax;
         this.cost = cost;
+        super.icon = new Picture(AssetLoader.coinsBuff);
     }
 
     public float getCount(){
@@ -66,6 +69,11 @@ public class CoinsBuff extends Buff{
         } else {
             return false;
         }
+    }
+
+    @Override
+    public String getInfo() {
+        return "Multiply the coins \nthat you get.";
     }
     
 }

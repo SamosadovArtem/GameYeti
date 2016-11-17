@@ -1,9 +1,10 @@
 package GameWorld.Skins.Elements;
 
-import Helper.Statistic;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+
+import Helper.Statistic;
 
 /**
  * Created by broff on 15.04.2016.
@@ -23,7 +24,7 @@ public class BuySkin extends Actor {
 
 
     public BuySkin(int index, TextureRegion pTextureRegion, float x, float y, float width, float height,
-                   int cost, boolean buyStatus, String name){
+                   int cost, boolean buyStatus, String name) {
         this.skin = pTextureRegion;
         this.index = index;
         this.posX = x;
@@ -35,93 +36,93 @@ public class BuySkin extends Actor {
         this.name = name;
     }
 
-    private void updatePos(){
+    public void click() {
+        if (buyStatus) {
+            SkinsStatistic.setActiveSkin(getIndex());
+        } else {
+            if (Statistic.getCoins() >= this.cost) {
+                Statistic.removeCoins(cost);
+                SkinsStatistic.addSkin(index);
+                buyStatus = true;
+            }
+        }
+    }
+
+    private void updatePos() {
         this.setPosition(posX - getWidth() / 2, posY + getHeight() / 2);
     }
 
-    public void setX(float x){
+    public void setX(float x) {
         posX = x;
         updatePos();
     }
-    
-    public void setXCenter(float x){
-        posX = x - getWidth()/2;
+
+    public void setXCenter(float x) {
+        posX = x - getWidth() / 2;
         updatePos();
     }
 
-    public void setY(float y){
+    public void setY(float y) {
         posY = y;
         updatePos();
     }
 
-    public float getX(){
+    public float getX() {
         return posX;
     }
 
-    public float getXCenter(){
+    public float getXCenter() {
         return posX + getWidth() / 2;
     }
 
-    public float getY(){
+    public float getY() {
         return posY;
     }
 
-    public void setWidth(float w){
+    public void setWidth(float w) {
         width = w;
         this.setWidth(w);
         updatePos();
     }
 
-    public void setHeight(float h){
+    public void setHeight(float h) {
         height = h;
         this.setWidth(h);
         updatePos();
     }
 
-    public void buySkin(){
+    public void buySkin() {
         buyStatus = false;
     }
 
-    public void setBuyStatus(boolean s){
+    public void setBuyStatus(boolean s) {
         buyStatus = s;
     }
 
-    public boolean getBuyStatus(){
+    public boolean getBuyStatus() {
         return buyStatus;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public int getIndex(){
+    public int getIndex() {
         return index;
     }
 
-    public int getCost(){
+    public int getCost() {
         return cost;
     }
 
-    public void setScale(float s){
+    public void setScale(float s) {
         float xC = this.getXCenter();
         this.setSize(width * s, height * s);
         setXCenter(xC);
         updatePos();
     }
 
-    public void draw (Batch batch, float parentAlpha) {
+    public void draw(Batch batch, float parentAlpha) {
         batch.draw(skin, getX(), getY(), getWidth(), getHeight());
-    }
-    
-    public void click(){
-        if(buyStatus){
-            SkinsStatistic.setActiveSkin(getIndex());
-        } else {
-            if(Statistic.getCoins() >= this.cost){
-                Statistic.payCoins(cost);
-                SkinsStatistic.addSkin(index);
-                buyStatus = true;
-            }
-        }
     }
 }

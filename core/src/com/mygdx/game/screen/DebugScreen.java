@@ -8,10 +8,10 @@ package com.mygdx.game.screen;
 import GameWorld.Game.Debug.DebugRenderer;
 import GameWorld.Game.Debug.DebugWorld;
 import GameWorld.Game.GameWorld;
+
 import com.mygdx.game.GameLibGDX;
 
 /**
- *
  * @author Pablo
  */
 public class DebugScreen extends AbstractScreen {
@@ -42,7 +42,7 @@ public class DebugScreen extends AbstractScreen {
     }
 
     @Override
-    public void backPress(){
+    public void backPress() {
         game.setScreen(new MainScreen(game));
     }
 }

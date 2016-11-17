@@ -8,10 +8,13 @@ package GameWorld.Game;
 import GameObjects.Buffs.Buff;
 import GameObjects.Button;
 import GameObjects.Interface;
+import GameObjects.Picture;
 import GameWorld.AbstractWorld;
 import GameWorld.Game.Generator.Generator;
+import GameWorld.Game.Objects.Antelope;
 import GameWorld.Game.Objects.EndGameWindow;
 import GameWorld.Game.Objects.GameActor;
+import GameWorld.Game.Objects.Giraffe;
 import GameWorld.Game.Objects.Ground;
 import GameWorld.Game.Objects.Pinguin;
 import GameWorld.Game.Objects.Tablet;
@@ -24,34 +27,35 @@ import Helper.GameContactListener;
 import Helper.JumpCountController;
 import Helper.SoundsLoader;
 import Helper.WorldUtils;
+
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.GameLibGDX;
 import com.mygdx.game.screen.DebugScreen;
-import com.mygdx.game.screen.MainScreen;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- *
  * @author qw
  */
 public class GameWorld extends AbstractWorld {
 
     public World world;
 
-    private GameMap map = new GameMap();
+    private GameMap map = new GameMap(this);
     private Ground ground, ground2;
     private Pinguin pinguin;
     private JumpCountController jumpCountController;
@@ -77,7 +81,8 @@ public class GameWorld extends AbstractWorld {
         super(ui, g);
         pause = false;
         setUpWorld();
-        Gdx.app.log("GameWorld", "create");
+
+        //newWorldGenerate();
     }
 
     private void setUpWorld() {
@@ -90,7 +95,7 @@ public class GameWorld extends AbstractWorld {
         endGameWindow = new EndGameWindow(ui.getGuiStage());
         setUpGround();
         addTablets(ground.getX(), ground2.getX() + ground2.getWidth());
-        setUpRunner(BuffsInfo.getJumpPowerBuff().getPower());
+        setUpRunner();
         addDebugButton(AssetLoader.btn, AssetLoader.btnPress);
         addPauseButton(AssetLoader.pauseTexture, AssetLoader.pauseTexture);
         world.setContactListener(new GameContactListener(this, pinguin));
@@ -100,11 +105,11 @@ public class GameWorld extends AbstractWorld {
         ui.addBack(game);
 
         GetBuffsInfo();
-        //newWorldGenerate();
+
     }
 
     private void createObjects(int startPos, int count) {
-        Generator g = new Generator(world, (int) Constants.GROUND_Y, startPos, count);
+        Generator g = new Generator(world, (int) Constants.GROUND_Y, startPos, count, this);
         //map.addUnits(g.getList(), (int) Constants.GROUND_Y, world);
         for (GameActor t : g.getObj()) {
             //map.getStage().addActor(t);        
@@ -134,38 +139,34 @@ public class GameWorld extends AbstractWorld {
     }
 
     private void addGround() {
-        float gr1 = ground.getBody().getPosition().x;
-        float gr2 = ground2.getBody().getPosition().x;
-        float pinguinX = pinguin.getBody().getPosition().x;
-        float dlt = Constants.GROUND_WIDTH / 2 - Constants.APP_WIDTH * 1.5f;
+        final float gr1 = ground.getBody().getPosition().x;
+        final float gr2 = ground2.getBody().getPosition().x;
+        final float pinguinX = pinguin.getBody().getPosition().x;
+        final float dlt = Constants.GROUND_WIDTH / 2 - Constants.APP_WIDTH * 1.5f;
 
         if (gr1 >= gr2) {
-            worldGenerate = new Thread(new Runnable()
-            {
-                public void run()
-                {
-                        if (pinguinX >= gr1 + dlt) {
-                    world.destroyBody(ground2.getBody());
-                    ground2 = new Ground(WorldUtils.createGround(world, Constants.GROUND_WIDTH
-                            + ground.getBody().getPosition().x));
-                    ui.getStage().addActor(ground2);
-                    addTablets(ground.getX() + ground.getWidth(), ground2.getX() + ground2.getWidth());
+            worldGenerate = new Thread(new Runnable() {
+                public void run() {
+                    if (pinguinX >= gr1 + dlt) {
+                        world.destroyBody(ground2.getBody());
+                        ground2 = new Ground(WorldUtils.createGround(world, Constants.GROUND_WIDTH
+                                + ground.getBody().getPosition().x));
+                        ui.getStage().addActor(ground2);
+                        addTablets(ground.getX() + ground.getWidth(), ground2.getX() + ground2.getWidth());
 
-                } else if (gr2 - dlt >= pinguinX) {
-                    world.destroyBody(ground.getBody());
-                    ground = new Ground(WorldUtils.createGround(world, ground2.getBody().getPosition().x
-                            - Constants.GROUND_WIDTH));
-                    ui.getStage().addActor(ground);
-                    addTablets(ground2.getX() + ground2.getWidth(), ground.getX() + ground.getWidth());
-                }                 
+                    } else if (gr2 - dlt >= pinguinX) {
+                        world.destroyBody(ground.getBody());
+                        ground = new Ground(WorldUtils.createGround(world, ground2.getBody().getPosition().x
+                                - Constants.GROUND_WIDTH));
+                        ui.getStage().addActor(ground);
+                        addTablets(ground2.getX() + ground2.getWidth(), ground.getX() + ground.getWidth());
+                    }
                 }
             });
-            worldGenerate.start();            
+            worldGenerate.start();
         } else if (pinguinX >= gr2 + dlt) {
-            worldGenerate = new Thread(new Runnable()
-            {
-                public void run()
-                {
+            worldGenerate = new Thread(new Runnable() {
+                public void run() {
                     world.destroyBody(ground.getBody());
                     ground = new Ground(WorldUtils.createGround(world, Constants.GROUND_WIDTH
                             + ground2.getBody().getPosition().x));
@@ -175,16 +176,14 @@ public class GameWorld extends AbstractWorld {
             });
             worldGenerate.start();
         } else if (gr1 >= pinguinX - dlt) {
-            worldGenerate = new Thread(new Runnable()
-            {
-                public void run()
-                {
+            worldGenerate = new Thread(new Runnable() {
+                public void run() {
                     worldGenerate.start();
                     world.destroyBody(ground2.getBody());
                     ground2 = new Ground(WorldUtils.createGround(world, ground.getBody().getPosition().x
                             - Constants.GROUND_WIDTH));
                     ui.getStage().addActor(ground2);
-                    addTablets(ground.getX() + ground.getWidth(), ground2.getX() + ground2.getWidth());                 
+                    addTablets(ground.getX() + ground.getWidth(), ground2.getX() + ground2.getWidth());
                 }
             });
         }
@@ -202,60 +201,55 @@ public class GameWorld extends AbstractWorld {
         }
     }
 
-    private void setUpRunner(int coff) {
-        pinguin = new Pinguin(WorldUtils.createPinguin(world), new SkinList().getActiveSkin().getTexture(), coff);
+    private void setUpRunner() {
+        pinguin = new Pinguin(WorldUtils.createPinguin(world));
         ui.getStage().addActor(pinguin);
     }
 
     @Override
     public void update(float delta) {
-        if (!pause) {
-            ui.updateFps(1 / delta);
+        ui.updateFps(1 / delta);
 
-            accumulator += delta;
+        accumulator += delta;
 
-            while (accumulator >= delta) {
-                world.step(TIME_STEP, 6, 1);
-                accumulator -= TIME_STEP;
+        while (accumulator >= delta) {
+            world.step(TIME_STEP, 6, 1);
+            accumulator -= TIME_STEP;
+        }
+        initHit();
+        setAngularPinguin();
+        checkHeight();
+        drawJumpCount();
+        map.focusCameraX(pinguin);
+
+        unlimitedGame();
+        addGround();
+
+        Array<Body> bodies = new Array<Body>();
+        world.getBodies(bodies);
+
+        for (Body bod : bodies) {
+            if (bod.getFixtureList().size != 0 && bod.getFixtureList().get(0).getUserData().equals("DELETE")) {
+                world.destroyBody(bod);
             }
-            initHit();
-            setAngularPinguin();
-            checkHeight();
-            drawJumpCount();
-            map.focusCameraX(pinguin);
+            if (pinguin.getBody().getPosition().x - bod.getPosition().x >= Constants.APP_WIDTH * 5
+                    && bod.getFixtureList().get(0).getUserData() != "GROUND") {
+                bod.getFixtureList().get(0).setUserData(null);
 
-            unlimitedGame();
-            addGround();
-
-            Array<Body> bodies = new Array<Body>();
-            world.getBodies(bodies);
-
-            for (Body bod : bodies) {
-                if (bod.getFixtureList().size!=0 && bod.getFixtureList().get(0).getUserData().equals("DELETE")) {
-                    world.destroyBody(bod);
-                }
-                if (pinguin.getBody().getPosition().x - bod.getPosition().x >= Constants.APP_WIDTH * 5
-                        && bod.getFixtureList().get(0).getUserData() != "GROUND") {
-                    bod.getFixtureList().get(0).setUserData(null);
-
-                    world.destroyBody(bod);
-                    //bod.getFixtureList().get(0).setUserData(null);
-                }
-
+                world.destroyBody(bod);
+                //bod.getFixtureList().get(0).setUserData(null);
             }
         }
     }
 
     private void unlimitedGame() {
         if (Math.abs(maxX - pinguin.getBody().getPosition().x) <= Constants.APP_WIDTH * 4) {
-            worldGenerate = new Thread(new Runnable()
-            {
-                public void run()
-                {
-                    createObjects((int) maxX, 5);                 
+            worldGenerate = new Thread(new Runnable() {
+                public void run() {
+                    createObjects((int) maxX, 5);
                 }
             });
-            worldGenerate.start();            
+            worldGenerate.start();
         }
     }
 
@@ -315,10 +309,8 @@ public class GameWorld extends AbstractWorld {
     }
 
     private void addDebugButton(TextureRegion normalState, TextureRegion pressedState) {
-        debugButton = new Button("Top", normalState, pressedState, "TOP", FontLoader.font) {
+        debugButton = new Button("Top", normalState, pressedState, "", FontLoader.font) {
             public void action() {
-                Gdx.app.log("check", "check");
-
                 ui.getStage().getActors().clear();
                 game.setScreen(new DebugScreen(game));
 
@@ -347,7 +339,7 @@ public class GameWorld extends AbstractWorld {
     }
 
     public void addTablet(float x) {
-        Tablet tablet = new Tablet("1", AssetLoader.textureBtnNormal, x, AssetLoader.font);
+        Tablet tablet = new Tablet("1", AssetLoader.textureBtnNormal, x);
         tablet.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
         tablet.setPosition(x, Constants.GROUND_HEIGHT + Constants.GROUND_Y - tablet.getHeight() / 2);
         tablet.toBack();
@@ -368,11 +360,7 @@ public class GameWorld extends AbstractWorld {
         for (int i = 0; i < allBufs.size(); i++) {
 
             if (allBufs.get(i).getLevel() > 0) {
-                Button buff = new Button("buff", AssetLoader.btn, AssetLoader.btn, "buff", FontLoader.font) {
-                    public void action() {
-                        System.out.println();
-                    }
-                };
+                Picture buff = allBufs.get(i).getIcon();
                 buff.setSize(ui.getStage().getWidth() * 0.05f, ui.getStage().getHeight() / 15);
                 buff.setPosition(xBuffPosition, yBuffPosition);
 
@@ -383,5 +371,4 @@ public class GameWorld extends AbstractWorld {
             //xBuffPosition = buff
         }
     }
-
 }

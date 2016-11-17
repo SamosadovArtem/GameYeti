@@ -7,6 +7,7 @@ package GameObjects;
 
 import Helper.MyTimer;
 import com.badlogic.gdx.utils.Array;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,9 +26,9 @@ public class DailyGift {
         this.timerMax = timerMax;
         this.level = level;
     }
-    
-    public DailyGift(){
-        
+
+    public DailyGift() {
+
     }
 
     public String getSaveData() {
@@ -47,11 +48,16 @@ public class DailyGift {
         if (level < 5) {
             level++;
         }
-        timerMin = new MyTimer(timerMin.getDateFinish(), 24 * 60 * 60);
-        timerMax = new MyTimer(timerMax.getDateFinish(), 24 * 60 * 60);
+        Date now = new Date();
+        timerMin = new MyTimer(now, 24 * 60 * 60);
+        timerMax = new MyTimer(now, 2 * 24 * 60 * 60);
     }
 
     public int getCoins() {
         return award[level - 1];
+    }
+
+    public int getLevel() {
+        return level;
     }
 }

@@ -23,15 +23,27 @@ public class PrizeField {
     private final int xMultiplier = 5;
     private final int yMultiplier = 5;
     private float xPos, yPos;
+    private boolean isWin;
+    private int countOfActiveParticles = 0;
+    private boolean isActive = false;
 
     public PrizeField(float xPos, float yPos) {
-        prize = new Picture(AssetLoader.pinguin);
+        isWin = TicketHandler.getIsWin();
+        initPicture();
         this.xPos = xPos;
         this.yPos = yPos;
         prize.setPosition(xPos, yPos);
         prize.setSize(100, 100);
         group.addActor(prize);
         initProtectiveLayer();
+    }
+
+    private void initPicture() {
+        if (isWin) {
+            prize = new Picture(AssetLoader.prizeFieldFull);
+        } else {
+            prize = new Picture(AssetLoader.prizeFieldEmpty);
+        }
     }
 
     private void initProtectiveLayer() {
@@ -60,5 +72,23 @@ public class PrizeField {
 
     public ArrayList<ProtectiveLayerParticle> getProtectiveLayer() {
         return protectiveLayer;
+    }
+
+    public boolean getIsWin() {
+        return isWin;
+    }
+
+    public void increaseCountOfActiveParticles() {
+        if (!isActive) {
+            countOfActiveParticles++;
+            if (countOfActiveParticles / protectiveLayer.size() * 100 >= 70) {
+                isActive = true;
+            }
+        }
+
+    }
+
+    public boolean getIsActive() {
+        return isActive;
     }
 }

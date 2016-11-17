@@ -9,7 +9,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- *
  * @author Pablo
  */
 public class Constants {
@@ -28,7 +27,7 @@ public class Constants {
     public static final float GROUND_DENSITY = 0;
 
     public static final float RUNNER_X = 0;
-    public static final float RUNNER_Y = GROUND_Y + GROUND_HEIGHT/2;
+    public static final float RUNNER_Y = GROUND_Y + GROUND_HEIGHT / 2;
     public static final float RUNNER_WIDTH = 60f;
     public static final float RUNNER_HEIGHT = 20f;
     public static float RUNNER_DENSITY = 0.5f;

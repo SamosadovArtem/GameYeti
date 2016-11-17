@@ -9,11 +9,11 @@ import GameWorld.Ticket.TicketRenderer;
 import GameWorld.Ticket.TicketWorld;
 import Helper.InputHandler;
 import Helper.TicketInputHandler;
+
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.GameLibGDX;
 
 /**
- *
  * @author Pablo
  */
 public class TicketScreen extends AbstractScreen {
@@ -39,11 +39,12 @@ public class TicketScreen extends AbstractScreen {
 
     @Override
     public void show() {
+        //устанавливаем сцену экрана как обработчик событий ввода. это нужно для того, чтобы можно было отлавливать нажатия на актёров
         Gdx.input.setInputProcessor(new TicketInputHandler(world, game));
     }
 
     @Override
-    public void backPress(){
+    public void backPress() {
         game.setScreen(new MainScreen(game));
     }
 }

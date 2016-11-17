@@ -11,7 +11,6 @@ import GameWorld.AbstractWorld;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.sun.prism.paint.Color;
 
 
 /**

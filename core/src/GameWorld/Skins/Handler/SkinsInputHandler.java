@@ -21,11 +21,11 @@ public class SkinsInputHandler implements InputProcessor {
     private int _oldX;
     private int temp;
     private boolean isTouched;
-    private float min=100000, max=0;
+    private float min = 100000, max = 0;
     private Date touchT;
     private float touchX, upX;
 
-    public SkinsInputHandler(SkinsWorld world, GameLibGDX game){
+    public SkinsInputHandler(SkinsWorld world, GameLibGDX game) {
         this.game = game;
         this.world = world;
     }
@@ -48,7 +48,7 @@ public class SkinsInputHandler implements InputProcessor {
         world.scrollArea = false;
 
         float in = (screenX - touchX) / ((new Date().getTime() - touchT.getTime()) / 10l);
-        Gdx.app.log("x", ""+in);
+        Gdx.app.log("x", "" + in);
         world.setInertion(in);
         world.getUI().getStage().touchUp(screenX, screenY, pointer, button);
         world.getUI().getGuiStage().touchUp(screenX, screenY, pointer, button);
@@ -61,10 +61,10 @@ public class SkinsInputHandler implements InputProcessor {
         //world.getUI().getStage().getCamera().position.x+=temp-screenX;
 
         temp = _oldX;
-        if ((isTouched)){
+        if ((isTouched)) {
 
             _oldX = screenX;
-            world.getSkins().moveX(-1* (temp-screenX));
+            world.getSkins().moveX(-1 * (temp - screenX));
         }
         return true;
     }

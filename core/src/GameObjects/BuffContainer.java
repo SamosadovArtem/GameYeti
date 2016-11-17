@@ -11,6 +11,7 @@ import Helper.FontLoader;
 import Helper.Statistic;
 import Helper.TimeConverter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -64,36 +65,36 @@ public class BuffContainer extends Actor {
         background.setPosition(xPos, yPos - height);
         group.addActor(background);
 
-        icon = new Picture(picture);
+        icon = buff.getIcon();
         icon.setSize(width / 4, height);
         icon.setPosition(xPos, yPos - height);
         group.addActor(icon);
 
-        timePicture = new Picture(picture);
+        timePicture = new Picture(AssetLoader.textureBuffsTime);
         timePicture.setSize(width / 6, height / 4);
         timePicture.setPosition(xPos + width * 5 / 6, yPos - height / 4);
         group.addActor(timePicture);
 
         Label.LabelStyle labelS = new Label.LabelStyle();
-        labelS.font = new BitmapFont();
+        labelS.font = FontLoader.font;
         labelS.fontColor = Color.WHITE;
         info = new Label("", labelS);
         info.setAlignment(Align.center);
-        info.setFontScale(2);
+        info.setFontScale(0.5f);
         info.setSize(width / 2, height / 4);
-        info.setPosition(xPos + width / 5, yPos - height / 2);
-        info.setText("Info: " + buff.getLevel());
+        info.setPosition(xPos + width * 7 / 24, yPos - height * 6 / 9);
+        info.setText(buff.getInfo());
         group.addActor(info);
 
         countdown = new Label("", labelS);
         countdown.setAlignment(Align.center);
-        countdown.setFontScale(2);
+        countdown.setFontScale(0.75f);
         countdown.setSize(width / 2, height / 4);
         countdown.setPosition(xPos + width / 5, yPos - height / 4);
         countdown.setText(timer.getTime());
         group.addActor(countdown);
 
-        upgrade = new Button("Upgrade", AssetLoader.btn, AssetLoader.btnPress, "UPGRADE", FontLoader.font) {
+        upgrade = new Button("Upgrade", AssetLoader.buffsArrow, AssetLoader.buffsArrow, "", FontLoader.font) {
             public void action() {
                 if (buff.checkUpgrade(Statistic.getCoins())) {
                     Gdx.app.log("UPGR", "");
@@ -107,7 +108,7 @@ public class BuffContainer extends Actor {
         upgrade.setPosition(xPos + width * 5 / 6, yPos - height);
         group.addActor(upgrade);
 
-        extend = new Button("Update", AssetLoader.btn, AssetLoader.btnPress, "UPDATE", FontLoader.font) {
+        extend = new Button("Extend", AssetLoader.buffsClock, AssetLoader.buffsClock, "", FontLoader.font) {
             public void action() {
                 if (buff.checkUpdate(Statistic.getCoins())) {
                     Gdx.app.log("UPD", "");
@@ -122,17 +123,19 @@ public class BuffContainer extends Actor {
     }
 
     private void updateInfo() {
-        info.setText("Info: " + buff.getLevel());
+      //  info.setText("Info: " + buff.getLevel());
     }
 
     public void update() {
         countdown.setText(timer.getTime());
         timer.removeTime(1);
     }
-    public float getY(){
+
+    public float getY() {
         return yPos;
     }
-    public float getHeight(){
+
+    public float getHeight() {
         return this.height;
     }
 }

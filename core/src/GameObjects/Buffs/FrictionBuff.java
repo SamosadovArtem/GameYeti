@@ -6,6 +6,8 @@
 package GameObjects.Buffs;
 
 import Enums.BuffType;
+import GameObjects.Picture;
+import Helper.AssetLoader;
 import Helper.BuffsInfo;
 import Helper.MyTimer;
 
@@ -23,10 +25,11 @@ public class FrictionBuff extends Buff {
         power = value;
         this.levelMax = lvlMax;
         this.cost = cost;
+        super.icon = new Picture(AssetLoader.frictionBuff);
     }
 
     public float getPower() {
-        return power - getLevel()*coff;
+        return power - getLevel() * coff;
     }
 
     public void upgrade() {
@@ -51,20 +54,25 @@ public class FrictionBuff extends Buff {
         }
         return c * cost;
     }
-    
-    public boolean checkUpdate(int allCoins){
-        if(allCoins >= getCoast(level) && level != 0){
+
+    public boolean checkUpdate(int allCoins) {
+        if (allCoins >= getCoast(level) && level != 0) {
             return true;
         } else {
             return false;
         }
     }
-    
-    public boolean checkUpgrade(int allCoins){
-        if(allCoins >= getCoast(level + 1) && level < levelMax){
+
+    public boolean checkUpgrade(int allCoins) {
+        if (allCoins >= getCoast(level + 1) && level < levelMax) {
             return true;
         } else {
             return false;
         }
+    }
+
+    @Override
+    public String getInfo() {
+        return "Decrease friction \nof the pinguin.";
     }
 }

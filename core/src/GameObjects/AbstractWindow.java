@@ -58,6 +58,17 @@ public abstract class AbstractWindow {
     public boolean getIsVisible() {
         return isVisible;
     }
+    
+    public void instantShow(GameLibGDX game) {
+         show();
+        isCreated = true;
+        xPos = stage.getCamera().position.x - width / 2;
+        yPos = stage.getHeight() * 1 / 3;
+        initBackground();
+        initText();
+        initButtons(game);
+        stage.addActor(group);
+    }
 
     public void showWindow(GameLibGDX game) {
         show();
@@ -72,7 +83,7 @@ public abstract class AbstractWindow {
     }
     
     public void deleteWindow(){
-        group.setPosition(group.getX(), 0);
+        group.clear();
     }
 
     protected void scroll() {

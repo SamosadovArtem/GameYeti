@@ -63,11 +63,11 @@ public class Interface {
 
     private void addCoins() {
         Label.LabelStyle labelS = new Label.LabelStyle();
-        labelS.font = new BitmapFont();
+        labelS.font = FontLoader.font;
         labelS.fontColor = Color.WHITE;
         coinText = new Label("", labelS);
         coinText.setAlignment(Align.center);
-        coinText.setFontScale(1);
+        coinText.setFontScale(0.5f);
         coinText.setSize(guiStage.getWidth() * 9 / 5, guiStage.getHeight() / 5);
         coinText.setPosition(0, guiStage.getHeight() * 3 / 5);
         coinText.setText("Coins: " + Statistic.getCoins());
@@ -83,9 +83,8 @@ public class Interface {
 
     public void addBack(final GameLibGDX game) {
         Button backButton;
-        backButton = new Button("BACK", AssetLoader.btn, AssetLoader.btnPress, "BACK", FontLoader.font) {
+        backButton = new Button("Back", AssetLoader.backTexture, AssetLoader.backPressedTexture, "", FontLoader.font) {
             public void action() {
-                Gdx.app.log("check", "check");
                 game.setScreen(new MainScreen(game));
             }
         };

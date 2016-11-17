@@ -35,36 +35,36 @@ public class BuffFactory {
     private static int COINS_COST = 1;
     private static int POWER_COFF_COST = 1;
     private static int DIRECTION_COFF_COST = 1;
-    
-    public static GravityBuff getGravityBuff(MyTimer time, int level){
+
+    public static GravityBuff getGravityBuff(MyTimer time, int level) {
         return new GravityBuff(time, level, GRAV_LVL_MAX, GRAV_VALUE, GRAV_COST);
     }
 
-    public static JumpCountBuff getJumpCountBuff(MyTimer time, int level){
+    public static JumpCountBuff getJumpCountBuff(MyTimer time, int level) {
         return new JumpCountBuff(time, level, JUMP_COUNT_LVL_MAX, JUMP_COUNT_VALUE, JUMP_COUNT_COST);
     }
 
-    public static JumpPowerBuff getJumpPowerBuff(MyTimer time, int level){
+    public static JumpPowerBuff getJumpPowerBuff(MyTimer time, int level) {
         return new JumpPowerBuff(time, level, JUMP_POWER_LVL_MAX, JUMP_POWER_VALUE, JUMP_POWER_COST);
     }
-    
-    public static FrictionBuff getFrictionBuff(MyTimer time, int level){
+
+    public static FrictionBuff getFrictionBuff(MyTimer time, int level) {
         return new FrictionBuff(time, level, FRICTION_LVL_MAX, FRICTION_VALUE, FRICTION_COST);
     }
-    
-    public static HeightSkyCoffBuff getHeightSkyCoffBuff(MyTimer time, int level){
+
+    public static HeightSkyCoffBuff getHeightSkyCoffBuff(MyTimer time, int level) {
         return new HeightSkyCoffBuff(time, level, HEIGHT_SKY_COFF_LVL_MAX, HEIGHT_SKY_COFF_VALUE, HEIGHT_SKY_COFF_COST);
     }
-    
-    public static CoinsBuff getCoinsBuff(MyTimer time, int level){
+
+    public static CoinsBuff getCoinsBuff(MyTimer time, int level) {
         return new CoinsBuff(time, level, COINS_LVL_MAX, COINS_VALUE, COINS_COST);
     }
-    
-    public static DirectionCoffBuff getDirectionCoffBuff(MyTimer time, int level){
+
+    public static DirectionCoffBuff getDirectionCoffBuff(MyTimer time, int level) {
         return new DirectionCoffBuff(time, level, DIRECTION_COFF_LVL_MAX, DIRECTION_COFF_VALUE, DIRECTION_COFF_COST);
     }
-    
-    public static PowerCoffBuff getPowerCoffBuff(MyTimer time, int level){
+
+    public static PowerCoffBuff getPowerCoffBuff(MyTimer time, int level) {
         return new PowerCoffBuff(time, level, POWER_COFF_LVL_MAX, POWER_COFF_VALUE, POWER_COFF_COST);
     }
 }

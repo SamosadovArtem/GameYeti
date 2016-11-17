@@ -19,6 +19,7 @@ public class Ticket {
 
     private ArrayList<PrizeField> prizeFieldList = new ArrayList<PrizeField>();
     private Picture background;
+    private boolean isWin;
 
     public Ticket(Interface ui) {
         background = new Picture(AssetLoader.textureBtnNormal);
@@ -28,6 +29,16 @@ public class Ticket {
         prizeFieldList.add(new PrizeField(ui.getWidth() * 2 / 10, ui.getHeight() / 5));
         prizeFieldList.add(new PrizeField(ui.getWidth() * 5 / 10, ui.getHeight() / 5));
         prizeFieldList.add(new PrizeField(ui.getWidth() * 8 / 10, ui.getHeight() / 5));
+        checkIsWin();
+    }
+
+    private void checkIsWin() {
+        isWin = true;
+        for (PrizeField p : prizeFieldList) {
+            if (!p.getIsWin()) {
+                isWin = false;
+            }
+        }
     }
 
     public ArrayList<PrizeField> getPrizeFieldList() {
@@ -39,5 +50,18 @@ public class Ticket {
         for (PrizeField p : prizeFieldList) {
             p.addToStage(stage);
         }
+    }
+
+    public boolean getIsWin() {
+        return isWin;
+    }
+
+    public boolean getIsActive() {
+        for (PrizeField p : prizeFieldList) {
+            if (!p.getIsActive()) {
+                return false;
+            }
+        }
+        return true;
     }
 }

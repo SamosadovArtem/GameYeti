@@ -6,35 +6,43 @@
 package com.mygdx.game.screen;
 
 /**
- *
  * @author AS
  */
+
+import GameWorld.Buffs.BuffsWorld;
+import GameWorld.Main.MainRenderer;
+import GameWorld.Main.MainWorld;
+
 import com.badlogic.gdx.Gdx;
+
 import GameWorld.Donate.*;
+
 import com.mygdx.game.GameLibGDX;
 
-public class DonateScreen extends AbstractScreen{
+public class DonateScreen extends AbstractScreen {
     public DonateWorld world;
     public DonateRenderer renderer;
 
     public DonateScreen(GameLibGDX game) {
         super(game);
     }
+
     @Override
     public void render(float delta) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         world.update(delta);
         renderer.render();
     }
+
     @Override
-    public void initScene(){
-        Gdx.app.log("DonateScreen","created");
+    public void initScene() {
+        Gdx.app.log("DonateScreen", "created");
         this.world = new DonateWorld(ui, game);
         renderer = new DonateRenderer(this.world, ui);
     }
 
     @Override
-    public void backPress(){
+    public void backPress() {
         game.setScreen(new MainScreen(game));
     }
 }

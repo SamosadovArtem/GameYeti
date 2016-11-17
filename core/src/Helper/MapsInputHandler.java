@@ -18,35 +18,34 @@ import com.mygdx.game.GameLibGDX;
 import java.util.ArrayList;
 
 /**
- *
  * @author Admin
  */
-public class MapsInputHandler implements InputProcessor{
+public class MapsInputHandler implements InputProcessor {
 
     private GameLibGDX game;
     MapsWorld world;
     boolean isTouched;
     private int _oldX;
-    
-    private float min=100000, max=0;
-    
-    public MapsInputHandler(ArrayList<Float> list, MapsWorld world, GameLibGDX game){
+
+    private float min = 100000, max = 0;
+
+    public MapsInputHandler(ArrayList<Float> list, MapsWorld world, GameLibGDX game) {
         this.game = game;
         this.world = world;
-        for(float f : list){
-            if(min > f){
+        for (float f : list) {
+            if (min > f) {
                 min = f;
             }
-            if(max < f){
+            if (max < f) {
                 max = f;
             }
         }
     }
-    
+
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         isTouched = true;
-        world.isNotTouched = false;    
+        world.isNotTouched = false;
         _oldX = screenX;
         world.getUI().getStage().touchDown(screenX, screenY, pointer, button);
         world.getUI().getGuiStage().touchDown(screenX, screenY, pointer, button);
@@ -58,34 +57,35 @@ public class MapsInputHandler implements InputProcessor{
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        isTouched = false; 
+        isTouched = false;
         world.calculateBtnPos();
-        world.isNotTouched = true;  
+        world.isNotTouched = true;
         world.getUI().getStage().touchUp(screenX, screenY, pointer, button);
         world.getUI().getGuiStage().touchUp(screenX, screenY, pointer, button);
         return true;
     }
 
     int temp;
+
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        if (!world.isDialog()){
-        temp = _oldX;
-        if ((isTouched)&&(_oldX > screenX)){
+        if (!world.isDialog()) {
+            temp = _oldX;
+            if ((isTouched) && (_oldX > screenX)) {
 
-            _oldX = screenX;
-            if(world.getUI().getStage().getCamera().position.x < max){
-                world.getUI().getStage().getCamera().position.x+=temp-screenX;
+                _oldX = screenX;
+                if (world.getUI().getStage().getCamera().position.x < max) {
+                    world.getUI().getStage().getCamera().position.x += temp - screenX;
+                }
             }
-        }
 
-        if ((isTouched)&&(_oldX<screenX)){
-            _oldX = screenX;
-            if(world.getUI().getStage().getCamera().position.x > min){
-            world.getUI().getStage().getCamera().position.x+=temp-screenX;
+            if ((isTouched) && (_oldX < screenX)) {
+                _oldX = screenX;
+                if (world.getUI().getStage().getCamera().position.x > min) {
+                    world.getUI().getStage().getCamera().position.x += temp - screenX;
+                }
             }
-        }
-        return true; 
+            return true;
         }
         return false;
     }
@@ -107,7 +107,7 @@ public class MapsInputHandler implements InputProcessor{
     public boolean keyTyped(char character) {
         return true;
     }
-        
+
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
         return true;
@@ -117,5 +117,5 @@ public class MapsInputHandler implements InputProcessor{
     public boolean scrolled(int amount) {
         return true;
     }
-    
+
 }

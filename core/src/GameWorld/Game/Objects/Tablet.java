@@ -5,6 +5,7 @@
  */
 package GameWorld.Game.Objects;
 
+import Helper.FontLoader;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -22,13 +23,13 @@ public class Tablet extends Actor {
 
     private CharSequence text;
 
-    public Tablet(String name, Texture sprite, float value, BitmapFont font) {
+    public Tablet(String name, Texture sprite, float value) {
         super();
         this.setName(name);
         this.sprite = sprite;
         this.setOrigin(this.getWidth() / 2.0f, this.getHeight() / 2.0f);
         this.text = (int)value + " m.";
-        this.font = font;
+        this.font = FontLoader.font;
     }
 
     private BitmapFont getFont() {
@@ -44,6 +45,7 @@ public class Tablet extends Actor {
         //Устанавливаем цвет фона
         font.setFixedWidthGlyphs(text);
         this.getFont().setColor(0, 0, 0, 1);
+        font.setScale(0.4f);
         //Рисуем текст по центру кнопки
         this.getFont().draw(batch, this.getText(), this.getX(),
                 this.getY() + this.getHeight() / 2 + this.getFont().getCapHeight() / 2);

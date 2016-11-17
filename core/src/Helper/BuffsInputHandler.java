@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- *
  * @author Pablo
  */
 public class BuffsInputHandler implements InputProcessor {
@@ -47,19 +46,13 @@ public class BuffsInputHandler implements InputProcessor {
 //        if(!world.getBuyMapWindow().getCheck()){
 //        world.getBuyMapWindow().checkClick(screenX, screenY);
 //        }
-
         world.scrollArea = true;
-
         return true;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         float in = (screenY - touchX) / ((new Date().getTime() - touchT.getTime()) / 8l);
-
-        System.out.println("Инерция"+in);
-
-
 
         world.getUI().getStage().touchUp(screenX, screenY, pointer, button);
         world.getUI().getGuiStage().touchUp(screenX, screenY, pointer, button);
@@ -74,25 +67,25 @@ public class BuffsInputHandler implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-                temp = _oldY;
-        if ((isTouched)&&(_oldY > screenY)){
+        temp = _oldY;
+        if ((isTouched) && (_oldY > screenY)) {
 
             _oldY = screenY;
-            if(world.getUI().getStage().getCamera().position.y > world.getMinY()){
-                world.getUI().getStage().getCamera().position.y-=temp-screenY;
+            if (world.getUI().getStage().getCamera().position.y > world.getMinY()) {
+                world.getUI().getStage().getCamera().position.y -= temp - screenY;
                 System.out.println("down");
             }
         }
 
-        if ((isTouched)&&(_oldY<screenY)){
+        if ((isTouched) && (_oldY < screenY)) {
             _oldY = screenY;
-            if(world.getUI().getStage().getCamera().position.y < world.getMaxY()){
-            world.getUI().getStage().getCamera().position.y-=temp-screenY;
-            
+            if (world.getUI().getStage().getCamera().position.y < world.getMaxY()) {
+                world.getUI().getStage().getCamera().position.y -= temp - screenY;
+
             }
         }
         System.out.println("Камера" + world.getUI().getStage().getCamera().position.y);
-        return true; 
+        return true;
     }
 
     @Override

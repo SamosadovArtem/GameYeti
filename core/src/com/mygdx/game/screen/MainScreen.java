@@ -21,14 +21,11 @@ public class MainScreen extends AbstractScreen {
 
     public MainScreen(GameLibGDX game) {
         super(game);
-        Gdx.app.log("MainScreen", "main screen created");
     }
 
     @Override
     protected void initScene() {
-        Gdx.app.log("MainScreen", "initScene");
-        this.world = 
-                new MainWorld(ui, game);
+        this.world = new MainWorld(ui, game);
         this.render = new MainRenderer(world, ui);
     }
 
@@ -39,8 +36,7 @@ public class MainScreen extends AbstractScreen {
     }
 
     @Override
-    public void backPress(){
-        Gdx.app.exit();
+    public void backPress() {
+        game.setScreen(new MainScreen(game));
     }
-
 }

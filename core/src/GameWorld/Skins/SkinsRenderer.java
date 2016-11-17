@@ -12,7 +12,7 @@ import GameWorld.Settings.SettingsWorld;
  * Created by broff on 15.04.2016.
  */
 public class SkinsRenderer extends Renderer {
-    
+
     private SkinsWorld world;
     private Interface ui;
 

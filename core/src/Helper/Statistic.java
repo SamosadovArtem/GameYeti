@@ -13,121 +13,141 @@ import com.badlogic.gdx.Preferences;
  * @author qw
  */
 public class Statistic {
-    
+
     private static Preferences prefs;
     private String bouhgtMaps;
-    
-    public static void load(){
+
+    public static void load() {
         prefs = Gdx.app.getPreferences("YetiGame");
 
         if (!prefs.contains("highScore")) {
             prefs.putInteger("highScore", 0);
             prefs.flush();
         }
-        
+
         if (!prefs.contains("coins")) {
             prefs.putInteger("coins", 0);
             prefs.flush();
         }
-        
+
         if (!prefs.contains("openMaps")) {
             prefs.putString("openMaps", "0");
             prefs.flush();
         }
-        
+
         if (!prefs.contains("allGames")) {
             prefs.putInteger("allGames", 0);
             prefs.flush();
         }
-        
+
         if (!prefs.contains("allJumps")) {
             prefs.putInteger("allJumps", 0);
             prefs.flush();
         }
-        
+
         if (!prefs.contains("allLength")) {
             prefs.putInteger("allLength", 0);
             prefs.flush();
         }
-        if (!prefs.contains("sounds")){
+        if (!prefs.contains("sounds")) {
             prefs.putInteger("sounds", 100);
         }
-        if (!prefs.contains("music")){
+        if (!prefs.contains("music")) {
             prefs.putInteger("music", 100);
         }
-        
+        if (!prefs.contains("tickets")) {
+            prefs.putInteger("tickets", 0);
+        }
+
         CloseMaps();
     }
-    
-    public static int getGames(){
+
+    public static int getTickets() {
+        return prefs.getInteger("tickets");
+    }
+
+    public static void addTicket() {
+        prefs.putInteger("tickets", getTickets() + 1);
+        prefs.flush();
+    }
+
+    public static void removeTicket() {
+        if (getTickets() > 0) {
+            prefs.putInteger("tickets", getTickets() - 1);
+            prefs.flush();
+        }
+    }
+
+    public static int getGames() {
         return prefs.getInteger("allGames");
     }
-    
-    public static void playGame(){
+
+    public static void playGame() {
         prefs.putInteger("allGames", getGames() + 1);
         prefs.flush();
     }
-    
-    public static int getJumps(){
+
+    public static int getJumps() {
         return prefs.getInteger("allJumps");
     }
-    
-    public static void jump(){
+
+    public static void jump() {
         prefs.putInteger("allJumps", getJumps() + 1);
         prefs.flush();
     }
-    
-    public static int getLength(){
+
+    public static int getLength() {
         return prefs.getInteger("allLength");
     }
-    
-    public static void setLength(int l){
+
+    public static void setLength(int l) {
         prefs.putInteger("allLength", getLength() + l);
         prefs.flush();
     }
-    
-    public static int getCoins(){
+
+    public static int getCoins() {
         return prefs.getInteger("coins");
     }
 
-    public static String[] getOpenMaps(){
+    public static String[] getOpenMaps() {
         String mapsString = prefs.getString("openMaps");
         String[] mapsArray = mapsString.split(",");
         return mapsArray;
     }
-    
-    public static void payCoins(int pay){
+
+    public static void removeCoins(int pay) {
         int newCoinsVal = getCoins() - pay;
-        if(newCoinsVal > 0){
+        if (newCoinsVal > 0) {
             prefs.putInteger("coins", newCoinsVal);
             prefs.flush();
         } else {
             throw new IllegalArgumentException("You have no " + pay + " coins");
         }
     }
-    public static void CloseMaps(){
+
+    public static void CloseMaps() {
         prefs.putString("openMaps", "0");
         prefs.flush();
     }
-    public static void OpenMap(String mapNumber){
+
+    public static void OpenMap(String mapNumber) {
         String oldMaps = prefs.getString("openMaps");
-        prefs.putString("openMaps", oldMaps+","+mapNumber);
+        prefs.putString("openMaps", oldMaps + "," + mapNumber);
         prefs.flush();
     }
-    
-    public static void addCoins(int add){
+
+    public static void addCoins(int add) {
         int newCoinsVal = getCoins() + add;
-        if(add > 0){
+        if (add > 0) {
             prefs.putInteger("coins", newCoinsVal);
             prefs.flush();
         } else {
             throw new IllegalArgumentException("Start Position must be > 0");
         }
     }
-    
-    
+
     public static void setHighScore(int val) {
-        if(getHighScore() < val){
+        if (getHighScore() < val) {
             prefs.putInteger("highScore", val);
             prefs.flush();
         } else {
@@ -138,22 +158,25 @@ public class Statistic {
     public static int getHighScore() {
         return prefs.getInteger("highScore");
     }
-    
-    public static void dispose(){
+
+    public static void dispose() {
         prefs.clear();
     }
-        public static int getSoundLevel(){
+
+    public static int getSoundLevel() {
         return prefs.getInteger("sounds");
     }
-    public static void setSoundsLevel(int lvl){
+
+    public static void setSoundsLevel(int lvl) {
         prefs.putInteger("sounds", lvl);
         prefs.flush();
     }
-    
-    public static int getMusicLevel(){
+
+    public static int getMusicLevel() {
         return prefs.getInteger("music");
     }
-    public static void setMusicLevel(int lvl){
+
+    public static void setMusicLevel(int lvl) {
         prefs.putInteger("music", lvl);
         prefs.flush();
     }
