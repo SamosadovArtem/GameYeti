@@ -87,21 +87,21 @@ public class Pinguin extends GameActor {
 
     @Override
     public float getWidth() {
-        return Constants.RUNNER_WIDTH;
+        return Constants.APP_WIDTH/13/2;
     }
 
     @Override
     public float getHeight() {
-        return Constants.RUNNER_HEIGHT;
+        return Constants.APP_HEIGHT/24/2;
     }
 
     public void draw(Batch batch, float parentAlpha) {
         if (delete()) {
             if (visible) {
                 batch.draw(pinguinTexture,
-                        getX(), getY() - getHeight() / 2,
+                        getX()-getWidth()/2, getY() - getHeight(),
                         getWidth() / 2, getHeight() / 2,
-                        getWidth(), getHeight(),
+                        getWidth()*2, getHeight()*2,
                         1, 1,
                         getRotation());
                 if (!moved()) {

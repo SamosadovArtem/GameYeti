@@ -97,7 +97,6 @@ public class GameWorld extends AbstractWorld {
         addTablets(ground.getX(), ground2.getX() + ground2.getWidth());
         setUpRunner();
         addDebugButton(AssetLoader.btn, AssetLoader.btnPress);
-        addPauseButton(AssetLoader.pauseTexture, AssetLoader.pauseTexture);
         world.setContactListener(new GameContactListener(this, pinguin));
         initJumpCount();
         createObjects((int) maxX, objectsGenerateNum);
@@ -142,7 +141,7 @@ public class GameWorld extends AbstractWorld {
         final float gr1 = ground.getBody().getPosition().x;
         final float gr2 = ground2.getBody().getPosition().x;
         final float pinguinX = pinguin.getBody().getPosition().x;
-        final float dlt = Constants.GROUND_WIDTH / 2 - Constants.APP_WIDTH * 1.5f;
+        final float dlt = Constants.APP_WIDTH * 2.5f;
 
         if (gr1 >= gr2) {
             worldGenerate = new Thread(new Runnable() {
@@ -298,13 +297,13 @@ public class GameWorld extends AbstractWorld {
 
     private void initJumpCount() {
         Label.LabelStyle labelS = new Label.LabelStyle();
-        labelS.font = new BitmapFont();
+        labelS.font = FontLoader.font;
         labelS.fontColor = Color.WHITE;
         jumpCountText = new Label("", labelS);
         jumpCountText.setAlignment(Align.center);
-        jumpCountText.setFontScale(1);
+        jumpCountText.setFontScale(2);
         jumpCountText.setSize(ui.getStage().getWidth() * 0.4f, ui.getStage().getHeight() / 5);
-        jumpCountText.setPosition(0, 250);
+        jumpCountText.setPosition(0, Constants.APP_HEIGHT/3);
         ui.getGuiStage().addActor(jumpCountText);
     }
 
@@ -323,24 +322,9 @@ public class GameWorld extends AbstractWorld {
         ui.getGuiStage().addActor(debugButton);
     }
 
-    private void addPauseButton(TextureRegion normalState, TextureRegion pressedState) {
-        pauseButton = new Button("Top", normalState, pressedState, "", FontLoader.font) {
-            public void action() {
-
-                pause = !pause;
-
-            }
-        };
-        pauseButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
-        pauseButton.setPosition(ui.getStage().getCamera().position.x + ui.getStage().getWidth() / 3,
-                ui.getStage().getCamera().position.y + ui.getStage().getHeight() / 3);
-
-        ui.getGuiStage().addActor(pauseButton);
-    }
-
     public void addTablet(float x) {
         Tablet tablet = new Tablet("1", AssetLoader.textureBtnNormal, x);
-        tablet.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
+        tablet.setSize(Constants.APP_WIDTH * 0.4f / 3, Constants.APP_HEIGHT / 6);
         tablet.setPosition(x, Constants.GROUND_HEIGHT + Constants.GROUND_Y - tablet.getHeight() / 2);
         tablet.toBack();
         ui.getStage().addActor(tablet);

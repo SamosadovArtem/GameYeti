@@ -18,14 +18,15 @@ import Helper.Constants;
 import LocationGenerator.Barrier;
 import LocationGenerator.BarrierTypes;
 import LocationGenerator.Location;
+
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.World;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 /**
- *
  * @author qw
  */
 public class Generator {
@@ -36,47 +37,51 @@ public class Generator {
 
     public Generator(World world, int y, int startPosition, int barriersCount, GameWorld gameWorld) {
         barr = Location.GetBarrierList(startPosition, barriersCount, true);
+        int width = Constants.APP_WIDTH;
+        int height = Constants.APP_HEIGHT;
 
         for (Barrier b : barr) {
             switch (b.GetType()) {
                 case STOP:
-                    StopObj s = new StopObj(world, b.GetX(), y, 60, 120,
+                    StopObj s = new StopObj(world, b.GetX(), y, width / 13, height / 4,
                             AssetLoader.elephantTexture);
                     StopObj ms = new StopObj(s.getBody(), b.GetX(), -Constants.GROUND_HEIGHT / 2,
-                            60, 120,
+                            width / 13, height / 4,
                             AssetLoader.elephantTexture);
                     objects.add(s);
                     mapObjects.add(ms);
                     break;
                 case SNAKE:
-                    Snake snake = new Snake(AssetLoader.btn, b.GetX(), Constants.GROUND_Y + 20f, 100f, 20f, world);
-                    Snake mapSnake = new Snake(snake.getBody(), AssetLoader.btn, b.GetX(), Constants.GROUND_Y + 20f, 100f, 20f);
+                    Snake snake = new Snake(AssetLoader.btn, b.GetX(), Constants.GROUND_Y + 20f, width / 8, height / 24, world);
+                    Snake mapSnake = new Snake(snake.getBody(), AssetLoader.btn, b.GetX(), Constants.GROUND_Y + 20f, width / 8, height / 24);
                     objects.add(snake);
                     mapObjects.add(mapSnake);
                     break;
                 case ANTELOPHE:
-                    Antelope a = new Antelope(AssetLoader.btn, b.GetX(), Constants.GROUND_Y, 100f, 30f, world, gameWorld);
-                    Antelope ma = new Antelope(a.getBody(), AssetLoader.btn, b.GetX(), Constants.GROUND_Y, 100f, 30f);
+                    Antelope a = new Antelope(AssetLoader.btn, b.GetX(), Constants.GROUND_Y, width / 8, height / 16, world, gameWorld);
+                    Antelope ma = new Antelope(a.getBody(), AssetLoader.btn, b.GetX(), Constants.GROUND_Y, width / 8, height / 16);
                     objects.add(a);
                     mapObjects.add(ma);
                     break;
                 case TREE:
                     Tree t = new Tree(world, b.GetX(), Constants.GROUND_Y + Constants.GROUND_HEIGHT / 2,
-                            10, 70, 70, 10, AssetLoader.btn);
+                            width / 80, height / 7, width / 11, height / 48, AssetLoader.btn);
                     Tree mt = new Tree(t.getBody(), b.GetX(), Constants.GROUND_Y + Constants.GROUND_HEIGHT / 2,
-                            10, 70, 70, 10, AssetLoader.btn);
+                            width / 80, height / 7, width / 11, height / 48, AssetLoader.btn);
                     objects.add(t);
                     mapObjects.add(mt);
                     break;
                 case GIRAFFE:
-                    Giraffe g = new Giraffe(world, b.GetX(), Constants.GROUND_Y + Constants.GROUND_HEIGHT / 2 + 40, 100f, 40f, 10f, 60f, 40f, 20f, AssetLoader.btn);
-                    Giraffe mg = new Giraffe(g.getBody(), b.GetX(), Constants.GROUND_Y + Constants.GROUND_HEIGHT / 2 + 40, 100f, 40f, 10f, 60f, 40f, 20f, AssetLoader.btn);
+                    Giraffe g = new Giraffe(world, b.GetX(), Constants.GROUND_Y + Constants.GROUND_HEIGHT / 2 + 40,
+                            width / 8, height / 12, width / 80, height / 6, width / 20, height / 24, AssetLoader.btn);
+                    Giraffe mg = new Giraffe(g.getBody(), b.GetX(), Constants.GROUND_Y + Constants.GROUND_HEIGHT / 2 + 40,
+                            width / 8, height / 12, width / 80, height / 6, width / 20, height / 24, AssetLoader.btn);
                     objects.add(g);
                     mapObjects.add(mg);
                     break;
                 case COIN:
-                    Coin c = new Coin(AssetLoader.ctr, b.GetX(), b.GetY() + 40f, 40f, 40f, world);
-                    Coin mc = new Coin(c.getBody(), AssetLoader.btn, b.GetX(), b.GetY() + 40f, 40f, 40f);
+                    Coin c = new Coin(AssetLoader.ctr, b.GetX(), b.GetY() + 40f, width / 20, height / 12, world);
+                    Coin mc = new Coin(c.getBody(), AssetLoader.btn, b.GetX(), b.GetY() + 40f, width / 20, height / 12);
                     objects.add(c);
                     mapObjects.add(mc);
                     break;

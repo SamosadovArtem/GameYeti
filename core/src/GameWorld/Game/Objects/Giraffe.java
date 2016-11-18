@@ -80,6 +80,7 @@ public class Giraffe extends GameActor {
 
     @Override
     public float getY() {
+
         if (mapActor) {
             return body.getPosition().y - Constants.GROUND_Y - Constants.GROUND_HEIGHT / 2;
         } else {
