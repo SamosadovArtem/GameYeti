@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1038082786451",
+    "firebase_url": "https://game-yeti.firebaseio.com",
+    "project_id": "game-yeti",
+    "storage_bucket": "game-yeti.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1038082786451:android:b5320e36eb15a2ae",
+        "android_client_info": {
+          "package_name": "com.mygdx.game.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1038082786451-ef2q10afbpentefrav8rlhbdn1nhn23r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mygdx.game.android",
+            "certificate_hash": "9EFFCB483556514519242DBE5AB5B2E95F2EE6BE"
+          }
+        },
+        {
+          "client_id": "1038082786451-f1n75br18c6ufsm33nq3srv4mk0qoirp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGv9vZFnW2TQqlTrzXBHgAQ0V8Vj2lMdI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1038082786451-f1n75br18c6ufsm33nq3srv4mk0qoirp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -40,18 +40,18 @@ public class Ground extends GameActor {
 
     @Override
     public float getWidth() {
-        return Constants.APP_WIDTH*4;
+        return Constants.GROUND_WIDTH;
     }
 
     @Override
     public float getHeight() {
-        return Constants.APP_HEIGHT/16;
+        return Constants.GROUND_HEIGHT;
     }
 
     public void draw(Batch batch, float parentAlpha) {
         if (delete()) {
-            batch.draw(groundTexture, getX()-getWidth(), getY()-getHeight(),
-                    getWidth()*2, getHeight()*2,
+            batch.draw(groundTexture, getX() - getWidth() / 2, getY() - getHeight() / 2,
+                    getWidth(), getHeight(),
                     0, 0, 64, 64, true, false);
 
         }

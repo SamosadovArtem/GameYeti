@@ -31,12 +31,13 @@ public class WorldUtils {
         bodyDef.position.set(new Vector2(Constants.GROUND_X + startPos, Constants.GROUND_Y));
         Body body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(Constants.APP_WIDTH*4, Constants.APP_HEIGHT / 16);
+        shape.setAsBox(Constants.GROUND_WIDTH / 2, Constants.GROUND_HEIGHT / 2);
         body.createFixture(shape, Constants.GROUND_DENSITY);
         body.getFixtureList().get(0).setUserData("GROUND");
         shape.dispose();
         return body;
     }
+
 
     public static Body createPinguin(World world) {
         BodyDef bodyDef = new BodyDef();
@@ -46,7 +47,7 @@ public class WorldUtils {
         body.setGravityScale(Constants.RUNNER_GRAVITY_SCALE);
         body.setFixedRotation(false);
         PolygonShape box = new PolygonShape();
-        box.setAsBox(Constants.APP_WIDTH/13/2, Constants.APP_HEIGHT/24/2,
+        box.setAsBox(Constants.RUNNER_WIDTH / 2, Constants.RUNNER_HEIGHT / 2,
                 body.getLocalCenter(), 0);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = box;

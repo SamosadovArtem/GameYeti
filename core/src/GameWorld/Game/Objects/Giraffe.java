@@ -8,20 +8,22 @@ package GameWorld.Game.Objects;
 import Helper.AssetLoader;
 import Helper.Constants;
 import Helper.WorldUtils;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+
 import static java.lang.Thread.sleep;
+
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author qw
  */
 public class Giraffe extends GameActor {
@@ -80,7 +82,6 @@ public class Giraffe extends GameActor {
 
     @Override
     public float getY() {
-
         if (mapActor) {
             return body.getPosition().y - Constants.GROUND_Y - Constants.GROUND_HEIGHT / 2;
         } else {
@@ -90,9 +91,11 @@ public class Giraffe extends GameActor {
 
     public void draw(Batch batch, float parentAlpha) {
         if (delete() && checkDraw()) {
-           // batch.draw(AssetLoader.giraffeTexture, getX() - widthBody / 2, getY() - heightBody / 2 - 40, 100, 200);
-            batch.draw(groundTexture, getX() - widthBody / 2, getY() - heightBody / 2 - 40, 10, 40);
-            batch.draw(groundTexture, getX() + widthBody / 2 - 10, getY() - heightBody / 2 - 40, 10, 40);
+            // batch.draw(AssetLoader.giraffeTexture, getX() - widthBody / 2, getY() - heightBody / 2 - 40, 100, 200);
+            batch.draw(groundTexture, getX() - widthBody / 2, getY() - heightBody / 2 - Constants.APP_HEIGHT / 12f,
+                    Constants.APP_WIDTH / 80f, Constants.APP_HEIGHT / 12f);
+            batch.draw(groundTexture, getX() + widthBody / 2 - 10, getY() - heightBody / 2 - Constants.APP_HEIGHT / 12f,
+                    Constants.APP_WIDTH / 80f, Constants.APP_HEIGHT / 12f);
             batch.draw(groundTexture, getX() - widthBody / 2, getY() - heightBody / 2, widthBody, heightBody);
             batch.draw(groundTexture, getX() - widthBody / 2, getY() + heightBody / 2, widthNeck, heightNeck);
             batch.draw(groundTexture, getX() - widthBody / 2 + widthNeck - widthHead, getY() + heightBody / 2 + heightNeck, widthHead, heightHead);

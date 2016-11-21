@@ -7,6 +7,7 @@ package com.mygdx.game.screen;
 
 import GameWorld.Game.GameRenderer;
 import GameWorld.Game.GameWorld;
+import Helper.Constants;
 import Helper.InputHandler;
 import Helper.Statistic;
 
@@ -35,14 +36,13 @@ public class GameScreen extends AbstractScreen {
         this.renderer = new GameRenderer(world, ui, world.getMap());
         Gdx.input.setInputProcessor(new InputHandler(world, game));
         Statistic.playGame();
+        Gdx.app.log(String.valueOf(Constants.APP_WIDTH),String.valueOf(Constants.APP_HEIGHT));
     }
 
     @Override
     public void render(float delta) {
         world.update(delta);
         moveCamera();
-        //Gdx.app.log("GameWorld", "xPos" + world.getPinguin().getBody().getPosition().x);
-        //Gdx.app.log("GameWorld", "xPosCam" + stage.getCamera().position.x);
         renderer.render();
     }
 
