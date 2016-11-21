@@ -26,6 +26,8 @@ public class MapsInputHandler implements InputProcessor {
     MapsWorld world;
     boolean isTouched;
     private int _oldX;
+    
+    private boolean isDragAfterTouch;
 
     private float min = 100000, max = 0;
 
@@ -43,12 +45,13 @@ public class MapsInputHandler implements InputProcessor {
     }
 
     @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {        
         isTouched = true;
         world.isNotTouched = false;
         _oldX = screenX;
-        world.getUI().getStage().touchDown(screenX, screenY, pointer, button);
-        world.getUI().getGuiStage().touchDown(screenX, screenY, pointer, button);
+        isDragAfterTouch = true;         
+            world.getUI().getStage().touchDown(screenX, screenY, pointer, button);
+            world.getUI().getGuiStage().touchDown(screenX, screenY, pointer, button);
 //        if(!world.getBuyMapWindow().getCheck()){
 //        world.getBuyMapWindow().checkClick(screenX, screenY);
 //        }
@@ -57,11 +60,16 @@ public class MapsInputHandler implements InputProcessor {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        isTouched = false;
+                
+            isTouched = false;
+        
         world.calculateBtnPos();
         world.isNotTouched = true;
-        world.getUI().getStage().touchUp(screenX, screenY, pointer, button);
+        if (isDragAfterTouch){
+            world.getUI().getStage().touchUp(screenX, screenY, pointer, button);
+        }
         world.getUI().getGuiStage().touchUp(screenX, screenY, pointer, button);
+        
         return true;
     }
 
@@ -69,6 +77,8 @@ public class MapsInputHandler implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+        isDragAfterTouch = false;
+                        
         if (!world.isDialog()) {
             temp = _oldX;
             if ((isTouched) && (_oldX > screenX)) {
@@ -87,6 +97,7 @@ public class MapsInputHandler implements InputProcessor {
             }
             return true;
         }
+        
         return false;
     }
 

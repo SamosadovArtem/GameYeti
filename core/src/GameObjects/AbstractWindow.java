@@ -112,20 +112,22 @@ public abstract class AbstractWindow {
     }
 
     public class ScrollWindowThread implements Runnable {
-
+        
         public ScrollWindowThread() {
+            group.setY(0);//TODO:Here!
         }
 
         @Override
         public void run() {
             while (group.getY() <= stage.getHeight() * 5 / 6 && !check) {
+
                 group.setY(group.getY() + 1);
                 try {
                     sleep(10);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(AbstractWindow.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } 
+            }
         }
 
     }

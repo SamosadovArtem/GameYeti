@@ -56,6 +56,13 @@ public class BuyMapWindow extends AbstractWindow {
 //    }
 
     @Override
+    public void showWindow(GameLibGDX game) {
+        System.out.println("ISDIALOG");
+        mapsWorld.setIsDialog(true);
+        super.showWindow(game);
+    }
+    
+    @Override
     protected void initText() {
         Label textLabel;
         Label.LabelStyle labelS = new Label.LabelStyle();
@@ -85,6 +92,9 @@ public class BuyMapWindow extends AbstractWindow {
     protected void initButtons(final GameLibGDX game) {
         Button buyButton = new Button("Buy", normalState, pressedState, "BUY", FontLoader.font) {
             public void action() {
+                
+                mapsWorld.setIsDialog(false);
+                
                 Gdx.app.log("check", "CONFIRM");
                 
                 mapsWorld.touchConfirm();
@@ -98,6 +108,8 @@ public class BuyMapWindow extends AbstractWindow {
         Button cancelButton = new Button("Cancel", normalState, pressedState, "CANCEL", FontLoader.font) {
             public void action() {
                 Gdx.app.log("check", "CANCEL");
+                
+                mapsWorld.setIsDialog(false);
 
                 mapsWorld.setIsCancel(true);
                 

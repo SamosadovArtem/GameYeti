@@ -26,6 +26,8 @@ import java.util.ArrayList;
  * @author qw
  */
 public class MapsWorld extends AbstractWorld {
+    
+
 
     public ArrayList<Map> mapsList = new ArrayList<Map>();
 
@@ -48,13 +50,12 @@ public class MapsWorld extends AbstractWorld {
 
     Boolean isTouchUnboughtMap = false;
     Boolean isTouchCancel = false;
-    Boolean isDialog = false;
+    private Boolean isDialog = false;
     
     BuyMapWindow buyMapWindow;
     
     Button rightButton;
     Button leftButton;
-
 
     
     public MapsWorld(Interface ui, GameLibGDX g) {
@@ -95,6 +96,7 @@ public class MapsWorld extends AbstractWorld {
         return isDialog;
     }
     public void setIsDialog(boolean flag){
+        System.out.println("I'm set to "+flag);
         isDialog = flag;
     }
    
@@ -128,14 +130,16 @@ public class MapsWorld extends AbstractWorld {
         if (isNotTouched) {
             
             float speed = 0;
-            if (nearestButton != getCameraX()) {
+            //if (nearestButton != getCameraX()) {
+            if (Math.abs((double) (nearestButton - getCameraX())) > 10) {//TODO: Тут можно относительный размер
                 speed = (nearestButton - getCameraX()) / 10.0f;
+                setCameraX(getCameraX() + speed);//TODO: Возможно баг пофикшен, но это неточно
                 //isDialog = true;
             } else {
                 isNotTouched = false;
                 //isDialog = false;
             }
-            setCameraX(getCameraX() + speed);
+            //setCameraX(getCameraX() + speed);
         }
     }
 
@@ -160,15 +164,16 @@ public class MapsWorld extends AbstractWorld {
     }
 
     public GameLibGDX getGame() {
+        System.out.println("getGame");
         return this.game;
     }
     public void setIsCancel(boolean flag){
         this.isTouchCancel = flag;
     }
-    
-   
-    
+     
     public void touchConfirm(){
+        System.out.println("touchConfirm");
+        
                         try {
                     Statistic.removeCoins(mapToBuy.GetPrice());
                     mapToBuy.BuyMap();
@@ -187,6 +192,8 @@ public class MapsWorld extends AbstractWorld {
         leftButton = new Button("Left", AssetLoader.leftSlideTexture, AssetLoader.leftSlidePressedTexture, "", FontLoader.font) {
             public void action() {
                 
+                if(!isDialog){
+                
                 if (GetActiveMapNumber()!=0){
 //                setNearestLength((float) (ui.getStage().getCamera().position.x
 //                        - (mapLocations.get(GetActiveMapNumber()-1))));
@@ -196,6 +203,8 @@ public class MapsWorld extends AbstractWorld {
                 
                 
                 SetVisible();
+                
+                }
             }
         };
         leftButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
@@ -207,6 +216,8 @@ public class MapsWorld extends AbstractWorld {
         rightButton = new Button("Right", AssetLoader.rightSlideTexture, AssetLoader.rightSlidePressedTexture, "", FontLoader.font) {
             public void action() {
                 
+                if(!isDialog){
+                
                 if (GetActiveMapNumber()!=mapsList.size()-1){
 //                setNearestLength((float) (ui.getStage().getCamera().position.x
 //                        - (mapLocations.get(GetActiveMapNumber()+1))));
@@ -217,6 +228,8 @@ public class MapsWorld extends AbstractWorld {
                 }
                 
                 SetVisible();
+                
+                }
             }
         };
         rightButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
@@ -265,7 +278,6 @@ public class MapsWorld extends AbstractWorld {
     
     public void setNearestLength(float length){
         this.nearestButton = length;
-    }
-    
+    }   
 
 }
