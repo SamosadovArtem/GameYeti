@@ -3,16 +3,14 @@ package com.mygdx.game;
 import GameWorld.Skins.Elements.SkinsStatistic;
 import Helper.AssetLoader;
 import Helper.BuffsInfo;
+import Helper.Constants;
 import Helper.DailyGiftHandler;
 import Helper.FontLoader;
-import Helper.InputHandler;
 import Helper.Statistic;
+
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.mygdx.game.screen.AbstractScreen;
-import com.mygdx.game.screen.GameScreen;
 import com.mygdx.game.screen.MainScreen;
 
 public class GameLibGDX extends ApplicationAdapter {
@@ -21,13 +19,12 @@ public class GameLibGDX extends ApplicationAdapter {
 	
     @Override
     public void create () {
-        Gdx.app.log("YetiGame", "app created");
         loadResources();
         Gdx.input.setCatchBackKey(true);
         setScreen(new MainScreen(this));
     }
-    
-    private void loadResources(){   
+
+    private void loadResources(){
         AssetLoader.load();
         FontLoader.load();
         Statistic.load();
@@ -44,7 +41,7 @@ public class GameLibGDX extends ApplicationAdapter {
         this.screen = screen;
         if (this.screen != null) {
             this.screen.show();
-            this.screen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            this.screen.resize(Constants.APP_WIDTH, Constants.APP_HEIGHT);
         }
     }
     

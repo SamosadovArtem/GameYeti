@@ -32,8 +32,8 @@ public abstract class AbstractScreen implements Screen {
 
     public AbstractScreen(GameLibGDX game) {
         this.game = game;
-        float a = Gdx.graphics.getWidth();
-        float b = Gdx.graphics.getHeight();
+        float a = Constants.APP_WIDTH;
+        float b = Constants.APP_HEIGHT;
         final GameLibGDX g = game;
 
         ui = new Interface(new Stage(new FillViewport(a, b)),
