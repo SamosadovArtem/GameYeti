@@ -10,11 +10,13 @@ import GameWorld.Game.Objects.Antelope;
 import GameWorld.Game.Objects.Coin;
 import GameWorld.Game.Objects.GameActor;
 import GameWorld.Game.Objects.Giraffe;
+import GameWorld.Game.Objects.Hippo;
 import GameWorld.Game.Objects.Snake;
 import GameWorld.Game.Objects.StopObj;
 import GameWorld.Game.Objects.Tree;
 import Helper.AssetLoader;
 import Helper.Constants;
+import Helper.Values;
 import LocationGenerator.Barrier;
 import LocationGenerator.BarrierTypes;
 import LocationGenerator.Location;
@@ -36,6 +38,7 @@ public class Generator {
     private List<Barrier> barr;
 
     public Generator(World world, int y, int startPosition, int barriersCount, GameWorld gameWorld) {
+        Location.setCurrentMapBarrierTypes(Values.currentMap.getCurrentBarrierTypes());
         barr = Location.GetBarrierList(startPosition, barriersCount, true);
 
         for (Barrier b : barr) {
@@ -85,6 +88,18 @@ public class Generator {
                             Constants.APP_WIDTH / 20f, Constants.APP_HEIGHT / 24f, AssetLoader.btn);
                     objects.add(g);
                     mapObjects.add(mg);
+                    break;
+                case HIPPO:
+                    Hippo h = new Hippo(world, b.GetX(), Constants.GROUND_Y + 30f,
+                            50, 15,
+                            100, 30, 
+                            AssetLoader.btn);
+                    Hippo mh = new Hippo( h.getBody(),b.GetX(), Constants.GROUND_Y,
+                            50, 15,
+                            100, 30, 
+                            AssetLoader.btn);
+                    objects.add(h);
+                    mapObjects.add(mh);
                     break;
                 case COIN:
                     Coin c = new Coin(AssetLoader.ctr, b.GetX(), b.GetY() + 40f,

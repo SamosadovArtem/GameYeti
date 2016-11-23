@@ -15,5 +15,8 @@ public enum BarrierTypes {
     TREE,
     GIRAFFE,
     ANTELOPHE,
-    COIN
+    COIN,
+    HIPPO
 }
+
+
