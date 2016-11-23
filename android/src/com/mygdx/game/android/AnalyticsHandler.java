@@ -4,9 +4,9 @@ package com.mygdx.game.android;
  * Created by User on 20.11.2016.
  */
 
-import android.content.Context;
+/*import android.content.Context;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.analytics.FirebaseAnalytics;*/
 
 import java.util.Date;
 
@@ -16,7 +16,7 @@ import java.util.Date;
 
 public class AnalyticsHandler {
 
-    private static FirebaseAnalytics firebaseAnalytics;
+    /*private static FirebaseAnalytics firebaseAnalytics;
 
     public static void initAnalytics(Context context) {
         firebaseAnalytics = FirebaseAnalytics.getInstance(context);

@@ -6,6 +6,7 @@
 package LocationGenerator;
 
 import Helper.Constants;
+import Helper.Values;
 import com.badlogic.gdx.Gdx;
 import java.util.ArrayList;
 import java.util.Random;
@@ -20,8 +21,9 @@ public final class Location {
     static ArrayList<Barrier> barriers;
     static int pushCounter = 0;
     static int stopCounter = 0;
-    private static final int typeCount = BarrierTypes.values().length;
-    static int[] typeCounter = new int[typeCount];
+    //private static final int typeCount = BarrierTypes.values().length;//Change it in constructor
+    private static BarrierTypes[] currentMapBarrierTypes = Values.currentMap.getCurrentBarrierTypes();
+    static int[] typeCounter = new int[Values.currentMap.getCurrentBarrierTypes().length];
     
     public static ArrayList<Barrier> GetBarrierList(int startPosition, int barriersCount, boolean course){
         barriers = new ArrayList<Barrier>();
@@ -92,7 +94,8 @@ public final class Location {
         }
         private static BarrierTypes GetRandomType(){
         //int randomValue = rnd.nextInt(2);
-        int randomValue = rnd.nextInt(typeCount);
+        int randomValue = rnd.nextInt(currentMapBarrierTypes.length);
+            System.out.println(randomValue);
         
         //не монетка
         
@@ -101,32 +104,33 @@ public final class Location {
             typeCounter[randomValue]=0;
             int oldRandom = randomValue;
             while (randomValue==oldRandom){  //Если 2 раза подряд появилось, то нельзя повторять
-                randomValue = rnd.nextInt(typeCount);
+                randomValue = rnd.nextInt(currentMapBarrierTypes.length);
             }
             
-            if (BarrierTypes.values()[randomValue]!=BarrierTypes.COIN){
+            if (currentMapBarrierTypes[randomValue]!=BarrierTypes.COIN){
             
                 typeCounter[randomValue]++;
             
-                return BarrierTypes.values()[randomValue];
+                //return BarrierTypes.values()[randomValue];
+                return currentMapBarrierTypes[randomValue];
             }else{
                 
-                typeCounter[1]++; //Если монетка, то лучше стоп добавим
+                typeCounter[0]++; //Если монетка, то лучше нулевой объект добавим
                 
-                return BarrierTypes.STOP; // И вернем
+                return currentMapBarrierTypes[0]; // И вернем
                 
             }
             
         }
         
         
-        if (BarrierTypes.values()[randomValue]!=BarrierTypes.COIN){
+        if (currentMapBarrierTypes[randomValue]!=BarrierTypes.COIN){
             typeCounter[randomValue]++;
-            return BarrierTypes.values()[randomValue];
+            return currentMapBarrierTypes[randomValue];
         } else{
-            typeCounter[0]++; //А тут - если не монетка, то пусть змейка
+            typeCounter[1]++; //А тут - если не монетка, то пусть первый объект
             
-            return BarrierTypes.SNAKE;
+            return currentMapBarrierTypes[1];
         }
         
  
@@ -152,6 +156,7 @@ public final class Location {
 //                //break;
 //        }
 //        throw new IllegalStateException("Somthing wrong");
+        //return BarrierTypes.HIPPO;
     }
         private static boolean isGenarateCoin(){
             int random = rnd.nextInt(2);
@@ -160,5 +165,16 @@ public final class Location {
             }
             return false;
         }
+
+    public static BarrierTypes[] getCurrentMapBarrierTypes() {
+        return currentMapBarrierTypes;
+    }
+
+    public static void setCurrentMapBarrierTypes(BarrierTypes[] currentMapBarrierTypes) {
+        Location.currentMapBarrierTypes = currentMapBarrierTypes;
+        Location.typeCounter = new int[currentMapBarrierTypes.length];
+    }
+        
+        
 
 }

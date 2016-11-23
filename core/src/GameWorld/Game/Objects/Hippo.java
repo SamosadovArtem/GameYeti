@@ -36,9 +36,11 @@ public class Hippo extends GameActor {
         this.groundTexture = groundTexture;
         foliage = WorldUtils.Foliage;
     }
-
+    
     public Hippo(Body body, float x, float y, float widthHead, float heightHead, float widthBody, float heightBody, TextureRegion groundTexture) {
+
         this.body = body;
+        
         this.widthHead = widthHead;
         this.heightHead = heightHead;
 
@@ -46,8 +48,6 @@ public class Hippo extends GameActor {
         this.heightBody = heightBody;
 
         this.groundTexture = groundTexture;
-        foliage = WorldUtils.Foliage;
-        this.mapActor = true;
     }
 
     @Override

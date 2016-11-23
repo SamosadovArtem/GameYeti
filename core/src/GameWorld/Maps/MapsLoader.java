@@ -8,6 +8,8 @@ package GameWorld.Maps;
 import GameObjects.Map;
 import Helper.AssetLoader;
 import Helper.FontLoader;
+import Helper.Values;
+import LocationGenerator.BarrierTypes;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.screen.GameScreen;
 import java.util.ArrayList;
@@ -22,14 +24,28 @@ public final class MapsLoader {
     private static TextureRegion firstButtonnPressedState = AssetLoader.btnPress;
     private static TextureRegion firstButtonUnboughtState = AssetLoader.btn;
     private static ArrayList<Float> mapLocations;
+    
+    private static BarrierTypes[] firstMapBarriers = new BarrierTypes[] {BarrierTypes.COIN, BarrierTypes.SNAKE,
+        BarrierTypes.GIRAFFE, BarrierTypes.HIPPO, BarrierTypes.SNAKE, BarrierTypes.STOP,BarrierTypes.TREE};
+    
+    private static BarrierTypes[] secondMapBarriers = new BarrierTypes[] {BarrierTypes.COIN, BarrierTypes.GIRAFFE,
+        BarrierTypes.GIRAFFE, BarrierTypes.ANTELOPHE, BarrierTypes.SNAKE, BarrierTypes.STOP,BarrierTypes.TREE};
+    
+    private static BarrierTypes[] thirdMapBarriers = new BarrierTypes[] {BarrierTypes.COIN, BarrierTypes.HIPPO,
+        BarrierTypes.GIRAFFE, BarrierTypes.ANTELOPHE, BarrierTypes.SNAKE, BarrierTypes.STOP,BarrierTypes.TREE};
+    
     public static ArrayList<Map> GetMaps( final MapsWorld world){
         allMaps = new ArrayList<Map>();
         mapLocations = new ArrayList<Float>();
         
           Map tempMap = new Map("0", firstButtonNormalState,
-                firstButtonnPressedState, firstButtonUnboughtState, "0", FontLoader.font){
+                firstButtonnPressedState, firstButtonUnboughtState, "0", FontLoader.font, firstMapBarriers){
                   
             public void action() {
+                Values.currentMap = this;
+                for (BarrierTypes b: Values.currentMap.getCurrentBarrierTypes()){
+                    System.out.println(b);
+                }
                 System.out.println(this.IsMapBought());
                 if (IsMapBought()) {
                     world.getGame().setScreen(new GameScreen(world.getGame()));
@@ -49,8 +65,12 @@ public final class MapsLoader {
         //stage.addActor(tempMap);
 
         Map tempMap2 = new Map("1", firstButtonNormalState,
-                firstButtonnPressedState, firstButtonUnboughtState, "1", FontLoader.font) {
+                firstButtonnPressedState, firstButtonUnboughtState, "1", FontLoader.font, secondMapBarriers) {
             public void action() {
+                Values.currentMap = this;
+                for (BarrierTypes b: Values.currentMap.getCurrentBarrierTypes()){
+                    System.out.println(b);
+                }
                 System.out.println(this.IsMapBought());
                 if (IsMapBought()) {
                     world.getGame().setScreen(new GameScreen(world.getGame()));
@@ -75,9 +95,13 @@ public final class MapsLoader {
         
         
                 Map tempMap3 = new Map("3", firstButtonNormalState,
-                firstButtonnPressedState, firstButtonUnboughtState, "3", FontLoader.font) {
+                firstButtonnPressedState, firstButtonUnboughtState, "3", FontLoader.font, thirdMapBarriers) {
             public void action() {
-                System.out.println(this.IsMapBought());
+                Values.currentMap = this;
+                for (BarrierTypes b: Values.currentMap.getCurrentBarrierTypes()){
+                    System.out.println(b);
+                }
+                System.out.println(Values.currentMap.getCurrentBarrierTypes());
                 if (IsMapBought()) {
                     world.getGame().setScreen(new GameScreen(world.getGame()));
                 } else {

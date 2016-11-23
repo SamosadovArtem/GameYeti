@@ -14,6 +14,7 @@ import GameWorld.Game.Objects.BuyMapWindow;
 import Helper.AssetLoader;
 import Helper.FontLoader;
 import Helper.Statistic;
+import LocationGenerator.BarrierTypes;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -26,9 +27,7 @@ import java.util.ArrayList;
  * @author qw
  */
 public class MapsWorld extends AbstractWorld {
-    
-
-
+        
     public ArrayList<Map> mapsList = new ArrayList<Map>();
 
     ArrayList<Float> mapLocations = new ArrayList<Float>();

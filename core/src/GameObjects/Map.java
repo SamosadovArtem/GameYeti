@@ -7,6 +7,7 @@ package GameObjects;
 
 import Helper.ButtonListener;
 import Helper.MapListener;
+import LocationGenerator.BarrierTypes;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -33,12 +34,14 @@ public class Map extends Actor {
   
   private BitmapFont font;
   
+  private BarrierTypes[] currentBarrierTypes;
+  
   private CharSequence text;
   
   public MapListener mapListener;
   
   public Map (String name, TextureRegion textureNormal, TextureRegion textureTouched,
-          TextureRegion textureUnbought, CharSequence newText, BitmapFont font) {
+          TextureRegion textureUnbought, CharSequence newText, BitmapFont font, BarrierTypes[] barrierTypes) {
     super();
     mapListener = new MapListener(this);
     this.addListener(mapListener);
@@ -49,6 +52,7 @@ public class Map extends Actor {
     this.setWidth(textureNormal.getRegionWidth());
     this.setHeight(textureNormal.getRegionHeight());
     this.setOrigin(this.getWidth() / 2.0f, this.getHeight() / 2.0f);
+    this.currentBarrierTypes = barrierTypes;
   }
   
   
@@ -125,5 +129,10 @@ public class Map extends Actor {
     }
     //Устанавливаем цвет фона
    }
+
+    public BarrierTypes[] getCurrentBarrierTypes() {
+        return currentBarrierTypes;
+    }
+    
 }
 
