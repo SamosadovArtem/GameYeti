@@ -14,10 +14,10 @@ import com.badlogic.gdx.math.Vector2;
 public class Constants {
 
 
-    public static final int APP_WIDTH = Gdx.graphics.getHeight()>Gdx.graphics.getWidth() ?
-            Gdx.graphics.getHeight() : Gdx.graphics.getWidth();//800;
-    public static final int APP_HEIGHT = Gdx.graphics.getHeight()<Gdx.graphics.getWidth() ?
-            Gdx.graphics.getHeight() : Gdx.graphics.getWidth();//480;
+    public static final int APP_WIDTH = /*Gdx.graphics.getHeight()>Gdx.graphics.getWidth() ?
+            Gdx.graphics.getHeight() : Gdx.graphics.getWidth();/*/800;
+    public static final int APP_HEIGHT = /* Gdx.graphics.getHeight()<Gdx.graphics.getWidth() ?
+            Gdx.graphics.getHeight() : Gdx.graphics.getWidth();/*/480;
 
     public static final int MIN_STEP = APP_WIDTH/3;
     public static final int MAX_STEP = APP_WIDTH*3/4;

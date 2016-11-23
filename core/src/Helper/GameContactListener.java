@@ -54,6 +54,7 @@ public class GameContactListener implements ContactListener {
                 snakeContact(contact);
                 coinsPreContact(contact);
                 deleteContact(contact);
+                hippoContact(contact);
             }
         }
     }
@@ -220,4 +221,18 @@ public class GameContactListener implements ContactListener {
         }
     }
 
+    private void hippoContact(Contact contact){
+        if (contact.getFixtureA().getUserData() != null && contact.getFixtureA().getUserData().equals("HippoHead")) {
+            if (contact.getFixtureB().getUserData() != null && contact.getFixtureB().getUserData().equals("PINGUIN")) {
+                contact.setEnabled(false);
+                snakeJump();
+            }
+        }
+        if (contact.getFixtureB().getUserData() != null && contact.getFixtureB().getUserData().equals("HippoHead")) {
+            if (contact.getFixtureA().getUserData() != null && contact.getFixtureA().getUserData().equals("PINGUIN")) {
+                contact.setEnabled(false);
+                snakeJump();
+            }
+        }
+    }
 }

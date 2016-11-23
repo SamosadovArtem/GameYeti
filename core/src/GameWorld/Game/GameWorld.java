@@ -16,6 +16,7 @@ import GameWorld.Game.Objects.EndGameWindow;
 import GameWorld.Game.Objects.GameActor;
 import GameWorld.Game.Objects.Giraffe;
 import GameWorld.Game.Objects.Ground;
+import GameWorld.Game.Objects.Hippo;
 import GameWorld.Game.Objects.Pinguin;
 import GameWorld.Game.Objects.Tablet;
 import GameWorld.Skins.Elements.SkinList;

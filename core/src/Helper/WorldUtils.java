@@ -294,4 +294,54 @@ public class WorldUtils {
         return body;
     }
 
+    public static Body createHippo(World world, float x, float y, float widthHead
+            , float heightHead, float widthBody, float heightBody) {
+        Body body = createHippoHead(world, x, y, widthHead, heightHead);
+        createHippoBody(world, x, y, widthBody, heightBody);
+        return body;
+    }
+
+    public static Body createHippoHead(World world, float x, float y, float width, float height) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.position.set(new Vector2(x, y + height));
+        //   bodyDef.active = false;
+        Body body = world.createBody(bodyDef);
+        body.setGravityScale(0f);
+        body.setFixedRotation(false);
+        PolygonShape box = new PolygonShape();
+        box.setAsBox(width / 2, height / 2);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = box;
+        fixtureDef.density = 0.0f;
+        fixtureDef.friction = 1.8f;
+        fixtureDef.restitution = 0f;
+        body.createFixture(fixtureDef);
+        body.getFixtureList().get(0).setUserData("HippoHead");
+        body.resetMassData();
+        box.dispose();
+        return body;
+    }
+
+    public static Body createHippoBody(World world, float x, float y, float width, float height) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.position.set(new Vector2(x, y + height));
+        Body body = world.createBody(bodyDef);
+        body.setGravityScale(0f);
+        body.setFixedRotation(false);
+        PolygonShape box = new PolygonShape();
+        box.setAsBox(width / 2, height / 2);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = box;
+        fixtureDef.density = 1.0f;
+        fixtureDef.friction = 1.8f;
+        fixtureDef.restitution = 0f;
+        body.createFixture(fixtureDef);
+        body.resetMassData();
+        body.getFixtureList().get(0).setUserData("HippoBody");
+        box.dispose();
+        return body;
+    }
+
 }

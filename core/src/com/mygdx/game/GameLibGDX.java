@@ -41,7 +41,7 @@ public class GameLibGDX extends ApplicationAdapter {
         this.screen = screen;
         if (this.screen != null) {
             this.screen.show();
-            this.screen.resize(Constants.APP_WIDTH, Constants.APP_HEIGHT);
+            this.screen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         }
     }
     

@@ -64,12 +64,12 @@ GameRenderer extends Renderer {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         // renderer.render(world.world, cam.combined);
         batch.begin();
-        batch.draw(background, 0, (int) (Constants.GROUND_HEIGHT / 2 + Constants.GROUND_Y),
+        batch.draw(background, 0, (int) (Constants.GROUND_HEIGHT / 2 + Gdx.graphics.getHeight()/4),
                 Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - (int) (Constants.GROUND_HEIGHT / 2 + Constants.GROUND_Y),
                 sourceX, 0, 1024, 512, true, false);
 
         batch.draw(background, 0, 0,
-                Gdx.graphics.getWidth(), (int) ((Constants.GROUND_Y)),
+                Gdx.graphics.getWidth(), (int) ((Gdx.graphics.getHeight()/4)),
                 sourceX, 0, 1024*4, 512, true, false);
 
         batch.end();

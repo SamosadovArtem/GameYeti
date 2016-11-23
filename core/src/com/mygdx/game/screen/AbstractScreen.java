@@ -16,6 +16,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.GameLibGDX;
 
 /**
@@ -36,8 +37,8 @@ public abstract class AbstractScreen implements Screen {
         float b = Constants.APP_HEIGHT;
         final GameLibGDX g = game;
 
-        ui = new Interface(new Stage(new FillViewport(a, b)),
-                new Stage(new FillViewport(a, b)) {
+        ui = new Interface(new Stage(new StretchViewport(a, b)),
+                new Stage(new StretchViewport(a, b)) {
                     @Override
                     public boolean keyDown(int keyCode) {
                         if (keyCode == Input.Keys.BACK) {
