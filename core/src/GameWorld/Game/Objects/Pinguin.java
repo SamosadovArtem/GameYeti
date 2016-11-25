@@ -49,10 +49,16 @@ public class Pinguin extends GameActor {
     }
 
     public void setAngle(float f) {
-
+        if(getY()<Constants.GROUND_Y+Constants.GROUND_HEIGHT+50f && f>=45 && f<=135){
+            if(f<90){
+                f=45;
+            } else{
+                f = 135;
+            }
+        }
         this.setRotation(f);
-        //this.getBody().setTransform(this.getBody().getPosition(),
-        //(float)Math.toRadians(angular));
+        this.getBody().setTransform(this.getBody().getPosition(),
+        (float)Math.toRadians(f));
     }
 
     public void show() {
@@ -144,7 +150,7 @@ public class Pinguin extends GameActor {
         body.applyLinearImpulse(new Vector2(directionX * power * powerCof, directionY * power * powerCof),
                 body.getWorldCenter(), true);
         Statistic.jump();
-        //body.setTransform(body.getPosition(), (float)Math.toRadians(body.getLinearVelocity().angle()));
+        body.setTransform(body.getPosition(), (float)Math.toRadians(body.getLinearVelocity().angle()));
     }
 
     public int getPower() {

@@ -41,8 +41,6 @@ public class GiftWorld extends AbstractWorld {
         ui.getGuiStage().addActor(gift);
         acceptButton = new Button("Accept", AssetLoader.btn, AssetLoader.btnPress, "ACCEPT", FontLoader.font) {
             public void action() {
-                type = GiftHandler.getGiftType();
-                Gdx.app.log("Type: ", "" + type.toString());
                 GiftHandler.takeGift(type);
                 game.setScreen(new MainScreen(game));
             }

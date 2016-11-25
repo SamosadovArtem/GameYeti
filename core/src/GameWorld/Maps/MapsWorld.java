@@ -15,19 +15,20 @@ import Helper.AssetLoader;
 import Helper.FontLoader;
 import Helper.Statistic;
 import LocationGenerator.BarrierTypes;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.GameLibGDX;
 import com.mygdx.game.screen.GameScreen;
+
 import java.util.ArrayList;
 
 /**
- *
  * @author qw
  */
 public class MapsWorld extends AbstractWorld {
-        
+
     public ArrayList<Map> mapsList = new ArrayList<Map>();
 
     ArrayList<Float> mapLocations = new ArrayList<Float>();
@@ -50,17 +51,17 @@ public class MapsWorld extends AbstractWorld {
     Boolean isTouchUnboughtMap = false;
     Boolean isTouchCancel = false;
     private Boolean isDialog = false;
-    
+
     BuyMapWindow buyMapWindow;
-    
+
     Button rightButton;
     Button leftButton;
 
-    
+
     public MapsWorld(Interface ui, GameLibGDX g) {
         super(ui, g);
 
-        buyMapWindow = new BuyMapWindow(ui.getGuiStage(),this);
+        buyMapWindow = new BuyMapWindow(ui.getGuiStage(), this);
         mapsList = LoadMaps();
         LoadLeftAndRightButtons();
         SetVisible();
@@ -74,15 +75,15 @@ public class MapsWorld extends AbstractWorld {
 
 //        System.out.println("Камера - "+ui.getStage().getCamera().position.x);
 //        System.out.println("Первая мапа - "+mapsList.get(1).getX());
-            
-         //System.out.println(GetActiveMapNumber());
-        
-        
+
+        //System.out.println(GetActiveMapNumber());
+
+
         ui.updateFps(1 / delta);
-        
+
         moveCamera();
         SetVisible();
-        }
+    }
 
     private void createUI(ArrayList<Map> allMap) {
         for (int i = 0; i < allMap.size(); i++) {
@@ -94,11 +95,11 @@ public class MapsWorld extends AbstractWorld {
     public boolean isDialog() {
         return isDialog;
     }
-    public void setIsDialog(boolean flag){
-        System.out.println("I'm set to "+flag);
+
+    public void setIsDialog(boolean flag) {
         isDialog = flag;
     }
-   
+
 
     private ArrayList<Map> LoadMaps() {
 
@@ -107,7 +108,7 @@ public class MapsWorld extends AbstractWorld {
         for (int i = 0; i < mapsArray.length; i++) {
             try {
                 allMap.get(Integer.valueOf(mapsArray[i])).BuyMap();
-            } catch (Exception e){
+            } catch (Exception e) {
 
             }
         }
@@ -127,7 +128,7 @@ public class MapsWorld extends AbstractWorld {
 
     private void moveCamera() {
         if (isNotTouched) {
-            
+
             float speed = 0;
             //if (nearestButton != getCameraX()) {
             if (Math.abs((double) (nearestButton - getCameraX())) > 10) {//TODO: Тут можно относительный размер
@@ -163,88 +164,87 @@ public class MapsWorld extends AbstractWorld {
     }
 
     public GameLibGDX getGame() {
-        System.out.println("getGame");
         return this.game;
     }
-    public void setIsCancel(boolean flag){
+
+    public void setIsCancel(boolean flag) {
         this.isTouchCancel = flag;
     }
-     
-    public void touchConfirm(){
-        System.out.println("touchConfirm");
-        
-                        try {
-                    Statistic.removeCoins(mapToBuy.GetPrice());
-                    mapToBuy.BuyMap();
-                    Statistic.OpenMap(mapToBuy.getName());
-                    isTouchCancel = true;
-                    buyMapWindow.deleteWindow();
-                } catch (IllegalArgumentException e) {
-                    System.err.println(e.getMessage());
-                }
+
+    public void touchConfirm() {
+        try {
+            Statistic.removeCoins(mapToBuy.GetPrice());
+            mapToBuy.BuyMap();
+            Statistic.OpenMap(mapToBuy.getName());
+            isTouchCancel = true;
+            buyMapWindow.deleteWindow();
+        } catch (IllegalArgumentException e) {
+            System.err.println(e.getMessage());
+        }
     }
-    public BuyMapWindow getBuyMapWindow(){
+
+    public BuyMapWindow getBuyMapWindow() {
         return this.buyMapWindow;
     }
-    
-    private void LoadLeftAndRightButtons(){
+
+    private void LoadLeftAndRightButtons() {
         leftButton = new Button("Left", AssetLoader.leftSlideTexture, AssetLoader.leftSlidePressedTexture, "", FontLoader.font) {
             public void action() {
-                
-                if(!isDialog){
-                
-                if (GetActiveMapNumber()!=0){
+
+                if (!isDialog) {
+
+                    if (GetActiveMapNumber() != 0) {
 //                setNearestLength((float) (ui.getStage().getCamera().position.x
 //                        - (mapLocations.get(GetActiveMapNumber()-1))));
-                    setNearestLength((float) (ui.getStage().getCamera().position.x-
-                            mapsList.get(0).getWidth()*2));
-                }
-                
-                
-                SetVisible();
-                
+                        setNearestLength((float) (ui.getStage().getCamera().position.x -
+                                mapsList.get(0).getWidth() * 2));
+                    }
+
+
+                    SetVisible();
+
                 }
             }
         };
         leftButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
-        leftButton.setPosition((float) (leftButton.getWidth()/4),ui.getGuiStage().getHeight()/2
-        - leftButton.getHeight()/2);
+        leftButton.setPosition((float) (leftButton.getWidth() / 4), ui.getGuiStage().getHeight() / 2
+                - leftButton.getHeight() / 2);
 
         ui.getGuiStage().addActor(leftButton);
-        
+
         rightButton = new Button("Right", AssetLoader.rightSlideTexture, AssetLoader.rightSlidePressedTexture, "", FontLoader.font) {
             public void action() {
-                
-                if(!isDialog){
-                
-                if (GetActiveMapNumber()!=mapsList.size()-1){
+
+                if (!isDialog) {
+
+                    if (GetActiveMapNumber() != mapsList.size() - 1) {
 //                setNearestLength((float) (ui.getStage().getCamera().position.x
 //                        - (mapLocations.get(GetActiveMapNumber()+1))));
 
-                    setNearestLength((float) (ui.getStage().getCamera().position.x+
-                            mapsList.get(0).getWidth()*2));
+                        setNearestLength((float) (ui.getStage().getCamera().position.x +
+                                mapsList.get(0).getWidth() * 2));
 
-                }
-                
-                SetVisible();
-                
+                    }
+
+                    SetVisible();
+
                 }
             }
         };
         rightButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
-        rightButton.setPosition((float) (ui.getGuiStage().getWidth()-rightButton.getWidth()*1.25),ui.getGuiStage().getHeight()/2
-        - rightButton.getHeight()/2);
+        rightButton.setPosition((float) (ui.getGuiStage().getWidth() - rightButton.getWidth() * 1.25), ui.getGuiStage().getHeight() / 2
+                - rightButton.getHeight() / 2);
 
         ui.getGuiStage().addActor(rightButton);
     }
-    
-    public void SetVisible(){
-        
-        if (GetActiveMapNumber()==0){
+
+    public void SetVisible() {
+
+        if (GetActiveMapNumber() == 0) {
             leftButton.setVisible(false);
             rightButton.setVisible(true);
-        }else{
-            if (GetActiveMapNumber()==mapsList.size()-1){
+        } else {
+            if (GetActiveMapNumber() == mapsList.size() - 1) {
                 rightButton.setVisible(false);
                 leftButton.setVisible(true);
             } else {
@@ -252,31 +252,30 @@ public class MapsWorld extends AbstractWorld {
                 leftButton.setVisible(true);
             }
         }
-        
-    }
-    
-    private int GetActiveMapNumber(){
 
-        
-        for (int i = 0;i<mapsList.size();i++){
-            
+    }
+
+    private int GetActiveMapNumber() {
+
+
+        for (int i = 0; i < mapsList.size(); i++) {
+
             //System.out.println((ui.getStage().getCamera().position.x-mapsList.get(i).getX()));
-            
-            if (Math.abs((ui.getStage().getCamera().position.x-mapsList.get(i).getX()))<=
-                    mapsList.get(0).getWidth()/2
-                    +
-                    mapsList.get(i).getWidth()/4){
-                
-                
-                
+
+            if (Math.abs((ui.getStage().getCamera().position.x - mapsList.get(i).getX())) <=
+                    mapsList.get(0).getWidth() / 2
+                            +
+                            mapsList.get(i).getWidth() / 4) {
+
+
                 return i;
             }
         }
         return -1;
     }
-    
-    public void setNearestLength(float length){
+
+    public void setNearestLength(float length) {
         this.nearestButton = length;
-    }   
+    }
 
 }

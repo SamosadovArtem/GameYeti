@@ -5,6 +5,7 @@
  */
 package GameWorld.Main;
 
+import Enums.TutorialType;
 import GameObjects.Button;
 import GameObjects.DailyGiftWindow;
 import GameObjects.Interface;
@@ -15,6 +16,7 @@ import Helper.DailyGiftHandler;
 import Helper.FontLoader;
 import Helper.SoundsLoader;
 import Helper.Statistic;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -32,9 +34,9 @@ import com.mygdx.game.screen.MapsScreen;
 import com.mygdx.game.screen.SettingsScreen;
 import com.mygdx.game.screen.StatisticScreen;
 import com.mygdx.game.screen.TicketScreen;
+import com.mygdx.game.tutorial.TutorialHandler;
 
 /**
- *
  * @author qw
  */
 public class MainWorld extends AbstractWorld {
@@ -50,6 +52,8 @@ public class MainWorld extends AbstractWorld {
         SoundsLoader.LoadBasicSounds();
         SoundsLoader.PlayBackSound();
 
+        TutorialHandler.initTutorial();
+
         createUI();
 
         handleDailyGift();
@@ -57,7 +61,6 @@ public class MainWorld extends AbstractWorld {
 
     private void handleDailyGift() {
         DailyGiftHandler.setDailyGift();
-        Gdx.app.log("fewfq", ": " + DailyGiftHandler.gift.getSaveData());
         DailyGiftWindow dailyGiftWindow = new DailyGiftWindow(ui.getGuiStage());
         if (DailyGiftHandler.gift.checkIsAvailable()) {
             dailyGiftWindow.instantShow(game);
@@ -81,27 +84,33 @@ public class MainWorld extends AbstractWorld {
 
         playButton(AssetLoader.playTexture, AssetLoader.playPressedTexture);
         settingsButton(AssetLoader.settingsTexture, AssetLoader.settingsPressedTexture);
+        ticketButton(AssetLoader.ticketTexture, AssetLoader.ticketPressedTexture);
         statisticButton(AssetLoader.statisticTexture, AssetLoader.statisticPressedTexture);
         buffsButton(AssetLoader.buffTexture, AssetLoader.buffPressedTexture);
         coinsButton(AssetLoader.coinsTexture, AssetLoader.coinsPressedTexture);
         skinsButton(AssetLoader.skinsTexture, AssetLoader.skinsPressedTexture);
-        ticketButton(AssetLoader.ticketTexture, AssetLoader.ticketPressedTexture);
         initHighscore();
     }
 
-    private void checkDailyGift() {
-
-    }
-
     private void playButton(TextureRegion normalState, TextureRegion pressedState) {
-        mapsScreenButton = new Button("Play", normalState, pressedState, "", FontLoader.font) {
+        TextureRegion normal = normalState;
+        TextureRegion pressed = pressedState;
+
+        if (TutorialHandler.getType() == TutorialType.PLAY) {
+            normal = AssetLoader.tutorialPlay;
+            pressed = AssetLoader.tutorialPlay;
+        }
+        mapsScreenButton = new Button("Play", normal, pressed, "", FontLoader.font) {
             public void action() {
-                game.setScreen(new MapsScreen(game));
+                if (TutorialHandler.getType() == TutorialType.DONE ||
+                        TutorialHandler.getType() == TutorialType.PLAY) {
+                    game.setScreen(new MapsScreen(game));
+                }
             }
         };
         mapsScreenButton.setSize(ui.getStage().getWidth() * 0.4f, ui.getStage().getHeight() / 5);
         mapsScreenButton.setPosition((ui.getStage().getWidth() - mapsScreenButton.getWidth()) / 2,
-                (ui.getStage().getHeight() - mapsScreenButton.getHeight()) / 2);
+                (ui.getStage().getHeight() - mapsScreenButton.getHeight()) * 5 / 8);
 
         ui.getGuiStage().addActor(mapsScreenButton);
     }
@@ -109,84 +118,136 @@ public class MainWorld extends AbstractWorld {
     private void settingsButton(TextureRegion normalState, TextureRegion pressedState) {
         settingsButton = new Button("Settings", normalState, pressedState, "", FontLoader.font) {
             public void action() {
-                game.setScreen(new SettingsScreen(game));
+                if (TutorialHandler.getType() == TutorialType.DONE) {
+                    game.setScreen(new SettingsScreen(game));
+                }
             }
         };
         settingsButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
-        settingsButton.setPosition(ui.getStage().getWidth() / 5 - settingsButton.getWidth() / 2,
+        settingsButton.setPosition(ui.getStage().getWidth() / 2 - settingsButton.getWidth() / 2,
                 mapsScreenButton.getY() - mapsScreenButton.getHeight());
 
         ui.getGuiStage().addActor(settingsButton);
     }
 
-    private void buffsButton(TextureRegion normalState, TextureRegion pressedState) {
-        buffsButton = new Button("Buff", normalState, pressedState, "", FontLoader.font) {
+    private void ticketButton(TextureRegion normalState, TextureRegion pressedState) {
+
+        TextureRegion normal = normalState;
+        TextureRegion pressed = pressedState;
+
+        if (TutorialHandler.getType() == TutorialType.TICKET) {
+            normal = AssetLoader.tutorialTicket;
+            pressed = AssetLoader.tutorialTicket;
+        }
+
+        ticketButton = new Button("Ticket", normal, pressed, String.valueOf(Statistic.getTickets()), FontLoader.font) {
             public void action() {
-                game.setScreen(new BuffsScreen(game));
+                if (TutorialHandler.getType() == TutorialType.DONE ||
+                        TutorialHandler.getType() == TutorialType.TICKET) {
+                    if (Statistic.getTickets() > 0) {
+                        Statistic.removeTicket();
+                        game.setScreen(new TicketScreen(game));
+                    } else {
+                        new TicketBuyWindow(getStage(), this).instantShow(game);
+                    }
+                }
             }
         };
-        buffsButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
-        buffsButton.setPosition(ui.getStage().getWidth() * 3 / 5 - buffsButton.getWidth() / 2,
+        ticketButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
+        ticketButton.setPosition(settingsButton.getX() - ui.getStage().getWidth() * 0.6f / 3,
                 mapsScreenButton.getY() - mapsScreenButton.getHeight());
 
-        ui.getGuiStage().addActor(buffsButton);
+        ui.getGuiStage().addActor(ticketButton);
     }
 
     private void statisticButton(TextureRegion normalState, TextureRegion pressedState) {
         statisticsButton = new Button("Stats", normalState, pressedState, "", FontLoader.font) {
             public void action() {
-                game.setScreen(new StatisticScreen(game));
+                if (TutorialHandler.getType() == TutorialType.DONE) {
+                    game.setScreen(new StatisticScreen(game));
+                }
             }
         };
         statisticsButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
-        statisticsButton.setPosition(ui.getStage().getWidth() * 2 / 5 - statisticsButton.getWidth() / 2,
+        statisticsButton.setPosition(settingsButton.getX() + ui.getStage().getWidth() * 0.6f / 3,
                 mapsScreenButton.getY() - mapsScreenButton.getHeight());
 
         ui.getGuiStage().addActor(statisticsButton);
     }
 
-    private void coinsButton(TextureRegion normalState, TextureRegion pressedState) {
-        topButton = new Button("Coins", normalState, pressedState, "", FontLoader.font) {
+    private void buffsButton(TextureRegion normalState, TextureRegion pressedState) {
+
+        TextureRegion normal = normalState;
+        TextureRegion pressed = pressedState;
+
+        if (TutorialHandler.getType() == TutorialType.BUFF) {
+            normal = AssetLoader.tutorialBuff;
+            pressed = AssetLoader.tutorialBuff;
+        }
+
+        buffsButton = new Button("Buff", normal, pressed, "", FontLoader.font) {
             public void action() {
-                game.setScreen(new DonateScreen(game));
+                if (TutorialHandler.getType() == TutorialType.DONE ||
+                        TutorialHandler.getType() == TutorialType.BUFF) {
+                    game.setScreen(new BuffsScreen(game));
+                }
+            }
+        };
+        buffsButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
+        buffsButton.setPosition(settingsButton.getX() - ui.getStage().getWidth() * 0.6f / 3,
+                mapsScreenButton.getY() - mapsScreenButton.getHeight() * 2);
+
+        ui.getGuiStage().addActor(buffsButton);
+    }
+
+    private void coinsButton(TextureRegion normalState, TextureRegion pressedState) {
+        TextureRegion normal = normalState;
+        TextureRegion pressed = pressedState;
+
+        if (TutorialHandler.getType() == TutorialType.PURCHASES) {
+            normal = AssetLoader.tutorialPurchase;
+            pressed = AssetLoader.tutorialPurchase;
+        }
+
+        topButton = new Button("Coins", normal, pressed, "", FontLoader.font) {
+            public void action() {
+                if (TutorialHandler.getType() == TutorialType.DONE ||
+                        TutorialHandler.getType() == TutorialType.PURCHASES) {
+                    game.setScreen(new DonateScreen(game));
+                }
             }
         };
         topButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
-        topButton.setPosition(ui.getStage().getWidth() * 4 / 5 - buffsButton.getWidth() / 2,
-                mapsScreenButton.getY() - mapsScreenButton.getHeight());
+        topButton.setPosition(ui.getStage().getWidth() / 2 - settingsButton.getWidth() / 2,
+                mapsScreenButton.getY() - mapsScreenButton.getHeight() * 2);
 
         ui.getGuiStage().addActor(topButton);
     }
 
     private void skinsButton(TextureRegion normalState, TextureRegion pressedState) {
-        topButton = new Button("Skins", normalState, pressedState, "", FontLoader.font) {
-            public void action() {
-                game.setScreen(new BuySkinsScreen(game));
-            }
-        };
-        topButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
-        topButton.setPosition(ui.getStage().getWidth() * 5 / 5 - buffsButton.getWidth() / 2,
-                mapsScreenButton.getY() - mapsScreenButton.getHeight());
+        TextureRegion normal = normalState;
+        TextureRegion pressed = pressedState;
 
-        ui.getGuiStage().addActor(topButton);
-    }
-
-    private void ticketButton(TextureRegion normalState, TextureRegion pressedState) {
-        ticketButton = new Button("Ticket", normalState, pressedState, String.valueOf(Statistic.getTickets()), FontLoader.font) {
+        if (TutorialHandler.getType() == TutorialType.SKIN) {
+            normal = AssetLoader.tutorialPurchase;
+            pressed = AssetLoader.tutorialPurchase;
+        }
+        topButton = new Button("Skins", normal, pressed, "", FontLoader.font) {
             public void action() {
-                if (Statistic.getTickets() > 0) {
-                    Statistic.removeTicket();
-                    game.setScreen(new TicketScreen(game));
-                } else {
-                    new TicketBuyWindow(getStage(), this).instantShow(game);
+                if (TutorialHandler.getType() == TutorialType.DONE ||
+                        TutorialHandler.getType() == TutorialType.SKIN) {
+                    if(TutorialHandler.getType() == TutorialType.SKIN){
+                        TutorialHandler.increaseTutorialLvl();
+                    }
+                    game.setScreen(new BuySkinsScreen(game));
                 }
             }
         };
-        ticketButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
-        ticketButton.setPosition(0,
-                mapsScreenButton.getY() - mapsScreenButton.getHeight());
+        topButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
+        topButton.setPosition(settingsButton.getX() + ui.getStage().getWidth() * 0.6f / 3,
+                mapsScreenButton.getY() - mapsScreenButton.getHeight() * 2);
 
-        ui.getGuiStage().addActor(ticketButton);
+        ui.getGuiStage().addActor(topButton);
     }
 
     private void initHighscore() {
@@ -195,7 +256,7 @@ public class MainWorld extends AbstractWorld {
         labelS.fontColor = Color.WHITE;
         highscoreText = new Label("", labelS);
         highscoreText.setAlignment(Align.center);
-        highscoreText.setFontScale(1);
+        highscoreText.setFontScale(1.1f);
         highscoreText.setSize(ui.getStage().getWidth() * 0.4f, ui.getStage().getHeight() / 5);
         updateHighscore();
         ui.getGuiStage().addActor(highscoreText);

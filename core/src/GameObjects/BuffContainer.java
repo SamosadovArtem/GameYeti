@@ -5,6 +5,7 @@
  */
 package GameObjects;
 
+import Enums.TutorialType;
 import GameObjects.Buffs.Buff;
 import Helper.AssetLoader;
 import Helper.FontLoader;
@@ -16,12 +17,14 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.mygdx.game.screen.MainScreen;
+import com.mygdx.game.tutorial.TutorialHandler;
 
 /**
  *
@@ -94,13 +97,23 @@ public class BuffContainer extends Actor {
         countdown.setText(timer.getTime());
         group.addActor(countdown);
 
-        upgrade = new Button("Upgrade", AssetLoader.buffsArrow, AssetLoader.buffsArrow, "", FontLoader.font) {
+        TextureRegion normal =AssetLoader.buffsArrow;
+        TextureRegion pressed = AssetLoader.buffsArrow;
+
+        if(TutorialHandler.getType() == TutorialType.BUFF){
+            normal = AssetLoader.tutorialBuff;
+            pressed = AssetLoader.tutorialBuff;
+        }
+
+        upgrade = new Button("Upgrade", normal, pressed, "", FontLoader.font) {
             public void action() {
                 if (buff.checkUpgrade(Statistic.getCoins())) {
-                    Gdx.app.log("UPGR", "");
                     buff.upgrade();
                     timer = buff.getTimer().getTimeLeft();
                     updateInfo();
+                    if(TutorialHandler.getType() == TutorialType.BUFF){
+                        TutorialHandler.increaseTutorialLvl();
+                    }
                 }
             }
         };
@@ -110,10 +123,12 @@ public class BuffContainer extends Actor {
 
         extend = new Button("Extend", AssetLoader.buffsClock, AssetLoader.buffsClock, "", FontLoader.font) {
             public void action() {
-                if (buff.checkUpdate(Statistic.getCoins())) {
-                    Gdx.app.log("UPD", "");
-                    buff.update();
-                    timer = buff.getTimer().getTimeLeft();
+                if(TutorialHandler.getType() != TutorialType.BUFF) {
+                    if (buff.checkUpdate(Statistic.getCoins())) {
+                        Gdx.app.log("UPD", "");
+                        buff.update();
+                        timer = buff.getTimer().getTimeLeft();
+                    }
                 }
             }
         };

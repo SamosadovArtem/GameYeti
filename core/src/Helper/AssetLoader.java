@@ -62,6 +62,11 @@ public class AssetLoader {
             heightSkyCoffBuff, jumpPowerBuff, powerCoffBuff;
     public static TextureRegion buffsArrow, buffsClock;
 
+    //Tutorial
+    public static TextureRegion tutorialBuff, tutorialGradeBuff, tutorialTicket, tutorialGetPrize,
+            tutorialPurchase, tutorialBuyCoin, tutorialSkin, tutorialBuySkin,
+            tutorialPlay, tutorialMap, tutorialBack;
+
     public static void load() {
 
         back = new Texture(Gdx.files.internal("gfx/buttons/back.png"));
@@ -74,6 +79,7 @@ public class AssetLoader {
         loadMainScreenElements();
         loadMapsScreenElements();
         loadBuffScreenElements();
+        loadTutorialElements();
 
         prizeFieldFull = new Texture(Gdx.files.internal("gfx/gameScreen.Objects/ticketFull.png"));
         prizeFieldFull.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -296,6 +302,54 @@ public class AssetLoader {
 
         powerCoffBuff = new Texture(Gdx.files.internal("gfx/interface/buffs/powerCoffBuff.png"));
         powerCoffBuff.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+    }
+
+    public static void loadTutorialElements(){
+        Texture tutorial = new Texture(Gdx.files.internal("gfx/interface/tutorialButtons/buff.png"));
+        tutorial.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        tutorialBuff = new TextureRegion(tutorial, 0, 0, 512, 512);
+
+        tutorial = new Texture(Gdx.files.internal("gfx/interface/tutorialButtons/gradeBuff.png"));
+        tutorial.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        tutorialGradeBuff = new TextureRegion(tutorial, 0, 0, 512, 512);
+
+        tutorial = new Texture(Gdx.files.internal("gfx/interface/tutorialButtons/ticket.png"));
+        tutorial.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        tutorialTicket = new TextureRegion(tutorial, 0, 0, 512, 512);
+
+        tutorial = new Texture(Gdx.files.internal("gfx/interface/tutorialButtons/getPrize.png"));
+        tutorial.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        tutorialGetPrize = new TextureRegion(tutorial, 0, 0, 512, 512);
+
+        tutorial = new Texture(Gdx.files.internal("gfx/interface/tutorialButtons/purchase.png"));
+        tutorial.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        tutorialPurchase = new TextureRegion(tutorial, 0, 0, 512, 512);
+
+        tutorial = new Texture(Gdx.files.internal("gfx/interface/tutorialButtons/buyCoin.png"));
+        tutorial.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        tutorialBuyCoin = new TextureRegion(tutorial, 0, 0, 512, 512);
+
+        tutorial = new Texture(Gdx.files.internal("gfx/interface/tutorialButtons/skin.png"));
+        tutorial.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        tutorialSkin = new TextureRegion(tutorial, 0, 0, 512, 512);
+
+        tutorial = new Texture(Gdx.files.internal("gfx/interface/tutorialButtons/buySkin.png"));
+        tutorial.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        tutorialBuySkin = new TextureRegion(tutorial, 0, 0, 512, 512);
+
+        tutorial = new Texture(Gdx.files.internal("gfx/interface/tutorialButtons/play.png"));
+        tutorial.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        tutorialPlay = new TextureRegion(tutorial, 0, 0, 512, 512);
+
+        tutorial = new Texture(Gdx.files.internal("gfx/interface/tutorialButtons/map.png"));
+        tutorial.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        tutorialMap = new TextureRegion(tutorial, 0, 0, 512, 512);
+
+        tutorial = new Texture(Gdx.files.internal("gfx/interface/tutorialButtons/back.png"));
+        tutorial.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        tutorialBack = new TextureRegion(tutorial, 0, 0, 512, 512);
+
+        //         tutorialPlay, tutorialMap, tutorialBack;
     }
 
     public static Texture loadTicketGift(GiftType type) {

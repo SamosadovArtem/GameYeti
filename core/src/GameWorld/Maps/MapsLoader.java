@@ -5,6 +5,7 @@
  */
 package GameWorld.Maps;
 
+import Enums.TutorialType;
 import GameObjects.Map;
 import Helper.AssetLoader;
 import Helper.FontLoader;
@@ -12,6 +13,8 @@ import Helper.Values;
 import LocationGenerator.BarrierTypes;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.screen.GameScreen;
+import com.mygdx.game.tutorial.TutorialHandler;
+
 import java.util.ArrayList;
 
 /**
@@ -37,6 +40,11 @@ public final class MapsLoader {
     public static ArrayList<Map> GetMaps( final MapsWorld world){
         allMaps = new ArrayList<Map>();
         mapLocations = new ArrayList<Float>();
+
+        if(TutorialHandler.getType() == TutorialType.PLAY){
+            firstButtonNormalState = AssetLoader.tutorialMap;
+            firstButtonnPressedState = AssetLoader.tutorialMap;
+        }
         
           Map tempMap = new Map("0", firstButtonNormalState,
                 firstButtonnPressedState, firstButtonUnboughtState, "0", FontLoader.font, firstMapBarriers){

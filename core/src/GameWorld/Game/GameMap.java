@@ -10,6 +10,7 @@ import GameWorld.Game.Objects.ClearObject;
 import GameWorld.Game.Objects.Coin;
 import GameWorld.Game.Objects.GameActor;
 import GameWorld.Game.Objects.Giraffe;
+import GameWorld.Game.Objects.Hippo;
 import GameWorld.Game.Objects.Pinguin;
 import GameWorld.Game.Objects.Snake;
 import GameWorld.Game.Objects.StopObj;
@@ -50,7 +51,7 @@ public class GameMap {
         player.setVisible(p.isVisible());
     }
 
-    public Stage getStage()  {
+    public Stage getStage() {
         return mapStage;
     }
 

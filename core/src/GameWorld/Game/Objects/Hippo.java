@@ -66,8 +66,8 @@ public class Hippo extends GameActor {
 
     public void draw(Batch batch, float parentAlpha) {
         if (delete() && checkDraw()) {
-            batch.draw(groundTexture, getX() - widthHead / 2 * 2, getY() - heightHead / 2 * 2 + heightBody, widthHead, heightHead);
-            batch.draw(groundTexture, getX() - widthBody / 2, getY() - heightBody / 2, widthBody, heightBody);
+            batch.draw(groundTexture, getX()-widthHead/2, getY()-heightHead/2, widthHead, heightHead);
+            batch.draw(groundTexture, getX()-widthHead/2, getY()-heightBody-heightHead/2, widthBody, heightBody);
         }
     }
 }

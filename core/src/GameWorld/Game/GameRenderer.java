@@ -53,8 +53,8 @@ GameRenderer extends Renderer {
         this.ui = ui;
         this.map = map;
 
-      //  renderer = new Box2DDebugRenderer();
-      //  renderer.setDrawVelocities(true);
+        renderer = new Box2DDebugRenderer();
+        renderer.setDrawVelocities(true);
         ui.getStage().getCamera().position.x = ui.getStage().getWidth() * 0.3f;
     }
 
@@ -62,7 +62,7 @@ GameRenderer extends Renderer {
     public void render() {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        // renderer.render(world.world, cam.combined);
+       //  renderer.render(world.world, cam.combined);
         batch.begin();
         batch.draw(background, 0, (int) (Constants.GROUND_HEIGHT / 2 + Gdx.graphics.getHeight()/4),
                 Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - (int) (Constants.GROUND_HEIGHT / 2 + Constants.GROUND_Y),

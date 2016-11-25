@@ -5,6 +5,8 @@
  */
 package GameWorld.Ticket;
 
+import Enums.GiftType;
+import Enums.TutorialType;
 import GameObjects.Button;
 import GameObjects.Interface;
 import GameObjects.PrizeField.PrizeField;
@@ -13,13 +15,14 @@ import GameWorld.AbstractWorld;
 import GameWorld.Ticket.Gift.GiftHandler;
 import Helper.AssetLoader;
 import Helper.FontLoader;
+
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.GameLibGDX;
 import com.mygdx.game.screen.GiftScreen;
 import com.mygdx.game.screen.SettingsScreen;
+import com.mygdx.game.tutorial.TutorialHandler;
 
 /**
- *
  * @author Pablo
  */
 public class TicketWorld extends AbstractWorld {
@@ -59,7 +62,11 @@ public class TicketWorld extends AbstractWorld {
     private void addButton() {
         resultButton = new Button("Result", AssetLoader.btn, AssetLoader.btnPress, "RESULT", FontLoader.font) {
             public void action() {
-                GiftScreen.initType(GiftHandler.getGiftType());
+                if (TutorialHandler.getType() == TutorialType.TICKET) {
+                    GiftScreen.initType(GiftType.COIN);
+                } else {
+                    GiftScreen.initType(GiftHandler.getGiftType());
+                }
                 game.setScreen(new GiftScreen(game));
             }
         };

@@ -5,8 +5,10 @@
  */
 package GameWorld.Game.Objects;
 
+import Enums.TutorialType;
 import GameObjects.Button;
 import GameObjects.AbstractWindow;
+import Helper.AssetLoader;
 import Helper.FontLoader;
 import Helper.SoundsLoader;
 import Helper.Statistic;
@@ -14,6 +16,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -22,6 +25,8 @@ import com.mygdx.game.GameLibGDX;
 import com.mygdx.game.screen.DebugScreen;
 import com.mygdx.game.screen.GameScreen;
 import com.mygdx.game.screen.MainScreen;
+import com.mygdx.game.tutorial.Tutorial;
+import com.mygdx.game.tutorial.TutorialHandler;
 
 /**
  *
@@ -53,7 +58,11 @@ public class EndGameWindow extends AbstractWindow {
         textLabel.setAlignment(Align.center);
         textLabel.setFontScale(0.5f);
         textLabel.setSize(width / 3, height / 6);
-        textLabel.setText("GAME OVER");
+        if(TutorialHandler.getType() == TutorialType.PLAY){
+            textLabel.setText("GAME OVER \nlet's try something else");
+        } else {
+            textLabel.setText("GAME OVER");
+        }
         textLabel.setPosition(xPos + width / 2 - textLabel.getWidth() / 2,
                 yPos + height - textLabel.getHeight());
         group.addActor(textLabel);
@@ -73,21 +82,31 @@ public class EndGameWindow extends AbstractWindow {
     protected void initButtons(final GameLibGDX game) {
         Button restartButton = new Button("Restart", normalState, pressedState, "RESTART", FontLoader.font) {
             public void action() {
-                Gdx.app.log("check", "check");
-
-                game.setScreen(new GameScreen(game));
+                if(TutorialHandler.getType() != TutorialType.PLAY) {
+                    game.setScreen(new GameScreen(game));
+                }
             }
         };
         restartButton.setSize(width / 5, height / 6);
         restartButton.setPosition(xPos, yPos);
         group.addActor(restartButton);
 
-        Button backButton = new Button("Back", normalState, pressedState, "BACK", FontLoader.font) {
+        TextureRegion normal = normalState;
+        TextureRegion pressed = pressedState;
+
+        if(TutorialHandler.getType() == TutorialType.PLAY){
+            normal = AssetLoader.tutorialBack;
+            pressed = AssetLoader.tutorialBack;
+        }
+
+        Button backButton = new Button("Back", normal, pressed, "", FontLoader.font) {
             public void action() {
-                Gdx.app.log("check", "check");
+                if(TutorialHandler.getType() == TutorialType.PLAY){
+                    TutorialHandler.increaseTutorialLvl();
+                    Statistic.addTicket();
+                }
 
                 SoundsLoader.DisposedGameSounds();
-
                 game.setScreen(new MainScreen(game));
             }
         };

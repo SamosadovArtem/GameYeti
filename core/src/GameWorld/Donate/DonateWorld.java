@@ -9,6 +9,7 @@
  */
 package GameWorld.Donate;
 
+import Enums.TutorialType;
 import GameObjects.Button;
 import GameObjects.Interface;
 import GameWorld.AbstractWorld;
@@ -24,6 +25,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.game.GameLibGDX;
+import com.mygdx.game.tutorial.TutorialHandler;
 
 public class DonateWorld extends AbstractWorld {
 
@@ -66,10 +68,22 @@ public class DonateWorld extends AbstractWorld {
     }
 
     private void donate100(TextureRegion normalState, TextureRegion pressedState) {
-        Donate100 = new Button("100", normalState, pressedState, "100", FontLoader.font) {
+
+        TextureRegion normal = normalState;
+        TextureRegion pressed = pressedState;
+
+        if(TutorialHandler.getType() == TutorialType.PURCHASES){
+            normal = AssetLoader.tutorialBuyCoin;
+            pressed = AssetLoader.tutorialBuyCoin;
+        }
+
+        Donate100 = new Button("100", normal, pressed, "100", FontLoader.font) {
             public void action() {
                 //here
                 Statistic.addCoins(100);
+                if(TutorialHandler.getType() == TutorialType.PURCHASES){
+                    TutorialHandler.increaseTutorialLvl();
+                }
             }
         };
         Donate100.setSize(2 * ui.getStage().getWidth() / 8, 2 * ui.getStage().getHeight() / 8);

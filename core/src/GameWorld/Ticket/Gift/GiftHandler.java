@@ -7,16 +7,19 @@ package GameWorld.Ticket.Gift;
 
 import Enums.BuffType;
 import Enums.GiftType;
+import Enums.TutorialType;
 import GameObjects.Picture;
 import Helper.AssetLoader;
 import Helper.BuffsInfo;
 import Helper.Statistic;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.mygdx.game.tutorial.TutorialHandler;
+
 import java.util.Random;
 
 /**
- *
  * @author Pablo
  */
 public class GiftHandler {
@@ -49,6 +52,10 @@ public class GiftHandler {
         Random rnd = new Random();
         int count = rnd.nextInt(3);
         int value = 0;
+        if (TutorialHandler.getType() == TutorialType.TICKET) {
+            count = 3;
+            TutorialHandler.increaseTutorialLvl();
+        }
         switch (count) {
             case 0:
                 value = 10;

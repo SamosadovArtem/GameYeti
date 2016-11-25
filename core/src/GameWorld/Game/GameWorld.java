@@ -61,11 +61,10 @@ public class GameWorld extends AbstractWorld {
     private Pinguin pinguin;
     private JumpCountController jumpCountController;
     private Label jumpCountText;
-    private boolean pause;
 
     private EndGameWindow endGameWindow;
 
-    private Button debugButton, pauseButton;
+    private Button debugButton;
 
     private final float TIME_STEP = 1 / 400f;
     private float accumulator = 0f;
@@ -80,7 +79,6 @@ public class GameWorld extends AbstractWorld {
 
     public GameWorld(Interface ui, GameLibGDX g) {
         super(ui, g);
-        pause = false;
         setUpWorld();
 
         //newWorldGenerate();
@@ -90,15 +88,14 @@ public class GameWorld extends AbstractWorld {
 
         SoundsLoader.LoadGameSounds();
         world = WorldUtils.createWorld(BuffsInfo.getGravityBuff().getGravity());
-        //jumpCountController = new JumpCountController(BuffsInfo.getJumpCountBuff().getCount());
-        jumpCountController = new JumpCountController(20);
+        jumpCountController = new JumpCountController(BuffsInfo.getJumpCountBuff().getCount());
+       // jumpCountController = new JumpCountController(20);
 
         endGameWindow = new EndGameWindow(ui.getGuiStage());
         setUpGround();
         addTablets(ground.getX(), ground2.getX() + ground2.getWidth());
         setUpRunner();
         addDebugButton(AssetLoader.btn, AssetLoader.btnPress);
-        addPauseButton(AssetLoader.pauseTexture, AssetLoader.pauseTexture);
         world.setContactListener(new GameContactListener(this, pinguin));
         initJumpCount();
         createObjects((int) maxX, objectsGenerateNum);
@@ -223,6 +220,8 @@ public class GameWorld extends AbstractWorld {
         drawJumpCount();
         map.focusCameraX(pinguin);
 
+    //    Gdx.app.log("Speed", String.valueOf(pinguin.getBody().getLinearVelocity().x));
+
         unlimitedGame();
         addGround();
 
@@ -262,11 +261,10 @@ public class GameWorld extends AbstractWorld {
 
     private void setAngularPinguin() {
         float angle = pinguin.getBody().getLinearVelocity().angle();
-        if (pinguin.getBody().getLinearVelocity().x <= 0.5) {
+        if (Math.abs(pinguin.getBody().getLinearVelocity().x) <= 100) {
             angle = 0;
         }
         pinguin.setAngle(angle);
-
     }
 
     private void initHit() {
@@ -274,7 +272,6 @@ public class GameWorld extends AbstractWorld {
         if (!jumpCountController.checkJump() && check) {
             endGameWindow.initHighscore((int) pinguin.getX());
             endGameWindow.showWindow(game);
-            int i = 0;
         } else if (check) {
             if (!pinguin.getIsPower()) {
                 pinguin.changePower();
@@ -285,7 +282,6 @@ public class GameWorld extends AbstractWorld {
     }
 
     public float getPlayerX() {
-
         return pinguin.getBody().getPosition().x;
     }
 
@@ -322,21 +318,6 @@ public class GameWorld extends AbstractWorld {
                 ui.getStage().getCamera().position.y + ui.getStage().getHeight() / 3);
 
         ui.getGuiStage().addActor(debugButton);
-    }
-
-    private void addPauseButton(TextureRegion normalState, TextureRegion pressedState) {
-        pauseButton = new Button("Top", normalState, pressedState, "", FontLoader.font) {
-            public void action() {
-
-                pause = !pause;
-
-            }
-        };
-        pauseButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
-        pauseButton.setPosition(ui.getStage().getCamera().position.x + ui.getStage().getWidth() / 3,
-                ui.getStage().getCamera().position.y + ui.getStage().getHeight() / 3);
-
-        ui.getGuiStage().addActor(pauseButton);
     }
 
     public void addTablet(float x) {

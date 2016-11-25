@@ -296,7 +296,7 @@ public class WorldUtils {
 
     public static Body createHippo(World world, float x, float y, float widthHead
             , float heightHead, float widthBody, float heightBody) {
-        Body body = createHippoHead(world, x, y, widthHead, heightHead);
+        Body body = createHippoHead(world, x - widthBody / 2 + widthHead /2, y + heightBody, widthHead, heightHead);
         createHippoBody(world, x, y, widthBody, heightBody);
         return body;
     }
@@ -304,7 +304,7 @@ public class WorldUtils {
     public static Body createHippoHead(World world, float x, float y, float width, float height) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.position.set(new Vector2(x, y + height));
+        bodyDef.position.set(new Vector2(x, y + height/2));
         //   bodyDef.active = false;
         Body body = world.createBody(bodyDef);
         body.setGravityScale(0f);
@@ -326,7 +326,7 @@ public class WorldUtils {
     public static Body createHippoBody(World world, float x, float y, float width, float height) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.position.set(new Vector2(x, y + height));
+        bodyDef.position.set(new Vector2(x, y + height/2));
         Body body = world.createBody(bodyDef);
         body.setGravityScale(0f);
         body.setFixedRotation(false);

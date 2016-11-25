@@ -94,7 +94,7 @@ public class Generator {
                             50, 15,
                             100, 30, 
                             AssetLoader.btn);
-                    Hippo mh = new Hippo( h.getBody(),b.GetX(), Constants.GROUND_Y,
+                    Hippo mh = new Hippo(world,b.GetX(), 0f,
                             50, 15,
                             100, 30, 
                             AssetLoader.btn);
