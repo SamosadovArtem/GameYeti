@@ -67,17 +67,8 @@ public class MainWorld extends AbstractWorld {
         }
     }
 
-    private Rectangle rect = new Rectangle(0, 0, 17, 12);
 
     public void update(float delta) {
-        rect.x++;
-        if (rect.x > 400) {
-            rect.x = 0;
-        }
-    }
-
-    public Rectangle getRect() {
-        return rect;
     }
 
     private void createUI() {
@@ -109,8 +100,8 @@ public class MainWorld extends AbstractWorld {
             }
         };
         mapsScreenButton.setSize(ui.getStage().getWidth() * 0.4f, ui.getStage().getHeight() / 5);
-        mapsScreenButton.setPosition((ui.getStage().getWidth() - mapsScreenButton.getWidth()) / 2,
-                (ui.getStage().getHeight() - mapsScreenButton.getHeight()) * 5 / 8);
+        mapsScreenButton.setPosition(ui.getStage().getWidth()*0.3f,
+                (ui.getStage().getHeight()/2));
 
         ui.getGuiStage().addActor(mapsScreenButton);
     }
@@ -171,7 +162,6 @@ public class MainWorld extends AbstractWorld {
         statisticsButton.setSize(ui.getStage().getWidth() * 0.4f / 3, ui.getStage().getHeight() / 6);
         statisticsButton.setPosition(settingsButton.getX() + ui.getStage().getWidth() * 0.6f / 3,
                 mapsScreenButton.getY() - mapsScreenButton.getHeight());
-
         ui.getGuiStage().addActor(statisticsButton);
     }
 

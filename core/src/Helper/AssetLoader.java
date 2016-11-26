@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
@@ -408,6 +409,26 @@ public class AssetLoader {
             default:
                 return null;
         }
+    }
+
+    public static void getTintedTexture(){
+
+        // TODO: это всё пример для реализации затемнения кнопок при обучении
+
+        Texture example = new Texture(Gdx.files.internal("gfx/interface/tutorialButtons/buff.png"));
+        example.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+        TextureRegion example1 = new TextureRegion(example, 0, 0, 512, 512);
+        Sprite sprite;
+        sprite = new Sprite(example, 20, 20, 50, 50);
+        sprite.setColor(0, 0, 1, 1);
+/*
+        batch.begin();
+        batch.setColor(1, 0, 0, 1);
+        batch.draw(texture, 10, 10);
+        batch.setColor(0, 1, 0, 1);
+        batch.draw(region, 50, 10);
+        sprite.draw(batch);
+        batch.end();*/
     }
 
     public static void dispose() {

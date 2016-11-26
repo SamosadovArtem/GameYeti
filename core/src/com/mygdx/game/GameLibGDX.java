@@ -10,6 +10,7 @@ import Helper.Statistic;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.mygdx.game.screen.AbstractScreen;
 import com.mygdx.game.screen.MainScreen;
 
@@ -21,6 +22,11 @@ public class GameLibGDX extends ApplicationAdapter {
     public void create () {
         loadResources();
         Gdx.input.setCatchBackKey(true);
+
+        Preferences prefs = Gdx.app.getPreferences("YetiGame");
+        prefs.putInteger("tutorialLvl", 0);
+        prefs.flush();
+
         setScreen(new MainScreen(this));
     }
 
