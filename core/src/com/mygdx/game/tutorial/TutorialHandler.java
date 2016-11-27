@@ -32,7 +32,7 @@ public class TutorialHandler {
         }
         tutorialLvl = prefs.getInteger("tutorialLvl");
 
-        tutorial = new Tutorial(tutorialLvl);
+        tutorial = new Tutorial(5);
     }
 
     public static void increaseTutorialLvl() {

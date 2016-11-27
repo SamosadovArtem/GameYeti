@@ -17,6 +17,7 @@ import com.mygdx.game.screen.MainScreen;
 public class GameLibGDX extends ApplicationAdapter {
 
     private AbstractScreen screen;
+    public static boolean showAds;
 	
     @Override
     public void create () {

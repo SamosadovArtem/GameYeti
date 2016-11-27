@@ -48,6 +48,8 @@ public class MainWorld extends AbstractWorld {
     public MainWorld(Interface ui, GameLibGDX g) {
         super(ui, g);
 
+        GameLibGDX.showAds = true;
+
         SoundsLoader.LoadBasicSounds();
         SoundsLoader.PlayBackSound();
 

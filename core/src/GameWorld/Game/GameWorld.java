@@ -86,6 +86,8 @@ public class GameWorld extends AbstractWorld {
             ui.blockBack();
         }
 
+        GameLibGDX.showAds = false;
+
         setUpWorld();
 
         //newWorldGenerate();
