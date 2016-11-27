@@ -5,6 +5,7 @@
  */
 package GameWorld.Maps;
 
+import Enums.TutorialType;
 import GameObjects.AbstractWindow;
 import GameObjects.Button;
 import GameObjects.Interface;
@@ -21,6 +22,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.GameLibGDX;
 import com.mygdx.game.screen.GameScreen;
+import com.mygdx.game.tutorial.TutorialHandler;
 
 import java.util.ArrayList;
 
@@ -65,6 +67,10 @@ public class MapsWorld extends AbstractWorld {
         mapsList = LoadMaps();
         LoadLeftAndRightButtons();
         SetVisible();
+
+        if(TutorialHandler.getType() == TutorialType.PLAY) {
+            ui.blockBack();
+        }
 
         createUI(mapsList);
 
@@ -214,20 +220,21 @@ public class MapsWorld extends AbstractWorld {
 
         rightButton = new Button("Right", AssetLoader.rightSlideTexture, AssetLoader.rightSlidePressedTexture, "", FontLoader.font) {
             public void action() {
+                if (TutorialHandler.getType() != TutorialType.PLAY) {
+                    if (!isDialog) {
 
-                if (!isDialog) {
-
-                    if (GetActiveMapNumber() != mapsList.size() - 1) {
+                        if (GetActiveMapNumber() != mapsList.size() - 1) {
 //                setNearestLength((float) (ui.getStage().getCamera().position.x
 //                        - (mapLocations.get(GetActiveMapNumber()+1))));
 
-                        setNearestLength((float) (ui.getStage().getCamera().position.x +
-                                mapsList.get(0).getWidth() * 2));
+                            setNearestLength((float) (ui.getStage().getCamera().position.x +
+                                    mapsList.get(0).getWidth() * 2));
+
+                        }
+
+                        SetVisible();
 
                     }
-
-                    SetVisible();
-
                 }
             }
         };

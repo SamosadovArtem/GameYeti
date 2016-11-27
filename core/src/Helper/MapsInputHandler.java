@@ -5,6 +5,7 @@
  */
 package Helper;
 
+import Enums.TutorialType;
 import GameObjects.Map;
 import GameWorld.Maps.MapsWorld;
 
@@ -14,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.mygdx.game.GameLibGDX;
+import com.mygdx.game.tutorial.TutorialHandler;
 
 import java.util.ArrayList;
 
@@ -77,27 +79,28 @@ public class MapsInputHandler implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        isDragAfterTouch = false;
-                        
-        if (!world.isDialog()) {
-            temp = _oldX;
-            if ((isTouched) && (_oldX > screenX)) {
+        if(TutorialHandler.getType() != TutorialType.PLAY) {
+            isDragAfterTouch = false;
 
-                _oldX = screenX;
-                if (world.getUI().getStage().getCamera().position.x < max) {
-                    world.getUI().getStage().getCamera().position.x += temp - screenX;
-                }
-            }
+            if (!world.isDialog()) {
+                temp = _oldX;
+                if ((isTouched) && (_oldX > screenX)) {
 
-            if ((isTouched) && (_oldX < screenX)) {
-                _oldX = screenX;
-                if (world.getUI().getStage().getCamera().position.x > min) {
-                    world.getUI().getStage().getCamera().position.x += temp - screenX;
+                    _oldX = screenX;
+                    if (world.getUI().getStage().getCamera().position.x < max) {
+                        world.getUI().getStage().getCamera().position.x += temp - screenX;
+                    }
                 }
+
+                if ((isTouched) && (_oldX < screenX)) {
+                    _oldX = screenX;
+                    if (world.getUI().getStage().getCamera().position.x > min) {
+                        world.getUI().getStage().getCamera().position.x += temp - screenX;
+                    }
+                }
+                return true;
             }
-            return true;
         }
-        
         return false;
     }
 

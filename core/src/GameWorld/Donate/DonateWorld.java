@@ -86,8 +86,8 @@ public class DonateWorld extends AbstractWorld {
                 }
             }
         };
-        Donate100.setSize(2 * ui.getStage().getWidth() / 8, 2 * ui.getStage().getHeight() / 8);
-        Donate100.setPosition(ui.getStage().getWidth() / 8 + ui.getStage().getWidth() / 8, 5 * ui.getStage().getHeight() / 8);
+        Donate100.setSize(ui.getStage().getWidth() / 4, ui.getStage().getHeight() / 4);
+        Donate100.setPosition(ui.getStage().getWidth() / 4, 5 * ui.getStage().getHeight() / 8);
 
         ui.getGuiStage().addActor(Donate100);
     }
@@ -96,7 +96,9 @@ public class DonateWorld extends AbstractWorld {
         Donate1000 = new Button("1000", normalState, pressedState, "1000", FontLoader.font) {
             public void action() {
                 //here
-                Statistic.addCoins(1000);
+                if(TutorialHandler.getType() != TutorialType.PURCHASES) {
+                    Statistic.addCoins(1000);
+                }
             }
         };
         Donate1000.setSize(2 * ui.getStage().getWidth() / 8, 2 * ui.getStage().getHeight() / 8);
@@ -109,7 +111,9 @@ public class DonateWorld extends AbstractWorld {
         Donate500 = new Button("500", normalState, pressedState, "500", FontLoader.font) {
             public void action() {
                 //here
-                Statistic.addCoins(500);
+                if(TutorialHandler.getType() != TutorialType.PURCHASES) {
+                    Statistic.addCoins(1000);
+                }
             }
         };
         Donate500.setSize(2 * ui.getStage().getWidth() / 8, 2 * ui.getStage().getHeight() / 8);
@@ -122,7 +126,9 @@ public class DonateWorld extends AbstractWorld {
         Donate5000 = new Button("5000", normalState, pressedState, "5000", FontLoader.font) {
             public void action() {
                 //here
-                Statistic.addCoins(5000);
+                if(TutorialHandler.getType() != TutorialType.PURCHASES) {
+                    Statistic.addCoins(1000);
+                }
             }
         };
         Donate5000.setSize(2 * ui.getStage().getWidth() / 8, 2 * ui.getStage().getHeight() / 8);

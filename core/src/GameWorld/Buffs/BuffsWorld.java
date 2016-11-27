@@ -5,6 +5,7 @@
  */
 package GameWorld.Buffs;
 
+import Enums.TutorialType;
 import GameObjects.BuffContainer;
 import GameObjects.Buffs.Buff;
 import GameObjects.Buffs.JumpCountBuff;
@@ -29,6 +30,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.mygdx.game.GameLibGDX;
+import com.mygdx.game.tutorial.TutorialHandler;
 
 import static java.lang.Thread.sleep;
 
@@ -60,6 +62,7 @@ public class BuffsWorld extends AbstractWorld {
 
     public BuffsWorld(Interface ui, GameLibGDX g) {
         super(ui, g);
+
         setUpWorld();
         t = new BuffsThread(containerList);
         tr = new Thread(t);
@@ -86,21 +89,11 @@ public class BuffsWorld extends AbstractWorld {
         initContainer(BuffsInfo.getPowerCoffBuff());
         initContainer(BuffsInfo.getCoinsBuff());
         
-        
-     /*   containerList.add(new BuffContainer(BuffsInfo.getJumpCountBuff(), ui.getWidth() / 5,
-                ui.getHeight() - space, width, height, ui.getStage()));
-        containerList.add(new BuffContainer(BuffsInfo.getGravityBuff(), ui.getWidth() / 5,
-                ui.getHeight() - height - space * 2, width, height, ui.getStage()));
-        containerList.add(new BuffContainer(BuffsInfo.getJumpPowerBuff(), ui.getWidth() / 5,
-                ui.getHeight() - height * 2 - space * 3, width, height, ui.getStage()));
-        containerList.add(new BuffContainer(BuffsInfo.getDirectionCoffBuff(), ui.getWidth() / 5,
-                ui.getHeight() - height * 3 - space * 4, width, height, ui.getStage()));
-*/
+
         minY = containerList.get(containerList.size() - 1).getY()
                 + containerList.get(containerList.size() - 1).getHeight();
 
         maxY = containerList.get(0).getY() - containerList.get(0).getHeight() * 2;
-        //- containerList.get(0).getHeight()/4 ;
     }
 
     private void initContainer(Buff buff) {
@@ -108,8 +101,20 @@ public class BuffsWorld extends AbstractWorld {
         float height = ui.getHeight() / 4;
         float space = ui.getHeight() / 15;
 
+        boolean isTutorial = false;
+        boolean isActive = true;
+
+        if (TutorialHandler.getType() == TutorialType.BUFF) {
+            if (count == 0) {
+                isTutorial = true;
+            } else {
+                isActive = false;
+            }
+        }
+
         containerList.add(new BuffContainer(buff, ui.getWidth() / 5,
-                ui.getHeight() - height * count - space * (count + 1), width, height, ui.getStage()));
+                ui.getHeight() - height * count - space * (count + 1), width, height, ui.getStage(),
+                isTutorial, isActive));
 
         count++;
     }
@@ -124,18 +129,20 @@ public class BuffsWorld extends AbstractWorld {
 
     @Override
     public void update(float delta) {
-        if (inertion < -5 || inertion > 5) {
-            moveCamera(inertion);
-            if (inertion < 0) {
-                inertion += 0.5f;
+        if(TutorialHandler.getType() != TutorialType.BUFF) {
+            if (inertion < -5 || inertion > 5) {
+                moveCamera(inertion);
+                if (inertion < 0) {
+                    inertion += 0.5f;
+                } else {
+                    inertion -= 0.5f;
+                }
+                if (inertion > -5 && inertion < 5) {
+                    inertion = 0;
+                }
             } else {
-                inertion -= 0.5f;
+                moveToBuff();
             }
-            if (inertion > -5 && inertion < 5) {
-                inertion = 0;
-            }
-        } else {
-            moveToBuff();
         }
     }
 

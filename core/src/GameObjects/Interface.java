@@ -26,10 +26,12 @@ public class Interface {
     private Stage stage, guiStage;
     private int coin = Statistic.getCoins();
     private Label coinText, fpsText;
+    private boolean isBackBlocked;
 
     public Interface(Stage stage, Stage guiStage) {
         this.stage = stage;
         this.guiStage = guiStage;
+        this.isBackBlocked = false;
         addCoins();
         addFPS();
     }
@@ -81,11 +83,17 @@ public class Interface {
         }
     }
 
+    public void blockBack(){
+        isBackBlocked = true;
+    }
+
     public void addBack(final GameLibGDX game) {
         Button backButton;
         backButton = new Button("Back", AssetLoader.backTexture, AssetLoader.backPressedTexture, "", FontLoader.font) {
             public void action() {
-                game.setScreen(new MainScreen(game));
+                if (!isBackBlocked) {
+                    game.setScreen(new MainScreen(game));
+                }
             }
         };
         backButton.setSize(getStage().getWidth() * 0.4f / 3, getStage().getHeight() / 6);

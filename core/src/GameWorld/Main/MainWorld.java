@@ -47,7 +47,6 @@ public class MainWorld extends AbstractWorld {
 
     public MainWorld(Interface ui, GameLibGDX g) {
         super(ui, g);
-        Gdx.app.log("MainWorld ", "create");
 
         SoundsLoader.LoadBasicSounds();
         SoundsLoader.PlayBackSound();
@@ -56,7 +55,9 @@ public class MainWorld extends AbstractWorld {
 
         createUI();
 
-        handleDailyGift();
+        if (TutorialHandler.getType() == TutorialType.DONE) {
+            handleDailyGift();
+        }
     }
 
     private void handleDailyGift() {
@@ -100,8 +101,8 @@ public class MainWorld extends AbstractWorld {
             }
         };
         mapsScreenButton.setSize(ui.getStage().getWidth() * 0.4f, ui.getStage().getHeight() / 5);
-        mapsScreenButton.setPosition(ui.getStage().getWidth()*0.3f,
-                (ui.getStage().getHeight()/2));
+        mapsScreenButton.setPosition(ui.getStage().getWidth() * 0.3f,
+                (ui.getStage().getHeight() / 2));
 
         ui.getGuiStage().addActor(mapsScreenButton);
     }
@@ -226,7 +227,7 @@ public class MainWorld extends AbstractWorld {
             public void action() {
                 if (TutorialHandler.getType() == TutorialType.DONE ||
                         TutorialHandler.getType() == TutorialType.SKIN) {
-                    if(TutorialHandler.getType() == TutorialType.SKIN){
+                    if (TutorialHandler.getType() == TutorialType.SKIN) {
                         TutorialHandler.increaseTutorialLvl();
                     }
                     game.setScreen(new BuySkinsScreen(game));

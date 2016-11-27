@@ -11,6 +11,7 @@ import Helper.AssetLoader;
 import Helper.FontLoader;
 import Helper.Statistic;
 import Helper.TimeConverter;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
@@ -27,7 +28,6 @@ import com.mygdx.game.screen.MainScreen;
 import com.mygdx.game.tutorial.TutorialHandler;
 
 /**
- *
  * @author qw
  */
 public class BuffContainer extends Actor {
@@ -44,7 +44,11 @@ public class BuffContainer extends Actor {
     private Buff buff;
     private TimeConverter timer;
 
-    public BuffContainer(Buff b, float xPos, float yPos, float width, float height, Stage stage) {
+    private boolean isTutorial;
+    private boolean isActive;
+
+    public BuffContainer(Buff b, float xPos, float yPos, float width, float height, Stage stage,
+                         boolean isTutorial, boolean isActive) {
         group = new Group();
         buff = b;
         timer = buff.getTimer().getTimeLeft();
@@ -52,6 +56,10 @@ public class BuffContainer extends Actor {
         this.yPos = yPos;
         this.width = width;
         this.height = height;
+
+        this.isTutorial = isTutorial;
+        this.isActive = isActive;
+
         initObjects();
         stage.addActor(group);
     }
@@ -97,21 +105,21 @@ public class BuffContainer extends Actor {
         countdown.setText(timer.getTime());
         group.addActor(countdown);
 
-        TextureRegion normal =AssetLoader.buffsArrow;
+        TextureRegion normal = AssetLoader.buffsArrow;
         TextureRegion pressed = AssetLoader.buffsArrow;
 
-        if(TutorialHandler.getType() == TutorialType.BUFF){
+        if (isTutorial) {
             normal = AssetLoader.tutorialBuff;
             pressed = AssetLoader.tutorialBuff;
         }
 
         upgrade = new Button("Upgrade", normal, pressed, "", FontLoader.font) {
             public void action() {
-                if (buff.checkUpgrade(Statistic.getCoins())) {
+                if (buff.checkUpgrade(Statistic.getCoins()) && isActive) {
                     buff.upgrade();
                     timer = buff.getTimer().getTimeLeft();
                     updateInfo();
-                    if(TutorialHandler.getType() == TutorialType.BUFF){
+                    if (isTutorial && TutorialHandler.getType() == TutorialType.BUFF) {
                         TutorialHandler.increaseTutorialLvl();
                     }
                 }
@@ -123,7 +131,7 @@ public class BuffContainer extends Actor {
 
         extend = new Button("Extend", AssetLoader.buffsClock, AssetLoader.buffsClock, "", FontLoader.font) {
             public void action() {
-                if(TutorialHandler.getType() != TutorialType.BUFF) {
+                if (!isTutorial && isActive) {
                     if (buff.checkUpdate(Statistic.getCoins())) {
                         Gdx.app.log("UPD", "");
                         buff.update();
@@ -138,7 +146,7 @@ public class BuffContainer extends Actor {
     }
 
     private void updateInfo() {
-      //  info.setText("Info: " + buff.getLevel());
+        //  info.setText("Info: " + buff.getLevel());
     }
 
     public void update() {

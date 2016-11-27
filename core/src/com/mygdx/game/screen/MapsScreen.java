@@ -5,6 +5,7 @@
  */
 package com.mygdx.game.screen;
 
+import Enums.TutorialType;
 import GameWorld.Main.MainRenderer;
 import GameWorld.Main.MainWorld;
 import GameWorld.Maps.MapsRenderer;
@@ -13,6 +14,7 @@ import Helper.MapsInputHandler;
 
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.GameLibGDX;
+import com.mygdx.game.tutorial.TutorialHandler;
 
 /**
  * @author qw
@@ -48,6 +50,8 @@ public class MapsScreen extends AbstractScreen {
 
     @Override
     public void backPress() {
-        game.setScreen(new MainScreen(game));
+        if (TutorialHandler.getType() != TutorialType.PLAY) {
+            game.setScreen(new MainScreen(game));
+        }
     }
 }

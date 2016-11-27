@@ -22,7 +22,6 @@ import com.mygdx.game.tutorial.TutorialHandler;
  */
 public class MainRenderer extends Renderer {
 
-
     private ShapeRenderer shapeRenderer;
     MainWorld world;
     private Interface ui;
@@ -31,7 +30,6 @@ public class MainRenderer extends Renderer {
         super();
         this.world = world;
         this.ui = ui;
-        Gdx.app.log("MainRenderer", "create");
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(cam.combined);
     }
@@ -91,7 +89,7 @@ public class MainRenderer extends Renderer {
                     Constants.APP_WIDTH * 1.3f / 3f, Constants.APP_HEIGHT);
             shapeRenderer.rect(Constants.APP_WIDTH * 1.3f / 3f, Constants.APP_HEIGHT * 4 / 15,
                     Constants.APP_WIDTH * 0.4f / 3f, Constants.APP_HEIGHT * 11 / 15);
-        } else if (TutorialHandler.getType() == TutorialType.SKIN){
+        } else if (TutorialHandler.getType() == TutorialType.SKIN) {
             shapeRenderer.rect(0, 0,
                     Constants.APP_WIDTH * 1.9f / 3f, Constants.APP_HEIGHT);
             shapeRenderer.rect(Constants.APP_WIDTH * 1.9f / 3f, 0,

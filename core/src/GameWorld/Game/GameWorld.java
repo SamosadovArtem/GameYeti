@@ -5,6 +5,7 @@
  */
 package GameWorld.Game;
 
+import Enums.TutorialType;
 import GameObjects.Buffs.Buff;
 import GameObjects.Button;
 import GameObjects.Interface;
@@ -43,6 +44,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.GameLibGDX;
 import com.mygdx.game.screen.DebugScreen;
+import com.mygdx.game.tutorial.TutorialHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +81,11 @@ public class GameWorld extends AbstractWorld {
 
     public GameWorld(Interface ui, GameLibGDX g) {
         super(ui, g);
+
+        if(TutorialHandler.getType() == TutorialType.PLAY) {
+            ui.blockBack();
+        }
+
         setUpWorld();
 
         //newWorldGenerate();

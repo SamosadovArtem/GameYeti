@@ -5,6 +5,7 @@
  */
 package com.mygdx.game.screen;
 
+import Enums.TutorialType;
 import GameWorld.Game.GameRenderer;
 import GameWorld.Game.GameWorld;
 import Helper.Constants;
@@ -16,6 +17,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.GameLibGDX;
+import com.mygdx.game.tutorial.TutorialHandler;
 
 /**
  * @author qw
@@ -61,6 +63,8 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void backPress() {
-        game.setScreen(new MainScreen(game));
+        if (TutorialHandler.getType() == TutorialType.PLAY) {
+            game.setScreen(new MainScreen(game));
+        }
     }
 }
