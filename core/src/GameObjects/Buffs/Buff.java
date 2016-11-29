@@ -56,6 +56,10 @@ public abstract class Buff {
         return level;
     }
 
+    public int getLevelMax(){
+        return levelMax;
+    }
+
     public void increaseLevel() {
         level++;
     }
@@ -80,7 +84,7 @@ public abstract class Buff {
 
     public abstract void update();
 
-    public abstract int getCoast(int level);
+    public abstract int getCost(int level);
 
     public abstract boolean checkUpdate(int allCoins);
 

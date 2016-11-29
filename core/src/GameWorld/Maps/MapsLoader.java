@@ -79,7 +79,6 @@ public final class MapsLoader {
                 for (BarrierTypes b: Values.currentMap.getCurrentBarrierTypes()){
                     System.out.println(b);
                 }
-                System.out.println(this.IsMapBought());
                 if (IsMapBought()) {
                     world.getGame().setScreen(new GameScreen(world.getGame()));
                 } else {

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 
 import Enums.TutorialType;
+import Helper.Statistic;
 
 /**
  * Created by User on 24.11.2016.
@@ -31,6 +32,10 @@ public class TutorialHandler {
             prefs.flush();
         }
         tutorialLvl = prefs.getInteger("tutorialLvl");
+
+        if(tutorialLvl == 1 && Statistic.getTickets() == 0){
+            Statistic.addTicket();
+        }
 
         tutorial = new Tutorial(5);
     }

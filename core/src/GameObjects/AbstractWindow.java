@@ -123,7 +123,7 @@ public abstract class AbstractWindow {
 
                 group.setY(group.getY() + 1);
                 try {
-                    sleep(10);
+                    sleep(5);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(AbstractWindow.class.getName()).log(Level.SEVERE, null, ex);
                 }

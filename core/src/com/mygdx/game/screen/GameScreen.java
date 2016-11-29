@@ -38,7 +38,6 @@ public class GameScreen extends AbstractScreen {
         this.renderer = new GameRenderer(world, ui, world.getMap());
         Gdx.input.setInputProcessor(new InputHandler(world, game));
         Statistic.playGame();
-        Gdx.app.log(String.valueOf(Constants.APP_WIDTH),String.valueOf(Constants.APP_HEIGHT));
     }
 
     @Override

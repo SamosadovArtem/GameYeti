@@ -24,10 +24,10 @@ public class GameLibGDX extends ApplicationAdapter {
         loadResources();
         Gdx.input.setCatchBackKey(true);
 
-        Preferences prefs = Gdx.app.getPreferences("YetiGame");
+/*        Preferences prefs = Gdx.app.getPreferences("YetiGame");
         prefs.putInteger("tutorialLvl", 0);
         prefs.flush();
-
+*/
         setScreen(new MainScreen(this));
     }
 

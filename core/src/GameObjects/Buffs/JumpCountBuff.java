@@ -46,7 +46,7 @@ public class JumpCountBuff extends Buff {
         }
     }
 
-    public int getCoast(int lvl) {
+    public int getCost(int lvl) {
         int c = 1;
         for (int i = 0; i < lvl; i++) {
             c += 2;
@@ -55,7 +55,7 @@ public class JumpCountBuff extends Buff {
     }
 
     public boolean checkUpdate(int allCoins) {
-        if (allCoins >= getCoast(level) && level != 0) {
+        if (allCoins >= getCost(level) && level != 0) {
             return true;
         } else {
             return false;
@@ -63,7 +63,7 @@ public class JumpCountBuff extends Buff {
     }
 
     public boolean checkUpgrade(int allCoins) {
-        if (allCoins >= getCoast(level + 1) && level < levelMax) {
+        if (allCoins >= getCost(level + 1) && level < levelMax) {
             return true;
         } else {
             return false;

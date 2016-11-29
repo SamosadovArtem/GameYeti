@@ -5,6 +5,7 @@
  */
 package com.mygdx.game.screen;
 
+import Enums.TutorialType;
 import GameWorld.Ticket.TicketRenderer;
 import GameWorld.Ticket.TicketWorld;
 import Helper.InputHandler;
@@ -12,6 +13,7 @@ import Helper.TicketInputHandler;
 
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.GameLibGDX;
+import com.mygdx.game.tutorial.TutorialHandler;
 
 /**
  * @author Pablo
@@ -45,6 +47,8 @@ public class TicketScreen extends AbstractScreen {
 
     @Override
     public void backPress() {
-        game.setScreen(new MainScreen(game));
+        if(TutorialHandler.getType() != TutorialType.TICKET) {
+            game.setScreen(new MainScreen(game));
+        }
     }
 }

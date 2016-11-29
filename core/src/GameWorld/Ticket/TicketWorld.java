@@ -33,6 +33,9 @@ public class TicketWorld extends AbstractWorld {
 
     public TicketWorld(Interface ui, GameLibGDX g) {
         super(ui, g);
+        if(TutorialHandler.getType() == TutorialType.TICKET){
+            ui.blockBack();
+        }
         initTicket();
         ui.addBack(game);
     }

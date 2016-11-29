@@ -67,7 +67,6 @@ GameRenderer extends Renderer {
         batch.draw(background, 0, (int) (Constants.GROUND_HEIGHT / 2 + Gdx.graphics.getHeight()/4),
                 Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - (int) (Constants.GROUND_HEIGHT / 2 + Constants.GROUND_Y),
                 sourceX, 0, 1024, 512, true, false);
-
         batch.draw(background, 0, 0,
                 Gdx.graphics.getWidth(), (int) ((Gdx.graphics.getHeight()/4)),
                 sourceX, 0, 1024*4, 512, true, false);

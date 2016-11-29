@@ -51,7 +51,6 @@ public class TicketInputHandler implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         world.getUI().getStage().touchDown(screenX, screenY, pointer, button);
         world.getUI().getGuiStage().touchDown(screenX, screenY, pointer, button);
-        Gdx.app.log("inputhandler", "touchdown");
         return true;
     }
 
@@ -71,8 +70,15 @@ public class TicketInputHandler implements InputProcessor {
     }
 
     private void checkParticles(int screenX, int screenY) {
-        float xPos = (float) screenX;
-        float yPos = world.getUI().getHeight() - (float) screenY;
+
+        float coefWidth = Gdx.app.getGraphics().getWidth()/800f;
+        float coefHeight = Gdx.app.getGraphics().getHeight()/480f;
+
+       // Gdx.app.log("HeightCoef", String.valueOf(coefHeight));
+
+        float xPos = (float) screenX / coefWidth;
+        float yPos = world.getUI().getHeight() - (float) screenY/coefHeight;
+        Gdx.app.log("x:" + xPos, "y: " + yPos);
         ArrayList<PrizeField> array = world.getTicket().getPrizeFieldList();
         for (PrizeField p : array) {
             ArrayList<ProtectiveLayerParticle> array2 = p.getProtectiveLayer();

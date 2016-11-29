@@ -113,28 +113,36 @@ public class BuffContainer extends Actor {
             pressed = AssetLoader.tutorialBuff;
         }
 
-        upgrade = new Button("Upgrade", normal, pressed, "", FontLoader.font) {
+        upgrade = new Button("Upgrade", normal, pressed, String.valueOf(buff.getLevel()), FontLoader.font) {
             public void action() {
                 if (buff.checkUpgrade(Statistic.getCoins()) && isActive) {
                     buff.upgrade();
+                    Statistic.removeCoins(buff.getCost(buff.getLevel() + 1));
+                    upgrade.setText(String.valueOf(buff.getLevel()));
                     timer = buff.getTimer().getTimeLeft();
                     updateInfo();
                     if (isTutorial && TutorialHandler.getType() == TutorialType.BUFF) {
                         TutorialHandler.increaseTutorialLvl();
+                    }
+                    if (buff.getLevel() == buff.getLevelMax()) {
+                        upgrade.setVisible(false);
                     }
                 }
             }
         };
         upgrade.setSize(width / 6, height / 4);
         upgrade.setPosition(xPos + width * 5 / 6, yPos - height);
+        if (buff.getLevel() == buff.getLevelMax()) {
+            upgrade.setVisible(false);
+        }
         group.addActor(upgrade);
 
         extend = new Button("Extend", AssetLoader.buffsClock, AssetLoader.buffsClock, "", FontLoader.font) {
             public void action() {
                 if (!isTutorial && isActive) {
                     if (buff.checkUpdate(Statistic.getCoins())) {
-                        Gdx.app.log("UPD", "");
                         buff.update();
+                        Statistic.removeCoins(buff.getCost(buff.getLevel()));
                         timer = buff.getTimer().getTimeLeft();
                     }
                 }

@@ -60,6 +60,8 @@ public class MainWorld extends AbstractWorld {
         if (TutorialHandler.getType() == TutorialType.DONE) {
             handleDailyGift();
         }
+
+        Gdx.app.log("Width", String.valueOf(Gdx.app.getGraphics().getWidth()));
     }
 
     private void handleDailyGift() {

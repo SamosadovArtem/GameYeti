@@ -27,24 +27,22 @@ public class GiftHandler {
     private static BuffType buffType;
 
     public static void takeGift(GiftType type) {
-        if (null != type) {
-            switch (type) {
-                case COIN:
-                    takeCoins();
-                    break;
-                case TICKET:
-                    takeTicket();
-                    break;
-                case BUFF:
-                    takeBuff();
-                    break;
-                case SKIN:
-                    takeSkin();
-                case MAP:
-                    takeMap();
-                default:
-                    break;
-            }
+        switch (type) {
+            case COIN:
+                takeCoins();
+                break;
+            case TICKET:
+                takeTicket();
+                break;
+            case BUFF:
+                takeBuff();
+                break;
+            case SKIN:
+                takeSkin();
+            case MAP:
+                takeMap();
+            default:
+                break;
         }
     }
 
@@ -81,7 +79,7 @@ public class GiftHandler {
 
     private static void takeBuff() {
         Random rnd = new Random();
-        switch (rnd.nextInt()) {
+        switch (rnd.nextInt(7)) {
             case 0:
                 buffType = BuffType.JUMPCOUNT;
                 BuffsInfo.getJumpCountBuff().update();

@@ -7,11 +7,12 @@ package GameObjects.PrizeField;
 
 import GameWorld.Game.Objects.GameActor;
 import GameWorld.Ticket.TicketListener;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
 /**
- *
  * @author Pablo
  */
 public class ProtectiveLayerParticle extends GameActor {
@@ -36,6 +37,7 @@ public class ProtectiveLayerParticle extends GameActor {
 
     public void action() {
         isVisible = false;
+        Gdx.app.log("point x: " + getX(), "point y: " + getY());
     }
 
     public void initSpritePos(int x, int y) {

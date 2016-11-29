@@ -7,6 +7,7 @@ package Helper;
 
 import Enums.BuffType;
 import Enums.GiftType;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Sound;
@@ -18,7 +19,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
- *
  * @author qw
  */
 public class AssetLoader {
@@ -305,7 +305,7 @@ public class AssetLoader {
         powerCoffBuff.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
     }
 
-    public static void loadTutorialElements(){
+    public static void loadTutorialElements() {
         Texture tutorial = new Texture(Gdx.files.internal("gfx/interface/tutorialButtons/buff.png"));
         tutorial.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
         tutorialBuff = new TextureRegion(tutorial, 0, 0, 512, 512);
@@ -375,35 +375,35 @@ public class AssetLoader {
         Texture res;
         switch (type) {
             case JUMPCOUNT:
-                res = new Texture(Gdx.files.internal("gfx/interface/Buffs/jumpCountBuff.png"));
+                res = new Texture(Gdx.files.internal("gfx/interface/buffs/jumpCountBuff.png"));
                 res.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
                 return res;
             case JUMPPOWER:
-                res = new Texture(Gdx.files.internal("gfx/interface/Buffs/jumpPowerBuff.png"));
+                res = new Texture(Gdx.files.internal("gfx/interface/buffs/jumpPowerBuff.png"));
                 res.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
                 return res;
             case DIRECTION_COFF:
-                res = new Texture(Gdx.files.internal("gfx/interface/Buffs/directionCoffBuff.png"));
+                res = new Texture(Gdx.files.internal("gfx/interface/buffs/directionCoffBuff.png"));
                 res.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
                 return res;
             case FRICTION:
-                res = new Texture(Gdx.files.internal("gfx/interface/Buffs/frictionBuff.png"));
+                res = new Texture(Gdx.files.internal("gfx/interface/buffs/frictionBuff.png"));
                 res.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
                 return res;
             case HEIGHT_SKY_COFF:
-                res = new Texture(Gdx.files.internal("gfx/interface/Buffs/heightSkyCoffBuff.png"));
+                res = new Texture(Gdx.files.internal("gfx/interface/buffs/heightSkyCoffBuff.png"));
                 res.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
                 return res;
             case POWER_COFF:
-                res = new Texture(Gdx.files.internal("gfx/interface/Buffs/powerCoffBuff.png"));
+                res = new Texture(Gdx.files.internal("gfx/interface/buffs/powerCoffBuff.png"));
                 res.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
                 return res;
             case COINS:
-                res = new Texture(Gdx.files.internal("gfx/interface/Buffs/coinsBuff.png"));
+                res = new Texture(Gdx.files.internal("gfx/interface/buffs/coinsBuff.png"));
                 res.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
                 return res;
             case GRAVITY:
-                res = new Texture(Gdx.files.internal("gfx/interface/Buffs/gravityBuff.png"));
+                res = new Texture(Gdx.files.internal("gfx/interface/buffs/gravityBuff.png"));
                 res.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
                 return res;
             default:
@@ -411,7 +411,7 @@ public class AssetLoader {
         }
     }
 
-    public static void getTintedTexture(){
+    public static void getTintedTexture() {
 
         // TODO: это всё пример для реализации затемнения кнопок при обучении
 

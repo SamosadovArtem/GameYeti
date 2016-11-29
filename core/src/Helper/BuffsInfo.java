@@ -82,6 +82,11 @@ public class BuffsInfo {
         buffs.add(getGravityBuff());
         buffs.add(getJumpCountBuff());
         buffs.add(getJumpPowerBuff());
+        buffs.add(getCoinsBuff());
+        buffs.add(getDirectionCoffBuff());
+        buffs.add(getFrictionBuff());
+        buffs.add(getHeightSkyCoffBuff());
+        buffs.add(getPowerCoffBuff());
         return buffs;
     }
 
@@ -174,13 +179,13 @@ public class BuffsInfo {
     }
 
     private static int getLevel(String tag) {
-        String str = new String(prefs.getString(tag));
+        String str = prefs.getString(tag);
         String[] strArr = str.split(",");
         return Integer.valueOf(strArr[0]);
     }
 
     private static long getTime(String tag) {
-        String str = new String(prefs.getString(tag));
+        String str = prefs.getString(tag);
         String[] strArr = str.split(",");
         return Long.valueOf(strArr[1]);
     }

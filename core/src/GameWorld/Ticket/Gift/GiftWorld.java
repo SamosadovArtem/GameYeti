@@ -35,13 +35,13 @@ public class GiftWorld extends AbstractWorld {
     }
 
     private void initWorld() {
+        GiftHandler.takeGift(type);
         gift = new Picture(GiftHandler.getPicture(type));
         gift.setSize(ui.getWidth() / 2, ui.getHeight() / 2);
         gift.setPosition(ui.getWidth() / 5, ui.getHeight() / 5);
         ui.getGuiStage().addActor(gift);
         acceptButton = new Button("Accept", AssetLoader.btn, AssetLoader.btnPress, "ACCEPT", FontLoader.font) {
             public void action() {
-                GiftHandler.takeGift(type);
                 game.setScreen(new MainScreen(game));
             }
         };
